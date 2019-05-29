@@ -1,1 +1,1 @@
-# BarcodeScanner
+# Resolver App
