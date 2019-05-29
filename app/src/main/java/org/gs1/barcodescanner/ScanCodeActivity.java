@@ -1,5 +1,6 @@
 package org.gs1.barcodescanner;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -21,7 +22,9 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
 
     @Override
     public void handleResult(Result result) {
-        MainActivity.resultTV.setText(result.getText());
+        mybrowser.gtin = result.getText();
+        Intent intent = new Intent(getApplicationContext(), mybrowser.class);
+        startActivity(intent);
         onBackPressed();
     }
 

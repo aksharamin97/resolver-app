@@ -94,15 +94,6 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#F26334"
-        android:text="Search Resolver"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#FFFFFF" />
-
 
     <TextView
         android:id="@+id/resultTV"
