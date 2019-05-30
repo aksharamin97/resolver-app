@@ -24,6 +24,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+//import org.json.simple.parser.JSONParser;
+//import org.json.simple.parser.*;
+
 public class loginActivity extends AppCompatActivity {
     public TextView res;
     public EditText uname;
@@ -84,13 +87,28 @@ public class loginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         if (response.isSuccessful()){
-                            final String myResponse = response.body().string();
+                            final String jsonString = response.body().string();
+                            String firstName = "";
+                            String moName = "";
 
+                            try {
+                                JSONObject json = new JSONObject(jsonString);
+                                firstName = json.getString("firstname");
+                                moName = json.getString("member_name");
+
+                            } catch(JSONException ex) {
+                                System.out.println("Error: " + ex);
+                            }
+
+                            final String finalFirstName = firstName;
+                            final String finalMoName = moName;
+
+                            final String welcomeMessage = "Hello " + firstName + "\r" + "Your MO is " + moName;
 
                             loginActivity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    res.setText(myResponse);
+                                    res.setText(welcomeMessage);
                                 }
                             });
                         }
