@@ -1,5 +1,6 @@
 package org.gs1.barcodescanner;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,10 @@ public class loginActivity extends AppCompatActivity {
     private String text2;
     private boolean switchOnOff;
 
+    /*public String firstName = "";
+    public String lastName = "";
+    public String memberName = "";*/
+    public String session_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +62,6 @@ public class loginActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
 
                 OkHttpClient client = new OkHttpClient();
                 MediaType JSON = MediaType.parse("application/json charset=utf-8");
@@ -88,44 +91,59 @@ public class loginActivity extends AppCompatActivity {
                     public void onResponse(Call call, Response response) throws IOException {
                         if (response.isSuccessful()){
                             final String jsonString = response.body().string();
-                            String firstName = "";
-                            String moName = "";
-
                             try {
                                 JSONObject json = new JSONObject(jsonString);
-                                firstName = json.getString("firstname");
-                                moName = json.getString("member_name");
+                                /*firstName = json.getString("firstname");
+                                lastName = json.getString("surname");
+                                memberName = json.getString("member_name");*/
+                                session_id = json.getString("session_id");
 
-                            } catch(JSONException ex) {
+                            }
+                            catch(JSONException ex) {
                                 System.out.println("Error: " + ex);
                             }
 
-                            final String finalFirstName = firstName;
-                            final String finalMoName = moName;
+                            final String sid = session_id;
+                            if (sid.compareTo("LOGIN FAILED") == 0){
+                                loginActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        res.setText("Login Failed");
+                                    }
+                                });
+                            }
+                            else{
+                                loginActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(getApplicationContext(), dashboard.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
 
-                            final String welcomeMessage = "Hello " + firstName + "\r" + "Your MO is " + moName;
+                           /* final String finalFirstName = firstName;
+                            final String finalMoName = memberName;
+
+                            final String welcomeMessage = "Hello " + firstName + "\r" + "Your MO is " + memberName;
 
                             loginActivity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     res.setText(welcomeMessage);
                                 }
-                            });
+                            });*/
                         }
                     }
                 });
+
+                    if (logCheck.isChecked())
+                        saveData();
+                    else
+                        clearData();
             }
         });
 //////////////////////////////////////////////////////////////////////////////////////////////////
-      logCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (logCheck.isChecked())
-                    saveData();
-                else
-                    clearData();
-            }
-        });
 
         loadData();
         updateView();
