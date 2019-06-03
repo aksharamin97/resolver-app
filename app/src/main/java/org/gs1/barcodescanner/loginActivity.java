@@ -58,8 +58,6 @@ public class loginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-
                 OkHttpClient client = new OkHttpClient();
                 MediaType JSON = MediaType.parse("application/json charset=utf-8");
                 JSONObject body = new JSONObject();
@@ -114,23 +112,17 @@ public class loginActivity extends AppCompatActivity {
                         }
                     }
                 });
+//////////////////////////////////////////////////////////////////////////////////////////////////
+               if (logCheck.isChecked())
+                   saveData();
+               else
+                    clearData();
+//////////////////////////////////////////////////////////////////////////////////////////////////
             }
         });
 //////////////////////////////////////////////////////////////////////////////////////////////////
-      logCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (logCheck.isChecked())
-                    saveData();
-                else
-                    clearData();
-            }
-        });
-
         loadData();
         updateView();
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////
