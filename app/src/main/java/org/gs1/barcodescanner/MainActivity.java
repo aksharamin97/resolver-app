@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CAMERA = 1;
@@ -56,9 +58,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), loginActivity.class));
             }
         });
+        final EditText editText;
+        editText = findViewById(R.id.editText);
 
-
-
-
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if(keyCode==KeyEvent.KEYCODE_ENTER) {
+                        mybrowser.gtin = editText.getText().toString();
+                        startActivity(new Intent(getApplicationContext(), mybrowser.class));
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 }
