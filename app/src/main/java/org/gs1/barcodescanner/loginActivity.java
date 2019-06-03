@@ -58,7 +58,7 @@ public class loginActivity extends AppCompatActivity {
         uname = (EditText)findViewById(R.id.username);
         pass = (EditText)findViewById(R.id.password);
         res = (TextView)findViewById(R.id.result);
-        Button btn = (Button)findViewById(R.id.login);
+        Button btn = (Button)findViewById(R.id.btn_login);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
