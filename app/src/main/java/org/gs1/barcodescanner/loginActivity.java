@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,7 +58,6 @@ public class loginActivity extends AppCompatActivity {
         logCheck = (CheckBox)findViewById(R.id.logCheck);
         uname = (EditText)findViewById(R.id.username);
         pass = (EditText)findViewById(R.id.password);
-        res = (TextView)findViewById(R.id.result);
         Button btn = (Button)findViewById(R.id.btn_login);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +108,8 @@ public class loginActivity extends AppCompatActivity {
                                 loginActivity.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        res.setText("Login Failed");
+                                        Toast toast = Toast.makeText(getApplicationContext(),"Login Failed", Toast.LENGTH_SHORT);
+                                        toast.show();
                                     }
                                 });
                             }
@@ -121,18 +122,6 @@ public class loginActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-
-                           /* final String finalFirstName = firstName;
-                            final String finalMoName = memberName;
-
-                            final String welcomeMessage = "Hello " + firstName + "\r" + "Your MO is " + memberName;
-
-                            loginActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    res.setText(welcomeMessage);
-                                }
-                            });*/
                         }
                     }
                 });
