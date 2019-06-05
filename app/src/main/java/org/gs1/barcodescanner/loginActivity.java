@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -100,7 +99,7 @@ public class loginActivity extends AppCompatActivity {
 
                             }
                             catch(JSONException ex) {
-                                System.out.println("Error: " + ex);
+                                System.out.println("Error");
                             }
 
                             final String sid = session_id;
@@ -118,6 +117,7 @@ public class loginActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         Intent intent = new Intent(getApplicationContext(), dashboard.class);
+                                        intent.putExtra("sid", sid);
                                         startActivity(intent);
                                     }
                                 });
