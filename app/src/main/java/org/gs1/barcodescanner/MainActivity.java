@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CAMERA = 1;
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if(keyCode==KeyEvent.KEYCODE_ENTER) {
+                    if (keyCode == KeyEvent.KEYCODE_ENTER) {
                         mybrowser.gtin = editText.getText().toString();
                         startActivity(new Intent(getApplicationContext(), landingPage.class));
                         return true;
@@ -75,5 +76,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button btn_test;
+        btn_test = findViewById(R.id.btn_test);
+        btn_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), grabBrowserUrl.class));
+            }
+        });
     }
 }
