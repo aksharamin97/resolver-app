@@ -1,11 +1,14 @@
 package org.gs1.barcodescanner;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -31,8 +34,9 @@ public class dashboard extends AppCompatActivity {
     String name;
     String gtin;
     String active;
+    String product_id;
     JSONArray json_array;
-    HashMap<String, String> hash = new HashMap<>();
+//    HashMap<String, String> hash = new HashMap<>();
     String url = "https://data.gs1.org/api/api.php";
     ArrayList<HashMap<String, String>> list;
 
@@ -50,7 +54,8 @@ public class dashboard extends AppCompatActivity {
         list = new ArrayList<>();
         lv = (ListView) findViewById(R.id.list);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        Intent intent = getIntent();
+        final String sid = intent.getStringExtra("sid");
         //String sid = "8391xulq7aklik7w3ibf3b5m42yl3mjvv3swssea8cy7317wbu";
         OkHttpClient client = new OkHttpClient();
 
@@ -58,7 +63,7 @@ public class dashboard extends AppCompatActivity {
         JSONObject body = new JSONObject();
         try {
             body.put("command", "get_uri_list");
-            body.put("session_id", "0ya7kkk5eyijvjwikamy8wvzr03tw1wokdo283$4srjny435d1");
+            body.put("session_id", sid);
             body.put("first_line_number", "0");
             body.put("max_number_of_lines", "20");
         } catch (JSONException e) {
@@ -95,20 +100,22 @@ public class dashboard extends AppCompatActivity {
                             name = jsonobject.getString("item_description");
                             gtin = jsonobject.getString("alpha_value");
                             active = jsonobject.getString("active");
-                            System.out.println("name in loop = " + name);
-                            System.out.println("gtin in loop = " + gtin);
+                            product_id = jsonobject.getString("uri_request_id");
+//                            System.out.println("name in loop = " + name);
+//                            System.out.println("gtin in loop = " + gtin);
                             HashMap<String, String> contact = new HashMap<>();
                             contact.put("name", name);
                             contact.put("gtin", gtin);
                             contact.put("active", active);
-                            System.out.println("hash/dict = " + contact);
+                            contact.put("product_id", product_id);
+//                            System.out.println("hash/dict = " + contact);
                             list.add(contact);
-                            System.out.println("Current Contact List in loop = " + list);
+//                            System.out.println("Current Contact List in loop = " + list);
 //                            list.put(name, gtin);
 
                         }
 //                        System.out.println(list);
-                        System.out.println("Final Contact List = " + list);
+//                        System.out.println("Final Contact List = " + list);
 
                         runOnUiThread(new Runnable() {
 
@@ -121,6 +128,21 @@ public class dashboard extends AppCompatActivity {
                                         R.id.gtin, R.id.active});
 //
                                 lv.setAdapter(adapter);
+                                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                                        System.out.println(list.get(position).get("name"));
+                                        Intent intent = new Intent(getApplicationContext(), product_page.class);
+                                        intent.putExtra("name", list.get(position).get("name"));
+                                        intent.putExtra("gtin", list.get(position).get("gtin"));
+                                        intent.putExtra("active", list.get(position).get("active"));
+                                        intent.putExtra("product_id", list.get(position).get("product_id"));
+                                        intent.putExtra("sid", sid);
+                                        startActivity(intent);
+//                                        Toast toast = Toast.makeText(getApplicationContext(),list.get(position).get("name"), Toast.LENGTH_SHORT);
+//                                        toast.show();
+                                }
+                                });
 //                                TableLayout tl = (TableLayout)findViewById(R.id.tl);
 //                                for (String i : list.keySet()){
 //                                    TableRow row = new TableRow(dashboard.this);
