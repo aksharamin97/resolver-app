@@ -67,12 +67,13 @@ public class MainActivity extends AppCompatActivity {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     if(keyCode==KeyEvent.KEYCODE_ENTER) {
                         mybrowser.gtin = editText.getText().toString();
-                        startActivity(new Intent(getApplicationContext(), mybrowser.class));
+                        startActivity(new Intent(getApplicationContext(), landingPage.class));
                         return true;
                     }
                 }
                 return false;
             }
         });
+
     }
 }
