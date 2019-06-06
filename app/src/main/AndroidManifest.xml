@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".grabBrowserUrl"></activity>
+        <activity android:name=".product_page"></activity>
         <activity android:name=".dashboard" />
         <activity android:name=".loginActivity" />
         <activity android:name=".mybrowser" />
