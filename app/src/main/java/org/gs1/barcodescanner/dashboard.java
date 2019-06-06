@@ -6,15 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import okhttp3.Call;
@@ -29,16 +30,25 @@ import okhttp3.Response;
 public class dashboard extends AppCompatActivity {
     String name;
     String gtin;
+    String active;
     JSONArray json_array;
-    HashMap<String, String> list = new HashMap<>();
+    HashMap<String, String> hash = new HashMap<>();
     String url = "https://data.gs1.org/api/api.php";
+    ArrayList<HashMap<String, String>> list;
+
+    ListView lv;
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
-
+        ///changed///
+        setContentView(R.layout.dashboard_lv);
+        list = new ArrayList<>();
+        lv = (ListView) findViewById(R.id.list);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //String sid = "8391xulq7aklik7w3ibf3b5m42yl3mjvv3swssea8cy7317wbu";
@@ -84,27 +94,44 @@ public class dashboard extends AppCompatActivity {
                             JSONObject jsonobject = json_array.getJSONObject(i);
                             name = jsonobject.getString("item_description");
                             gtin = jsonobject.getString("alpha_value");
-
-                            list.put(name, gtin);
+                            active = jsonobject.getString("active");
+                            System.out.println("name in loop = " + name);
+                            System.out.println("gtin in loop = " + gtin);
+                            HashMap<String, String> contact = new HashMap<>();
+                            contact.put("name", name);
+                            contact.put("gtin", gtin);
+                            contact.put("active", active);
+                            System.out.println("hash/dict = " + contact);
+                            list.add(contact);
+                            System.out.println("Current Contact List in loop = " + list);
+//                            list.put(name, gtin);
 
                         }
-                        System.out.println(list);
+//                        System.out.println(list);
+                        System.out.println("Final Contact List = " + list);
 
                         runOnUiThread(new Runnable() {
 
                             @Override
                             public void run() {
-                                TableLayout tl = (TableLayout)findViewById(R.id.tl);
-                                for (String i : list.keySet()){
-                                    TableRow row = new TableRow(dashboard.this);
-                                    TextView tv_name = new TextView(dashboard.this);
-                                    TextView tv_gtin = new TextView(dashboard.this);
-                                    tv_name.setText(i);
-                                    tv_gtin.setText((list.get(i)));
-                                    row.addView(tv_name);
-                                    row.addView(tv_gtin);
-                                    tl.addView(row);
-                                }
+                                ListAdapter adapter = new SimpleAdapter(
+                                        dashboard.this, list,
+                                        R.layout.dashboard_lv_item, new String[]{"name", "gtin",
+                                        "active"}, new int[]{R.id.name,
+                                        R.id.gtin, R.id.active});
+//
+                                lv.setAdapter(adapter);
+//                                TableLayout tl = (TableLayout)findViewById(R.id.tl);
+//                                for (String i : list.keySet()){
+//                                    TableRow row = new TableRow(dashboard.this);
+//                                    TextView tv_name = new TextView(dashboard.this);
+//                                    TextView tv_gtin = new TextView(dashboard.this);
+//                                    tv_name.setText(i);
+//                                    tv_gtin.setText((list.get(i)));
+//                                    row.addView(tv_name);
+//                                    row.addView(tv_gtin);
+//                                    tl.addView(row);
+//                                }
 
                             }
                         });
