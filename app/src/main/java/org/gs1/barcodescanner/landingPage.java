@@ -5,26 +5,48 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.google.android.gms.common.internal.Objects;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class landingPage extends AppCompatActivity {
 
     Button openBrowser;
     Button getJson;
     private TextView result;
+    private TextView name;
+    private TextView uri;
 
     JSONObject object;
+    String productName;
+
+    ArrayList<String> titles = new ArrayList<>();
+    ArrayList<String> uris = new ArrayList<>();
+
+    ListView listview;
 
 
     @Override
@@ -33,9 +55,11 @@ public class landingPage extends AppCompatActivity {
         setContentView(R.layout.activity_landing_page);
 
         result = (TextView)findViewById(R.id.result);
+        name = (TextView)findViewById(R.id.landing_name);
+        uri = (TextView)findViewById(R.id.landing_uri);
+
 
         openBrowser= (Button)findViewById(R.id.getBtn);
-        getJson = (Button)findViewById(R.id.getJson);
 
         openBrowser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,13 +69,8 @@ public class landingPage extends AppCompatActivity {
             }
         });
 
-        getJson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getWebsite();
-            }
-        });
 
+        getWebsite();
 
     }
 
@@ -70,8 +89,27 @@ public class landingPage extends AppCompatActivity {
                     scriptcontent = links.first().html();
 
                     object = new JSONObject(scriptcontent);
+                    productName = object.getJSONObject("/").getString("item_name");
+//                    System.out.println(object.getJSONObject("/").getJSONObject("responses").getJSONObject("productdescriptionpage").getJSONObject("lang").getJSONObject("en").getString("link"));
 
-                    System.out.println(object.getClass().getName());
+
+
+
+                    JSONObject jsonobject = object.getJSONObject("/").getJSONObject("responses");
+                    Iterator<String> keys = jsonobject.keys();
+
+                    System.out.println(jsonobject);
+
+                    while (keys.hasNext()) {
+                        String key = keys.next();
+                        if (jsonobject.get(key) instanceof JSONObject) {
+                            System.out.println(key);
+                            String keyString = key.toString();
+                            titles.add(jsonobject.getJSONObject(keyString).getJSONObject("lang").getJSONObject("en").getString("title"));
+                            uris.add (jsonobject.getJSONObject(keyString).getJSONObject("lang").getJSONObject("en").getString("link"));
+                        }
+                    }
+
 
                     builder.append(title).append("\n");
 
@@ -89,9 +127,17 @@ public class landingPage extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-//                        result.setText(builder.toString());
-                        result.setText(scriptcontent);
 
+                        StringBuilder output = new StringBuilder();
+
+                        output.append(productName);
+
+                        int listSize = titles.size();
+
+                        for (int i = 0; i < listSize; i++){
+                            output.append("\n" + titles.get(i) + ": \n" + uris.get(i) + "\n");
+                            result.setText(output);
+                        }
                     }
                 });
             }
