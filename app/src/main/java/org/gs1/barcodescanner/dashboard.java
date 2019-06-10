@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -49,6 +50,8 @@ public class dashboard extends AppCompatActivity {
     String url = "https://data.gs1.org/api/api.php";
     ArrayList<HashMap<String, String>> list;
     ListView lv;
+
+    Button addProduct;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("StaticFieldLeak")
@@ -168,6 +171,14 @@ public class dashboard extends AppCompatActivity {
                         System.out.println("FAIL" + e);
                     }
                 }
+            }
+        });
+
+        addProduct = findViewById(R.id.addProduct);
+        addProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), addProductPage.class));
             }
         });
 /*        adapter = new ArrayAdapter<HashMap<String, String>>(
