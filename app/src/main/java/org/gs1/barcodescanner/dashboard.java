@@ -7,11 +7,17 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +25,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Handler;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -39,10 +48,7 @@ public class dashboard extends AppCompatActivity {
 //    HashMap<String, String> hash = new HashMap<>();
     String url = "https://data.gs1.org/api/api.php";
     ArrayList<HashMap<String, String>> list;
-
     ListView lv;
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("StaticFieldLeak")
@@ -164,6 +170,39 @@ public class dashboard extends AppCompatActivity {
                 }
             }
         });
+/*        adapter = new ArrayAdapter<HashMap<String, String>>(
+                dashboard.this,android.R.layout.simple_list_item_1, list
+        );
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_dash,menu);
+        MenuItem item = menu.findItem(R.id.search_list);
+        SearchView searchView = (SearchView)item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                for(int i = 0; i<list.size();i++){
+                    if (list.get(i).get("name").toLowerCase().contains(query.toLowerCase())) {
+                        //newList.add(list.get(i));
+                        Toast.makeText(dashboard.this, "Match found", Toast.LENGTH_LONG).show();
+                        break;
+                    } else {
+                        Toast.makeText(dashboard.this, "No Match found", Toast.LENGTH_LONG).show();
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);*/
     }
 }
 
