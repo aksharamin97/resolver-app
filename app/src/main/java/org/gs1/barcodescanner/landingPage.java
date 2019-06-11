@@ -95,9 +95,6 @@ public class landingPage extends AppCompatActivity {
                     productName = object.getJSONObject("/").getString("item_name");
 //                    System.out.println(object.getJSONObject("/").getJSONObject("responses").getJSONObject("productdescriptionpage").getJSONObject("lang").getJSONObject("en").getString("link"));
 
-
-
-
                     JSONObject jsonobject = object.getJSONObject("/").getJSONObject("responses");
                     Iterator<String> keys = jsonobject.keys();
 
@@ -113,7 +110,6 @@ public class landingPage extends AppCompatActivity {
                         }
                     }
 
-
                     builder.append(title).append("\n");
 
                     for ( Element link : links){
@@ -126,11 +122,9 @@ public class landingPage extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
                         StringBuilder output = new StringBuilder();
 
                         landing_title.setText(productName);
@@ -147,5 +141,4 @@ public class landingPage extends AppCompatActivity {
         }).start();
 
     }
-
 }

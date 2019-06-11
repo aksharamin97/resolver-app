@@ -130,13 +130,16 @@ public class dashboard extends AppCompatActivity {
 
                             @Override
                             public void run() {
-                                ListAdapter adapter = new SimpleAdapter(
+/*                                ListAdapter adapter = new SimpleAdapter(
                                         dashboard.this, list,
                                         R.layout.dashboard_lv_item, new String[]{"name", "gtin",
                                         "active"}, new int[]{R.id.name,
                                         R.id.gtin, R.id.active});
 //
-                                lv.setAdapter(adapter);
+                                lv.setAdapter(adapter);*/
+
+                                adapt();
+
                                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -183,7 +186,9 @@ public class dashboard extends AppCompatActivity {
         });
 /*        adapter = new ArrayAdapter<HashMap<String, String>>(
                 dashboard.this,android.R.layout.simple_list_item_1, list
-        );
+        );*/
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -199,6 +204,7 @@ public class dashboard extends AppCompatActivity {
                     if (list.get(i).get("name").toLowerCase().contains(query.toLowerCase())) {
                         //newList.add(list.get(i));
                         Toast.makeText(dashboard.this, "Match found", Toast.LENGTH_LONG).show();
+                        adapt();
                         break;
                     } else {
                         Toast.makeText(dashboard.this, "No Match found", Toast.LENGTH_LONG).show();
@@ -210,10 +216,22 @@ public class dashboard extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 //adapter.getFilter().filter(newText);
+
                 return false;
             }
         });
-        return super.onCreateOptionsMenu(menu);*/
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    public void adapt(){
+        ListAdapter adapter = new SimpleAdapter(
+                dashboard.this, list,
+                R.layout.dashboard_lv_item, new String[]{"name", "gtin",
+                "active"}, new int[]{R.id.name,
+                R.id.gtin, R.id.active});
+
+        lv.setAdapter(adapter);
     }
 }
 
