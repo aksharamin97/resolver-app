@@ -7,46 +7,17 @@
     android:orientation="vertical"
     tools:context=".product_page">
 
-    <TableLayout
-        android:id="@+id/tl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TableRow android:id="@+id/tr">
-
-            <TextView
-                android:id="@+id/h1"
-                android:layout_width="112dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Link Type"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/h2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Link"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </TableRow>
-
-    </TableLayout>
-
     <TextView
-        android:id="@+id/h"
+        android:id="@+id/productTitle"
         android:layout_width="match_parent"
-        android:layout_height="599dp"
-        android:layout_weight="5"
-        android:gravity="center"
-        android:text="Title"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:layout_height="103dp"
+        android:text="TextView"
+        android:textSize="40sp" />
+
+    <ListView
+        android:id="@+id/linkLv"
+        android:layout_width="match_parent"
+        android:layout_height="452dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
