@@ -36,7 +36,9 @@ public class landingPage extends AppCompatActivity {
 
     Button openBrowser;
     Button getJson;
+
     private TextView result;
+    private TextView landing_title;
     private TextView name;
     private TextView uri;
 
@@ -55,6 +57,7 @@ public class landingPage extends AppCompatActivity {
         setContentView(R.layout.activity_landing_page);
 
         result = (TextView)findViewById(R.id.result);
+        landing_title = (TextView)findViewById(R.id.landing_title);
         name = (TextView)findViewById(R.id.landing_name);
         uri = (TextView)findViewById(R.id.landing_uri);
 
@@ -123,7 +126,9 @@ public class landingPage extends AppCompatActivity {
                     @Override
                     public void run() {
                         StringBuilder output = new StringBuilder();
-                        output.append(productName);
+
+                        landing_title.setText(productName);
+
                         int listSize = titles.size();
 
                         for (int i = 0; i < listSize; i++){
