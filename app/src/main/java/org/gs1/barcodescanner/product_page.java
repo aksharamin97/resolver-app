@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +35,9 @@ public class product_page extends AppCompatActivity {
     String attribute_type;
     ArrayList<HashMap<String, String>> product_list;
 
+    Button viewInBrowser;
+    Button deleteBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +45,7 @@ public class product_page extends AppCompatActivity {
         setContentView(R.layout.activity_product_page);
         Intent intent = getIntent();
         final String name = intent.getStringExtra("name");
-        String gtin = intent.getStringExtra("gtin");
+        final String gtin = intent.getStringExtra("gtin");
         String active = intent.getStringExtra("active");
         final String product_id = intent.getStringExtra("product_id");
         String sid = intent.getStringExtra("sid");
@@ -114,7 +120,7 @@ public class product_page extends AppCompatActivity {
                                     row.addView(tv_link);
                                     tl.addView(row);
                                 }
-                        }
+                            }
                         });
 //
                     }
@@ -125,5 +131,23 @@ public class product_page extends AppCompatActivity {
                 }
             }
         });
+
+        viewInBrowser = findViewById(R.id.viewInBrowser);
+        viewInBrowser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mybrowser.gtin = gtin;
+                startActivity(new Intent(getApplicationContext(), mybrowser.class));
+            }
+        });
+
+        deleteBtn = findViewById(R.id.deleteBtn);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(product_page.this, "Not yet implemented", Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 }
