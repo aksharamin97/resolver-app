@@ -2,23 +2,22 @@ package org.gs1.barcodescanner;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,10 +25,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Handler;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -147,7 +143,6 @@ public class dashboard extends AppCompatActivity {
 
                                 dashboard_title.setText(ss);
 
-                                adapt();
 
                                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override

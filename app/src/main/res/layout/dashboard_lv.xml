@@ -30,7 +30,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="26sp" />
     </LinearLayout>
-    
+
     <TextView
         android:id="@+id/dashboard_title"
         android:layout_width="match_parent"
@@ -51,7 +51,7 @@
         android:layout_marginRight="20dp">
 
     </SearchView>
-    
+
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
