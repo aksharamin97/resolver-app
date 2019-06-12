@@ -72,4 +72,9 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
+    <ListView
+        android:id="@+id/linkLv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
