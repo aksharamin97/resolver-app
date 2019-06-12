@@ -16,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -26,7 +25,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 import okhttp3.Call;
@@ -42,7 +40,7 @@ public class dashboard extends AppCompatActivity {
     String name;
     String gtin;
     String active;
-//    String product_id;
+    String product_id;
     String last_product_id;
     JSONArray json_array;
 //    HashMap<String, String> hash = new HashMap<>();
@@ -110,21 +108,23 @@ public class dashboard extends AppCompatActivity {
                             name = jsonobject.getString("item_description");
                             gtin = jsonobject.getString("alpha_value");
                             active = jsonobject.getString("active");
-//                            product_id = jsonobject.getString("uri_request_id");
+                            product_id = jsonobject.getString("uri_request_id");
 //                            System.out.println("name in loop = " + name);
 //                            System.out.println("gtin in loop = " + gtin);
                             HashMap<String, String> contact = new HashMap<>();
                             contact.put("name", name);
                             contact.put("gtin", gtin);
                             contact.put("active", active);
-//                            contact.put("product_id", product_id);
+                            contact.put("product_id", product_id);
 //                            System.out.println("hash/dict = " + contact);
                             list.add(contact);
 //                            System.out.println("Current Contact List in loop = " + list);
 //                            list.put(name, gtin);
 //                            product_list.add(product_id);
+
                         }
-                        Collections.reverse(list);
+//                        System.out.println("list     " + list);
+//                        Collections.reverse(list);
 
 //                        last_product_id = product_list.get(product_list.size() -1 );
 
@@ -148,25 +148,25 @@ public class dashboard extends AppCompatActivity {
 
                                 dashboard_title.setText(ss);
 
-                                SearchView sv = (SearchView)findViewById(R.id.dashboard_search_bar);
-                                sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                                    @Override
-                                    public boolean onQueryTextSubmit(String query) {
-
-                                        return false;
-                                    }
-
-                                    @Override
-                                    public boolean onQueryTextChange(String newText) {
-                                        ((SimpleAdapter) adapter).getFilter().filter(newText);
-                                        return false;
-                                    }
-                                });
+//                                SearchView sv = (SearchView)findViewById(R.id.dashboard_search_bar);
+//                                sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                                    @Override
+//                                    public boolean onQueryTextSubmit(String query) {
+//
+//                                        return false;
+//                                    }
+//
+//                                    @Override
+//                                    public boolean onQueryTextChange(String newText) {
+//                                        ((SimpleAdapter) adapter).getFilter().filter(newText);
+//                                        return false;
+//                                    }
+//                                });
 
                                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        System.out.println(position);
+//                                        System.out.println(position);
                                         Intent intent = new Intent(getApplicationContext(), product_page.class);
                                         intent.putExtra("name", list.get(position).get("name"));
                                         intent.putExtra("gtin", list.get(position).get("gtin"));
@@ -196,7 +196,7 @@ public class dashboard extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), addProductPage.class);
                 intent.putExtra("sid", sid);
-                intent.putExtra("last_product_id", last_product_id);
+//                intent.putExtra("last_product_id", last_product_id);
                 startActivity(intent);
             }
         });

@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -112,16 +110,13 @@ public class product_page extends AppCompatActivity {
                             link = jsonobject.getString("destination_uri");
                             attribute_type =  jsonobject.getString("alt_attribute_name");
                             HashMap<String, String> product = new HashMap<>();
-//                            product.put("name", name);
                             product.put("link_type", attribute_type);
                             product.put("link", link);
-//                            product.put(link, attribute_type);
                             linkList.add(product);
-//                            System.out.println(product);
 //                            product_list.add(product);
                         }
 //                        System.out.println(product);
-                        final TableLayout tl = (TableLayout)findViewById(R.id.tl);
+//                        final TableLayout tl = (TableLayout)findViewById(R.id.tl);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -137,13 +132,12 @@ public class product_page extends AppCompatActivity {
 //                                    row.addView(tv_link);
 //                                    tl.addView(row);
 //                                }
-                                System.out.println(linkList);
+//                                System.out.println(linkList);
                                 productTitle.setText(name);
                                 ListAdapter adapter = new SimpleAdapter(
                                         product_page.this, linkList,
                                         R.layout.activity_product_page_item, new String[]{"link_type", "link"}
-                                        , new int[]{R.id.linkType,
-                                        R.id.link});
+                                        , new int[]{R.id.linkType, R.id.link});
 
                                 linkLv.setAdapter(adapter);
                                 linkLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

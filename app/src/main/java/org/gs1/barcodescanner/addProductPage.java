@@ -106,38 +106,39 @@ public class addProductPage extends AppCompatActivity {
                                 System.out.println("error in json obj");
                             }
                             System.out.println("outside");
-                            body3 = new JSONObject();
+
+                            body2 = new JSONObject();
                             try {
-                                body3.put("command", "save_existing_uri_request");
-                                body3.put("session_id", sid);
-                                body3.put("uri_request_id", new_uri);
-                                body3.put("alpha_code", "gtin");
-                                body3.put("alpha_value", gtin.getText().toString());
-                                body3.put("item_description", item_description.getText().toString());
-                                body3.put("include_in_sitemap", "1");
-                                body3.put("active", "0");
-                                body3.put("uri_prefix_1", "");
-                                body3.put("uri_suffix_1", "");
-                                body3.put("uri_prefix_2", "");
-                                body3.put("uri_suffix_2", "");
-                                body3.put("uri_prefix_3", "");
-                                body3.put("uri_suffix_3", "");
-                                body3.put("uri_prefix_4", "");
-                                body3.put("uri_suffix_4", "");
+                                body2.put("command", "save_existing_uri_request");
+                                body2.put("session_id", sid);
+                                body2.put("uri_request_id", new_uri);
+                                body2.put("alpha_code", "gtin");
+                                body2.put("alpha_value", gtin.getText().toString());
+                                body2.put("item_description", item_description.getText().toString());
+                                body2.put("include_in_sitemap", "1");
+                                body2.put("active", "0");
+                                body2.put("uri_prefix_1", "");
+                                body2.put("uri_suffix_1", "");
+                                body2.put("uri_prefix_2", "");
+                                body2.put("uri_suffix_2", "");
+                                body2.put("uri_prefix_3", "");
+                                body2.put("uri_suffix_3", "");
+                                body2.put("uri_prefix_4", "");
+                                body2.put("uri_suffix_4", "");
                             } catch (JSONException e) {
                                 Log.d("OKHTTP3", "JSON Exception");
                                 e.printStackTrace();
                             }
-                            RequestBody req_body3 = RequestBody.create(JSON, body3.toString());
-                            Request request3 = new Request.Builder()
+                            RequestBody req_body2 = RequestBody.create(JSON, body2.toString());
+                            Request request2 = new Request.Builder()
                                     .url(url)
-                                    .post(req_body3)
+                                    .post(req_body2)
                                     .build();
-                            client.newCall(request3).enqueue(new Callback() {
+                            client.newCall(request2).enqueue(new Callback() {
                                 @Override
                                 public void onFailure(Call call, IOException e) {
                                     e.printStackTrace();
-                                    System.out.println("Call 3 Error");
+                                    System.out.println("Call 2 Error");
                                 }
 
                                 @Override
@@ -145,6 +146,7 @@ public class addProductPage extends AppCompatActivity {
                                     if (response.isSuccessful()){
                                         final String jsonString3 = response.body().string();
                                         System.out.println("save_existing_uri_request:   " + jsonString3);
+
                                     }
                                 }
                             });
