@@ -37,6 +37,9 @@ public class addProductPage extends AppCompatActivity {
     JSONObject body3;
     String new_uri;
 
+    Button getLink;
+    EditText link;
+
 
 //    static Integer new_product_id;
     @Override
@@ -54,7 +57,7 @@ public class addProductPage extends AppCompatActivity {
         item_description = (EditText)findViewById(R.id.item_description);
         gtin = (EditText)findViewById(R.id.gtin);
 
-        Button btn = (Button)findViewById(R.id.button);
+        Button btn = (Button)findViewById(R.id.get_link);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -345,6 +348,18 @@ public class addProductPage extends AppCompatActivity {
 
         /*To whomever creates the xml to this page change all texts fields to appropriate Id's
         Constraints must also be fixed for proper formatting*/
+
+        getLink = (Button)findViewById(R.id.get_link);
+        getLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), grabBrowserUrl.class));
+            }
+        });
+
+        link = (EditText)findViewById(R.id.link);
+        link.setText(grabBrowserUrl.current_url);
+
 
     }
 }
