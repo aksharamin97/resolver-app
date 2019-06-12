@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class grabBrowserUrl extends AppCompatActivity {
 
     private WebView web;
-    String current_url;
+    static String current_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class grabBrowserUrl extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(),current_url, Toast.LENGTH_SHORT);
                 toast.show();
 
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), addProductPage.class));
             }
         });
     }
