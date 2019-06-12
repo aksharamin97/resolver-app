@@ -59,7 +59,6 @@ public class landingPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
 
-        result = (TextView)findViewById(R.id.result);
         landing_title = (TextView)findViewById(R.id.landing_title);
         name = (TextView)findViewById(R.id.landing_name);
         uri = (TextView)findViewById(R.id.landing_uri);
