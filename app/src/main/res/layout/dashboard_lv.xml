@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:elevation="10dp"
         android:background="@drawable/shadow"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
 
         <ImageView
             android:id="@+id/banner_logo"
@@ -30,40 +31,48 @@
             android:textColor="@color/colorPrimary"
             android:textSize="26sp" />
     </LinearLayout>
-    
+
     <TextView
         android:id="@+id/dashboard_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:textSize="30dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:textColor="@color/colorPrimaryDark"
+        android:textSize="30dp"
         android:textStyle="bold" />
 
-    <SearchView
-        android:id="@+id/dashboard_search_bar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search you Product"
-        android:iconifiedByDefault="false"
-        android:background="@drawable/background"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:orientation="horizontal">
 
-    </SearchView>
-    
+        <SearchView
+            android:id="@+id/dashboard_search_bar"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/background"
+            android:iconifiedByDefault="false"
+            android:queryHint="Search you Product" />
+
+        <Button
+            android:id="@+id/addProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="#F26334" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
         android:layout_height="595dp"
-        android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:paddingTop="10dp"/>
-
-    <Button
-        android:id="@+id/addProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Add product" />
+        android:paddingTop="10dp">
+
+    </ListView>
+
 </LinearLayout>

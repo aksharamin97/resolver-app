@@ -44,24 +44,19 @@
         android:textStyle="bold"
         android:text="TextView" />
 
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="wrap_content"
+    <ListView
+        android:id="@+id/linkLv"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/getBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="20dp"
-        android:text="Result ..."
-        android:textSize="20dp" />
+        android:divider="@null"/>
 
     <Button
         android:id="@+id/getBtn"
         android:layout_width="wrap_content"
         android:layout_height="38dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="#F26334"
         android:gravity="center"
@@ -71,10 +66,5 @@
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
-
-    <ListView
-        android:id="@+id/linkLv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>
