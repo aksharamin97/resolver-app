@@ -73,6 +73,6 @@
         android:layout_weight="1"
         android:paddingTop="10dp" />
   
-    </ListView>
+
 
 </LinearLayout>

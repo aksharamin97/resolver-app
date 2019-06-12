@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -148,20 +149,20 @@ public class dashboard extends AppCompatActivity {
 
                                 dashboard_title.setText(ss);
 
-//                                SearchView sv = (SearchView)findViewById(R.id.dashboard_search_bar);
-//                                sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//                                    @Override
-//                                    public boolean onQueryTextSubmit(String query) {
-//
-//                                        return false;
-//                                    }
-//
-//                                    @Override
-//                                    public boolean onQueryTextChange(String newText) {
-//                                        ((SimpleAdapter) adapter).getFilter().filter(newText);
-//                                        return false;
-//                                    }
-//                                });
+                                SearchView sv = (SearchView)findViewById(R.id.dashboard_search_bar);
+                                sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                    @Override
+                                    public boolean onQueryTextSubmit(String query) {
+
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onQueryTextChange(String newText) {
+                                        ((SimpleAdapter) adapter).getFilter().filter(newText);
+                                        return false;
+                                    }
+                                });
 
                                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
