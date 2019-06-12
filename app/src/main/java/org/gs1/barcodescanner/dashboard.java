@@ -7,18 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,10 +20,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Handler;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -45,12 +36,13 @@ public class dashboard extends AppCompatActivity {
     String gtin;
     String active;
     String product_id;
+    String last_product_id;
     JSONArray json_array;
 //    HashMap<String, String> hash = new HashMap<>();
     String url = "https://data.gs1.org/api/api.php";
     ArrayList<HashMap<String, String>> list;
+    ArrayList<String> product_list = new ArrayList<String>();
     ListView lv;
-
     Button addProduct;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -74,12 +66,11 @@ public class dashboard extends AppCompatActivity {
             body.put("command", "get_uri_list");
             body.put("session_id", sid);
             body.put("first_line_number", "0");
-            body.put("max_number_of_lines", "20");
+            body.put("max_number_of_lines", "50");
         } catch (JSONException e) {
             Log.d("OKHTTP3", "JSON Exception");
             e.printStackTrace();
         }
-        String url = "https://data.gs1.org/api/api.php";
         RequestBody req_body = RequestBody.create(JSON, body.toString());
         Request request = new Request.Builder()
                 .url(url)
@@ -121,9 +112,11 @@ public class dashboard extends AppCompatActivity {
                             list.add(contact);
 //                            System.out.println("Current Contact List in loop = " + list);
 //                            list.put(name, gtin);
-
+                            product_list.add(product_id);
                         }
-//                        System.out.println(list);
+
+                        last_product_id = product_list.get(product_list.size() -1 );
+
 //                        System.out.println("Final Contact List = " + list);
 
                         runOnUiThread(new Runnable() {
@@ -131,10 +124,7 @@ public class dashboard extends AppCompatActivity {
                             @Override
                             public void run() {
                                 ListAdapter adapter = new SimpleAdapter(
-                                        dashboard.this, list,
-                                        R.layout.dashboard_lv_item, new String[]{"name", "gtin",
-                                        "active"}, new int[]{R.id.name,
-                                        R.id.gtin, R.id.active});
+                                        dashboard.this, list, R.layout.dashboard_lv_item, new String[]{"name", "gtin", "active"}, new int[]{R.id.name, R.id.gtin, R.id.active});
 //
                                 lv.setAdapter(adapter);
                                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -178,7 +168,10 @@ public class dashboard extends AppCompatActivity {
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), addProductPage.class));
+                Intent intent = new Intent(getApplicationContext(), addProductPage.class);
+                intent.putExtra("sid", sid);
+                intent.putExtra("last_product_id", last_product_id);
+                startActivity(intent);
             }
         });
 /*        adapter = new ArrayAdapter<HashMap<String, String>>(

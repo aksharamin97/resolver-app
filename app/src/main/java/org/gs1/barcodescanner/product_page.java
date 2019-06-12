@@ -37,12 +37,15 @@ public class product_page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_page);
+
         Intent intent = getIntent();
         final String name = intent.getStringExtra("name");
         String gtin = intent.getStringExtra("gtin");
         String active = intent.getStringExtra("active");
         final String product_id = intent.getStringExtra("product_id");
         String sid = intent.getStringExtra("sid");
+        String last_product_id = intent.getStringExtra("last_product_id");
+
 
 
 //        TextView t_name = (TextView)findViewById(R.id.name);
