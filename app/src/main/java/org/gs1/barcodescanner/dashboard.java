@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import okhttp3.Call;
@@ -123,6 +124,7 @@ public class dashboard extends AppCompatActivity {
 //                            list.put(name, gtin);
 //                            product_list.add(product_id);
                         }
+                        Collections.reverse(list);
 
 //                        last_product_id = product_list.get(product_list.size() -1 );
 
