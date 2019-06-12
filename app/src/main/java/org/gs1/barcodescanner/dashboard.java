@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -40,14 +41,16 @@ public class dashboard extends AppCompatActivity {
     String name;
     String gtin;
     String active;
-    String product_id;
+//    String product_id;
     String last_product_id;
     JSONArray json_array;
 //    HashMap<String, String> hash = new HashMap<>();
     String url = "https://data.gs1.org/api/api.php";
     ArrayList<HashMap<String, String>> list;
-    ArrayList<String> product_list = new ArrayList<String>();
+//    ArrayList<String> product_list = new ArrayList<String>();
     ListView lv;
+//    String titlePosition;
+
 
     Button addProduct;
 
@@ -106,22 +109,22 @@ public class dashboard extends AppCompatActivity {
                             name = jsonobject.getString("item_description");
                             gtin = jsonobject.getString("alpha_value");
                             active = jsonobject.getString("active");
-                            product_id = jsonobject.getString("uri_request_id");
+//                            product_id = jsonobject.getString("uri_request_id");
 //                            System.out.println("name in loop = " + name);
 //                            System.out.println("gtin in loop = " + gtin);
                             HashMap<String, String> contact = new HashMap<>();
                             contact.put("name", name);
                             contact.put("gtin", gtin);
                             contact.put("active", active);
-                            contact.put("product_id", product_id);
+//                            contact.put("product_id", product_id);
 //                            System.out.println("hash/dict = " + contact);
                             list.add(contact);
 //                            System.out.println("Current Contact List in loop = " + list);
 //                            list.put(name, gtin);
-                            product_list.add(product_id);
+//                            product_list.add(product_id);
                         }
 
-                        last_product_id = product_list.get(product_list.size() -1 );
+//                        last_product_id = product_list.get(product_list.size() -1 );
 
 //                        System.out.println("Final Contact List = " + list);
 
@@ -130,7 +133,7 @@ public class dashboard extends AppCompatActivity {
                             @SuppressLint("ResourceType")
                             @Override
                             public void run() {
-                                ListAdapter adapter = new SimpleAdapter(
+                                final ListAdapter adapter = new SimpleAdapter(
                                         dashboard.this, list, R.layout.dashboard_lv_item, new String[]{"name", "gtin", "active"}, new int[]{R.id.name, R.id.gtin, R.id.active});
 //
                                 lv.setAdapter(adapter);
@@ -143,11 +146,25 @@ public class dashboard extends AppCompatActivity {
 
                                 dashboard_title.setText(ss);
 
+                                SearchView sv = (SearchView)findViewById(R.id.dashboard_search_bar);
+                                sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                    @Override
+                                    public boolean onQueryTextSubmit(String query) {
+
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onQueryTextChange(String newText) {
+                                        ((SimpleAdapter) adapter).getFilter().filter(newText);
+                                        return false;
+                                    }
+                                });
 
                                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                        System.out.println(list.get(position).get("name"));
+                                        System.out.println(position);
                                         Intent intent = new Intent(getApplicationContext(), product_page.class);
                                         intent.putExtra("name", list.get(position).get("name"));
                                         intent.putExtra("gtin", list.get(position).get("gtin"));
@@ -159,17 +176,7 @@ public class dashboard extends AppCompatActivity {
 //                                        toast.show();
                                 }
                                 });
-//                                TableLayout tl = (TableLayout)findViewById(R.id.tl);
-//                                for (String i : list.keySet()){
-//                                    TableRow row = new TableRow(dashboard.this);
-//                                    TextView tv_name = new TextView(dashboard.this);
-//                                    TextView tv_gtin = new TextView(dashboard.this);
-//                                    tv_name.setText(i);
-//                                    tv_gtin.setText((list.get(i)));
-//                                    row.addView(tv_name);
-//                                    row.addView(tv_gtin);
-//                                    tl.addView(row);
-//                                }
+
 
                             }
                         });
@@ -191,39 +198,7 @@ public class dashboard extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-/*        adapter = new ArrayAdapter<HashMap<String, String>>(
-                dashboard.this,android.R.layout.simple_list_item_1, list
-        );
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_dash,menu);
-        MenuItem item = menu.findItem(R.id.search_list);
-        SearchView searchView = (SearchView)item.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
 
-                for(int i = 0; i<list.size();i++){
-                    if (list.get(i).get("name").toLowerCase().contains(query.toLowerCase())) {
-                        //newList.add(list.get(i));
-                        Toast.makeText(dashboard.this, "Match found", Toast.LENGTH_LONG).show();
-                        break;
-                    } else {
-                        Toast.makeText(dashboard.this, "No Match found", Toast.LENGTH_LONG).show();
-                    }
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //adapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-        return super.onCreateOptionsMenu(menu);*/
     }
 }
 

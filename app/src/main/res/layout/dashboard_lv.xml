@@ -55,10 +55,10 @@
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
-        android:layout_height="595dp"
-        android:layout_weight="1"
+        android:layout_height="461dp"
         android:layout_marginLeft="10dp"
-        android:paddingTop="10dp"/>
+        android:layout_weight="1"
+        android:paddingTop="10dp" />
 
     <Button
         android:id="@+id/addProduct"
