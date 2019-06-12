@@ -2,10 +2,14 @@ package org.gs1.barcodescanner;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +22,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -74,7 +79,7 @@ public class dashboard extends AppCompatActivity {
             body.put("command", "get_uri_list");
             body.put("session_id", sid);
             body.put("first_line_number", "0");
-            body.put("max_number_of_lines", "20");
+            body.put("max_number_of_lines", "1000");
         } catch (JSONException e) {
             Log.d("OKHTTP3", "JSON Exception");
             e.printStackTrace();
@@ -128,6 +133,7 @@ public class dashboard extends AppCompatActivity {
 
                         runOnUiThread(new Runnable() {
 
+                            @SuppressLint("ResourceType")
                             @Override
                             public void run() {
 /*                                ListAdapter adapter = new SimpleAdapter(
@@ -135,8 +141,16 @@ public class dashboard extends AppCompatActivity {
                                         R.layout.dashboard_lv_item, new String[]{"name", "gtin",
                                         "active"}, new int[]{R.id.name,
                                         R.id.gtin, R.id.active});
-//
+
                                 lv.setAdapter(adapter);*/
+
+                                TextView dashboard_title = findViewById(R.id.dashboard_title);
+                                String dashboard_title_text = "You currently have " + list.size() + " products";
+                                SpannableString ss = new SpannableString(dashboard_title_text);
+                                ForegroundColorSpan fcsPrimary = new ForegroundColorSpan(Color.parseColor("#F26334"));
+                                ss.setSpan(fcsPrimary, 18, 21, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                                dashboard_title.setText(ss);
 
                                 adapt();
 

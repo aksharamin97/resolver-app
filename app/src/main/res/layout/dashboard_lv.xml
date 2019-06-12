@@ -30,7 +30,28 @@
             android:textColor="@color/colorPrimary"
             android:textSize="26sp" />
     </LinearLayout>
+    
+    <TextView
+        android:id="@+id/dashboard_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textSize="30dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
 
+    <SearchView
+        android:id="@+id/dashboard_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search you Product"
+        android:iconifiedByDefault="false"
+        android:background="@drawable/background"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+    </SearchView>
+    
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
