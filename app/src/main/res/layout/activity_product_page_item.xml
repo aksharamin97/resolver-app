@@ -2,22 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
 
     <TextView
         android:id="@+id/linkType"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="2dip"
+        android:paddingBottom="10dip"
         android:paddingTop="6dip"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/colorAccent"
+        android:text="Activas Page"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/link"
         android:layout_width="fill_parent"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="dasjdlkasjdkls"
+        android:textSize="16dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/background2"
         android:paddingBottom="2dip"
         android:textColor="@color/colorAccent" />
 

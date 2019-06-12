@@ -4,16 +4,17 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="10dip"
+        android:paddingBottom="4dip">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="6dip"
-            android:paddingBottom="2dip"
+            android:paddingBottom="4dip"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -22,7 +23,6 @@
             android:id="@+id/gtin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="2dip"
             android:textColor="@color/colorAccent" />
     </LinearLayout>
 
@@ -32,5 +32,6 @@
         android:layout_height="wrap_content"
         android:gravity="right"
         android:textColor="#5d5d5d"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
 </LinearLayout>
