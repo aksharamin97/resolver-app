@@ -4,46 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".product_page">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:background="@drawable/shadow"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/banner_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:src="@drawable/gs1_logo" />
+
+        <TextView
+            android:id="@+id/banner_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="left|center_vertical"
+
+            android:text="Resolver"
+            android:textColor="@color/colorPrimary"
+            android:textSize="26sp" />
+    </LinearLayout>
+
     <TextView
-        android:id="@+id/h"
+        android:id="@+id/productTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:gravity="center"
-        android:text="Title"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-    <TableLayout
-        android:id="@+id/tl"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:textSize="25dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:text="TextView"
+        />
+
+    <ListView
+        android:id="@+id/linkLv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="452dp"
+        android:divider="@null"
+        android:dividerHeight="0dp"/>
 
-        <TableRow
-            android:id="@+id/tr">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/h1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Link Type"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+        <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="Delete" />
 
-            <TextView
-                android:id="@+id/h2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Link"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+        <Button
+            android:id="@+id/viewInBrowser"
+            android:layout_width="168dp"
+            android:layout_height="wrap_content"
+            android:text="View in Browser" />
 
-        </TableRow>
-
-    </TableLayout>
+        <Button
+            android:id="@+id/editBtn"
+            android:layout_width="159dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Edit" />
+    </LinearLayout>
 
 </LinearLayout>

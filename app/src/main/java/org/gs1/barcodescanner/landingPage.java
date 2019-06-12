@@ -1,10 +1,12 @@
 package org.gs1.barcodescanner;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -36,7 +38,9 @@ public class landingPage extends AppCompatActivity {
 
     Button openBrowser;
     Button getJson;
+
     private TextView result;
+    private TextView landing_title;
     private TextView name;
     private TextView uri;
 
@@ -45,8 +49,9 @@ public class landingPage extends AppCompatActivity {
 
     ArrayList<String> titles = new ArrayList<>();
     ArrayList<String> uris = new ArrayList<>();
+    ArrayList<HashMap<String, String>> linkList;
 
-    ListView listview;
+    ListView linkLv;
 
 
     @Override
@@ -55,8 +60,11 @@ public class landingPage extends AppCompatActivity {
         setContentView(R.layout.activity_landing_page);
 
         result = (TextView)findViewById(R.id.result);
+        landing_title = (TextView)findViewById(R.id.landing_title);
         name = (TextView)findViewById(R.id.landing_name);
         uri = (TextView)findViewById(R.id.landing_uri);
+        linkLv = (ListView)findViewById(R.id.linkLv);
+        linkList = new ArrayList<>();
 
 
         openBrowser= (Button)findViewById(R.id.getBtn);
@@ -89,27 +97,32 @@ public class landingPage extends AppCompatActivity {
                     scriptcontent = links.first().html();
 
                     object = new JSONObject(scriptcontent);
+//                    System.out.println(object.toString());
                     productName = object.getJSONObject("/").getString("item_name");
 //                    System.out.println(object.getJSONObject("/").getJSONObject("responses").getJSONObject("productdescriptionpage").getJSONObject("lang").getJSONObject("en").getString("link"));
-
-
-
 
                     JSONObject jsonobject = object.getJSONObject("/").getJSONObject("responses");
                     Iterator<String> keys = jsonobject.keys();
 
-                    System.out.println(jsonobject);
+//                    System.out.println(jsonobject);
 
                     while (keys.hasNext()) {
+                        HashMap<String,String>product = new HashMap<>();
                         String key = keys.next();
                         if (jsonobject.get(key) instanceof JSONObject) {
-                            System.out.println(key);
+//                            System.out.println(key);
                             String keyString = key.toString();
-                            titles.add(jsonobject.getJSONObject(keyString).getJSONObject("lang").getJSONObject("en").getString("title"));
-                            uris.add (jsonobject.getJSONObject(keyString).getJSONObject("lang").getJSONObject("en").getString("link"));
+                            product.put("title", jsonobject.getJSONObject(keyString).getJSONObject("lang").getJSONObject("en").getString("title"));
+                            product.put("link", jsonobject.getJSONObject(keyString).getJSONObject("lang").getJSONObject("en").getString("link"));
+//                            System.out.println(product);
+//                            titles.add(jsonobject.getJSONObject(keyString).getJSONObject("lang").getJSONObject("en").getString("title"));
+//                            uris.add (jsonobject.getJSONObject(keyString).getJSONObject("lang").getJSONObject("en").getString("link"));
+
+                            linkList.add(product);
+
                         }
                     }
-
+                    System.out.println(linkList);
 
                     builder.append(title).append("\n");
 
@@ -123,26 +136,41 @@ public class landingPage extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+//                        StringBuilder output = new StringBuilder();
 
-                        StringBuilder output = new StringBuilder();
+                        landing_title.setText(productName);
+                        ListAdapter adapter = new SimpleAdapter(
+                                landingPage.this, linkList,
+                                R.layout.list_uri, new String[]{"title", "link"}
+                                , new int[]{R.id.landing_name,
+                                R.id.landing_uri});
 
-                        output.append(productName);
-
-                        int listSize = titles.size();
-
-                        for (int i = 0; i < listSize; i++){
-                            output.append("\n" + titles.get(i) + ": \n" + uris.get(i) + "\n");
-                            result.setText(output);
-                        }
+                        linkLv.setAdapter(adapter);
+                        linkLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                                        System.out.println(list.get(position).get("name"));
+                                Uri webaddress = Uri.parse(linkList.get(position).get("link"));
+                                Intent intent = new Intent(Intent.ACTION_VIEW, webaddress);
+                                if(intent.resolveActivity(getPackageManager()) != null) {
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+//
+//                        int listSize = titles.size();
+//
+//                        for (int i = 0; i < listSize; i++){
+//                            output.append("\n" + titles.get(i) + ": \n" + uris.get(i) + "\n");
+//                            result.setText(output);
+//                        }
                     }
                 });
             }
         }).start();
 
     }
-
 }

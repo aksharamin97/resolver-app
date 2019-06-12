@@ -1,12 +1,20 @@
 package org.gs1.barcodescanner;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,22 +38,30 @@ public class product_page extends AppCompatActivity {
     JSONArray json_array;
     String link;
     String attribute_type;
-    ArrayList<HashMap<String, String>> product_list;
+//    ArrayList<HashMap<String, String>> product_list;
+
+    Button viewInBrowser;
+    Button deleteBtn;
+
+    ArrayList<HashMap<String, String>> linkList;
+    ListView linkLv;
+    TextView productTitle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_page);
-
         Intent intent = getIntent();
         final String name = intent.getStringExtra("name");
-        String gtin = intent.getStringExtra("gtin");
+        final String gtin = intent.getStringExtra("gtin");
         String active = intent.getStringExtra("active");
         final String product_id = intent.getStringExtra("product_id");
         String sid = intent.getStringExtra("sid");
-        String last_product_id = intent.getStringExtra("last_product_id");
+        linkList = new ArrayList<>();
 
+        productTitle = (TextView)findViewById(R.id.productTitle);
+        linkLv = (ListView)findViewById(R.id.linkLv);
 
 
 //        TextView t_name = (TextView)findViewById(R.id.name);
@@ -87,16 +103,20 @@ public class product_page extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String jsonString = response.body().string();
+                    System.out.println(jsonString);
                     try{
                         json_array = new JSONArray(jsonString);
-                        final HashMap<String, String> product = new HashMap<>();
+//                        final HashMap<String, String> product = new HashMap<>();
                         for (int i = 0; i < json_array.length(); i++) {
                             JSONObject jsonobject = json_array.getJSONObject(i);
                             link = jsonobject.getString("destination_uri");
                             attribute_type =  jsonobject.getString("alt_attribute_name");
-
+                            HashMap<String, String> product = new HashMap<>();
 //                            product.put("name", name);
-                            product.put(link, attribute_type);
+                            product.put("link_type", attribute_type);
+                            product.put("link", link);
+//                            product.put(link, attribute_type);
+                            linkList.add(product);
 //                            System.out.println(product);
 //                            product_list.add(product);
                         }
@@ -105,19 +125,39 @@ public class product_page extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                for (String i : product.keySet()) {
-                                    TableRow row = new TableRow(product_page.this);
-                                    TextView tv_type = new TextView(product_page.this);
-                                    TextView tv_link = new TextView(product_page.this);
-//                                    System.out.println(i);
-//                                    System.out.println(product.get(i));
-                                    tv_type.setText(product.get(i));
-                                    tv_link.setText(i);
-                                    row.addView(tv_type);
-                                    row.addView(tv_link);
-                                    tl.addView(row);
-                                }
-                        }
+//                                for (String i : product.keySet()) {
+//                                    TableRow row = new TableRow(product_page.this);
+//                                    TextView tv_type = new TextView(product_page.this);
+//                                    TextView tv_link = new TextView(product_page.this);
+////                                    System.out.println(i);
+////                                    System.out.println(product.get(i));
+//                                    tv_type.setText(product.get(i));
+//                                    tv_link.setText(i);
+//                                    row.addView(tv_type);
+//                                    row.addView(tv_link);
+//                                    tl.addView(row);
+//                                }
+                                System.out.println(linkList);
+                                productTitle.setText(name);
+                                ListAdapter adapter = new SimpleAdapter(
+                                        product_page.this, linkList,
+                                        R.layout.activity_product_page_item, new String[]{"link_type", "link"}
+                                        , new int[]{R.id.linkType,
+                                        R.id.link});
+
+                                linkLv.setAdapter(adapter);
+                                linkLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                                        System.out.println(list.get(position).get("name"));
+                                        Uri webaddress = Uri.parse(linkList.get(position).get("link"));
+                                        Intent intent = new Intent(Intent.ACTION_VIEW, webaddress);
+                                        if(intent.resolveActivity(getPackageManager()) != null) {
+                                            startActivity(intent);
+                                        }
+                                    }
+                                });
+                            }
                         });
 //
                     }
@@ -128,5 +168,23 @@ public class product_page extends AppCompatActivity {
                 }
             }
         });
+
+        viewInBrowser = findViewById(R.id.viewInBrowser);
+        viewInBrowser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mybrowser.gtin = gtin;
+                startActivity(new Intent(getApplicationContext(), mybrowser.class));
+            }
+        });
+
+        deleteBtn = findViewById(R.id.deleteBtn);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(product_page.this, "Not yet implemented", Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 }

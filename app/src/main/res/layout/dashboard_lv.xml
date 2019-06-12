@@ -5,12 +5,60 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:background="@drawable/shadow"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/banner_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:src="@drawable/gs1_logo" />
+
+        <TextView
+            android:id="@+id/banner_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="left|center_vertical"
+
+            android:text="Resolver"
+            android:textColor="@color/colorPrimary"
+            android:textSize="26sp" />
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/dashboard_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textSize="30dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
+
+    <SearchView
+        android:id="@+id/dashboard_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search you Product"
+        android:iconifiedByDefault="false"
+        android:background="@drawable/background"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+    </SearchView>
+    
     <ListView
         android:id="@+id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="643dp"
+        android:layout_width="wrap_content"
+        android:layout_height="595dp"
         android:layout_weight="1"
-        android:padding="20dp" />
+        android:layout_marginLeft="10dp"
+        android:paddingTop="10dp"/>
 
     <Button
         android:id="@+id/addProduct"

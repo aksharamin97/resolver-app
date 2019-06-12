@@ -7,12 +7,18 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +26,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Handler;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -43,6 +52,7 @@ public class dashboard extends AppCompatActivity {
     ArrayList<HashMap<String, String>> list;
     ArrayList<String> product_list = new ArrayList<String>();
     ListView lv;
+
     Button addProduct;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -66,7 +76,7 @@ public class dashboard extends AppCompatActivity {
             body.put("command", "get_uri_list");
             body.put("session_id", sid);
             body.put("first_line_number", "0");
-            body.put("max_number_of_lines", "50");
+            body.put("max_number_of_lines", "1000");
         } catch (JSONException e) {
             Log.d("OKHTTP3", "JSON Exception");
             e.printStackTrace();
@@ -121,12 +131,24 @@ public class dashboard extends AppCompatActivity {
 
                         runOnUiThread(new Runnable() {
 
+                            @SuppressLint("ResourceType")
                             @Override
                             public void run() {
                                 ListAdapter adapter = new SimpleAdapter(
                                         dashboard.this, list, R.layout.dashboard_lv_item, new String[]{"name", "gtin", "active"}, new int[]{R.id.name, R.id.gtin, R.id.active});
 //
                                 lv.setAdapter(adapter);
+
+                                TextView dashboard_title = findViewById(R.id.dashboard_title);
+                                String dashboard_title_text = "You currently have " + list.size() + " products";
+                                SpannableString ss = new SpannableString(dashboard_title_text);
+                                ForegroundColorSpan fcsPrimary = new ForegroundColorSpan(Color.parseColor("#F26334"));
+                                ss.setSpan(fcsPrimary, 18, 21, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                                dashboard_title.setText(ss);
+
+                                adapt();
+
                                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
