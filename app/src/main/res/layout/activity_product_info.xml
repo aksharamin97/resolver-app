@@ -82,11 +82,11 @@
             android:id="@+id/btn_viewOnResolver"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:background="#F26334"
             android:text="View On Resolver"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="#FFFFFF"
-            android:layout_margin="20dp"
             android:textSize="16sp"
             android:textStyle="bold" />
 
