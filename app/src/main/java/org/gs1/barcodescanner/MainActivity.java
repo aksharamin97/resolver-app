@@ -75,14 +75,5 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        Button btn_test;
-        btn_test = findViewById(R.id.btn_test);
-        btn_test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), grabBrowserUrl.class));
-            }
-        });
     }
 }

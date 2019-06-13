@@ -60,8 +60,6 @@ public class landingPage extends AppCompatActivity {
         setContentView(R.layout.activity_landing_page);
 
         landing_title = (TextView)findViewById(R.id.landing_title);
-        name = (TextView)findViewById(R.id.landing_name);
-        uri = (TextView)findViewById(R.id.landing_uri);
         linkLv = (ListView)findViewById(R.id.linkLv);
         linkList = new ArrayList<>();
 
@@ -103,7 +101,6 @@ public class landingPage extends AppCompatActivity {
                     JSONObject jsonobject = object.getJSONObject("/").getJSONObject("responses");
                     Iterator<String> keys = jsonobject.keys();
 
-//                    System.out.println(jsonobject);
 
                     while (keys.hasNext()) {
                         HashMap<String,String>product = new HashMap<>();
@@ -113,9 +110,6 @@ public class landingPage extends AppCompatActivity {
                             String keyString = key.toString();
                             product.put("title", jsonobject.getJSONObject(keyString).getJSONObject("lang").getJSONObject("en").getString("title"));
                             product.put("link", jsonobject.getJSONObject(keyString).getJSONObject("lang").getJSONObject("en").getString("link"));
-//                            System.out.println(product);
-//                            titles.add(jsonobject.getJSONObject(keyString).getJSONObject("lang").getJSONObject("en").getString("title"));
-//                            uris.add (jsonobject.getJSONObject(keyString).getJSONObject("lang").getJSONObject("en").getString("link"));
 
                             linkList.add(product);
 
@@ -143,15 +137,15 @@ public class landingPage extends AppCompatActivity {
                         landing_title.setText(productName);
                         ListAdapter adapter = new SimpleAdapter(
                                 landingPage.this, linkList,
-                                R.layout.list_uri, new String[]{"title", "link"}
-                                , new int[]{R.id.landing_name,
-                                R.id.landing_uri});
+                                R.layout.activity_product_page_item, new String[]{"title", "link"}
+                                , new int[]{R.id.linkType,
+                                R.id.link});
 
                         linkLv.setAdapter(adapter);
                         linkLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                        System.out.println(list.get(position).get("name"));
+//                                System.out.println(list.get(position).get("name"));
                                 Uri webaddress = Uri.parse(linkList.get(position).get("link"));
                                 Intent intent = new Intent(Intent.ACTION_VIEW, webaddress);
                                 if(intent.resolveActivity(getPackageManager()) != null) {
