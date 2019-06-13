@@ -39,10 +39,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:textSize="25dp"
         android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:text="TextView" />
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/linkLv"
