@@ -46,13 +46,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="15dp"
         android:orientation="horizontal">
 
         <SearchView
             android:id="@+id/dashboard_search_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+
             android:background="@drawable/background"
             android:iconifiedByDefault="false"
             android:queryHint="Search you Product" />
@@ -61,9 +62,8 @@
             android:id="@+id/addProduct"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="3dp"
-            android:paddingRight="10dp"
-            android:layout_marginRight="20dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="20dp"
             android:drawableLeft= "@drawable/ic_add_white_24dp"
             android:gravity="center"
             android:minHeight="0dp"
