@@ -2,6 +2,7 @@ package org.gs1.barcodescanner;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -113,10 +114,22 @@ public class dashboard extends AppCompatActivity {
 //                            System.out.println("name in loop = " + name);
 //                            System.out.println("gtin in loop = " + gtin);
                             HashMap<String, String> contact = new HashMap<>();
+                            HashMap<String, Bitmap> productStat = new HashMap<>();
                             contact.put("name", name);
                             contact.put("gtin", gtin);
-                            contact.put("active", active);
+//                            contact.put("active", active);
                             contact.put("product_id", product_id);
+                            if(active.compareTo("1")==0) {
+                                contact.put("status", "Active");
+                                contact.put("active", "•        ");
+                                contact.put("suspending", "");
+                            }
+                            else{
+                                contact.put("status", "Suspending");
+                                contact.put("active", "");
+                                contact.put("suspending", "•        ");
+                            }
+
 //                            System.out.println("hash/dict = " + contact);
                             list.add(contact);
 //                            System.out.println("Current Contact List in loop = " + list);
@@ -137,8 +150,11 @@ public class dashboard extends AppCompatActivity {
                             @Override
                             public void run() {
                                 final ListAdapter adapter = new SimpleAdapter(
-                                        dashboard.this, list, R.layout.dashboard_lv_item, new String[]{"name", "gtin", "active"}, new int[]{R.id.name, R.id.gtin, R.id.active});
+                                        dashboard.this, list, R.layout.dashboard_lv_item,
+                                        new String[]{"name", "gtin", "suspending", "active", "status"},
+                                        new int[]{R.id.name, R.id.gtin, R.id.suspending, R.id.active, R.id.status});
 //
+
                                 lv.setAdapter(adapter);
 
                                 TextView dashboard_title = findViewById(R.id.dashboard_title);

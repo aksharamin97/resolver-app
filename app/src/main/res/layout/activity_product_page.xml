@@ -40,18 +40,16 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="30dp"
-        android:textSize="25dp"
         android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:text="TextView"
-        />
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/linkLv"
         android:layout_width="match_parent"
-        android:layout_height="452dp"
+        android:layout_height="519dp"
         android:divider="@null"
-        android:dividerHeight="0dp"/>
+        android:dividerHeight="0dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
