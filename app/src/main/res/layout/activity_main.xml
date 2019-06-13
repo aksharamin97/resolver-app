@@ -11,8 +11,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="3.5dp"
         android:background="@drawable/shadow"
+        android:elevation="3.5dp"
+        android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -48,49 +49,174 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"/>
+        android:orientation="vertical" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:padding="15dp"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:background="@drawable/background"
-        android:hint="Search a product by GTIN"
-        android:inputType="number" />
+        android:drawableLeft="@drawable/ic_search_gray_24dp"
+        android:ems="10"
+        android:hint=" Search a product by GTIN"
+        android:inputType="number"
+        android:padding="15dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="30dp"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_margin="50dp">
+        android:orientation="vertical">
 
-
-        <Button
+        <RelativeLayout
             android:id="@+id/btn_scan"
-            android:layout_width="300dp"
-            android:layout_height="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="165dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="30dp"
             android:background="#002C6B"
-            android:text="Scan A Product"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:layout_marginBottom="50dp"/>
+            android:focusable="true"
+            android:text="Scan A Product">
 
-        <Button
+
+            <ImageView
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="240dp"
+                android:background="@drawable/ic_scan_white" />
+
+            <TextView
+                android:id="@+id/btn_scan_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
+                android:text="Scan A Product"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="291dp"
+                android:layout_height="1dp"
+                android:layout_below="@+id/btn_scan_title"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_divider_gray" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Scan a barcode for product's detailed
+information"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/btn_log"
-            android:layout_width="300dp"
-            android:layout_height="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="165dp"
+            android:layout_gravity="center_horizontal"
             android:background="#F26334"
-            android:gravity="center"
-            android:text="Log A Product"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:focusable="true"
+            android:text="Scan A Product">
+
+
+            <ImageView
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="240dp"
+                android:background="@drawable/ic_log_white" />
+
+            <TextView
+                android:id="@+id/btn_log_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
+                android:text="Log A Product"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                android:textStyle="bold" />"/>
+
+            <ImageView
+                android:layout_width="291dp"
+                android:layout_height="1dp"
+                android:layout_below="@+id/btn_log_title"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_divider_gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Scan a barcode for product's detailed
+information"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 

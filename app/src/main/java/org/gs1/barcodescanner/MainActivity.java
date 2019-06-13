@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CAMERA = 1;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btn_scan;
+        RelativeLayout btn_scan;
         btn_scan = findViewById(R.id.btn_scan);
 
         //If the permission is not  already granted then ask,if it is already granted then just do nothing for the permission section
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_log;
+        RelativeLayout btn_log;
         btn_log = findViewById(R.id.btn_log);
 
         btn_log.setOnClickListener(new View.OnClickListener() {

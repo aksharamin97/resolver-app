@@ -121,13 +121,13 @@ public class dashboard extends AppCompatActivity {
                             contact.put("product_id", product_id);
                             if(active.compareTo("1")==0) {
                                 contact.put("status", "Active");
-                                contact.put("active", "•        ");
+                                contact.put("active", "• ");
                                 contact.put("suspending", "");
                             }
                             else{
-                                contact.put("status", "Suspending");
+                                contact.put("status", "Draft");
                                 contact.put("active", "");
-                                contact.put("suspending", "•        ");
+                                contact.put("suspending", "• ");
                             }
 
 //                            System.out.println("hash/dict = " + contact);
@@ -211,7 +211,7 @@ public class dashboard extends AppCompatActivity {
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), addProductPage.class);
+                Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
                 intent.putExtra("sid", sid);
 //                intent.putExtra("last_product_id", last_product_id);
                 startActivity(intent);
