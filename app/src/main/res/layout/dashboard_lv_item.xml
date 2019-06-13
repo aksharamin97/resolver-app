@@ -7,17 +7,17 @@
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="10dip"
-        android:paddingBottom="4dip">
+        android:layout_gravity="center_vertical"
+        android:padding="15dp">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="4dip"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -26,45 +26,46 @@
             android:id="@+id/gtin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorAccent"
+/>
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="right"
+        android:orientation="horizontal"
         android:paddingTop="10dip"
-        android:paddingBottom="4dip">
+        android:paddingBottom="4dip"
+        android:layout_marginRight="8dp">
 
         <TextView
             android:id="@+id/suspending"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="right"
-            android:textColor="#FF0000"
-            android:textSize="30sp"
+            android:textColor="#FF9800"
+            android:textSize="50sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/active"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="right"
-            android:textColor="#00ff00"
-            android:textSize="30sp"
+            android:textColor="#00B406"
+            android:textSize="50sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/status"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
             android:layout_gravity="center"
-            android:gravity="right"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="14sp" />
+
     </LinearLayout>
 
 </LinearLayout>
