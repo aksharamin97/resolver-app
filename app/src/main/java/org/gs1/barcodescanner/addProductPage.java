@@ -1,5 +1,6 @@
 package org.gs1.barcodescanner;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +43,7 @@ public class addProductPage extends AppCompatActivity {
 
 
 //    static Integer new_product_id;
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +69,7 @@ public class addProductPage extends AppCompatActivity {
             }
         });
 
-        Button save = (Button)findViewById(R.id.save);
+        Button save = (Button)findViewById(R.id.btn_save);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
