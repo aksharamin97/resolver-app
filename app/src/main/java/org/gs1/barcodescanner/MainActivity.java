@@ -57,7 +57,13 @@ public class MainActivity extends AppCompatActivity {
         btn_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), loginActivity.class));
+                if(loginActivity.session_id.compareTo("") == 0 || dashboard.jsonString.compareTo("") == 0)
+                    startActivity(new Intent(getApplicationContext(), loginActivity.class));
+                else {
+                    Intent intent = new Intent(getApplicationContext(), dashboard.class);
+                    intent.putExtra("sid", loginActivity.session_id);
+                    startActivity(intent);
+                }
             }
         });
         final EditText editText;

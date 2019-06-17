@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class addProductPage1 extends AppCompatActivity {
@@ -45,5 +46,15 @@ public class addProductPage1 extends AppCompatActivity {
 
         link = (EditText)findViewById(R.id.link);
         link.setText(grabBrowserUrl.current_url);
+
+        ImageView logo;
+        logo = (ImageView)findViewById(R.id.banner_logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

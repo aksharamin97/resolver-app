@@ -47,7 +47,8 @@ public class loginActivity extends AppCompatActivity {
     /*public String firstName = "";
     public String lastName = "";
     public String memberName = "";*/
-    public String session_id = "";
+    public static String session_id = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

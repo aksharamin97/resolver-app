@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -54,6 +55,8 @@ public class dashboard extends AppCompatActivity {
 
 
     Button addProduct;
+
+    static String jsonString = "";
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("StaticFieldLeak")
@@ -96,7 +99,7 @@ public class dashboard extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    String jsonString = response.body().string();
+                    jsonString = response.body().string();
                     try {
                         json_array = new JSONArray(jsonString);
 //                        JSONObject jsonobject = json_array.getJSONObject(0);
@@ -214,6 +217,16 @@ public class dashboard extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), addProductPage.class);
                 intent.putExtra("sid", sid);
 //                intent.putExtra("last_product_id", last_product_id);
+                startActivity(intent);
+            }
+        });
+
+        ImageView logo;
+        logo = (ImageView)findViewById(R.id.banner_logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
