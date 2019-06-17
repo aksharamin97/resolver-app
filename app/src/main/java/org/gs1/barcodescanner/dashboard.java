@@ -211,7 +211,7 @@ public class dashboard extends AppCompatActivity {
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
+                Intent intent = new Intent(getApplicationContext(), addProductPage.class);
                 intent.putExtra("sid", sid);
 //                intent.putExtra("last_product_id", last_product_id);
                 startActivity(intent);

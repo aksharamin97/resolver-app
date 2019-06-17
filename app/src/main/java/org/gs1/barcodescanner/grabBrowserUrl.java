@@ -43,7 +43,7 @@ public class grabBrowserUrl extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(),current_url, Toast.LENGTH_SHORT);
                 toast.show();
 
-                startActivity(new Intent(getApplicationContext(), addProductPage.class));
+                startActivity(new Intent(getApplicationContext(), addProductPage1.class));
             }
         });
     }
@@ -61,6 +61,7 @@ public class grabBrowserUrl extends AppCompatActivity {
             case R.id.menu_back:
                 onBackPressed();
                 break;
+
 
             case R.id.menu_forward:
                 onForwardPressed();

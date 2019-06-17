@@ -56,20 +56,11 @@ public class addProductPage extends AppCompatActivity {
 //        new_product_id = Integer.parseInt(last_product_id) + 1;
 //        System.out.println("product_id =   " + new_product_id);
 
-        item_description = (EditText)findViewById(R.id.item_description);
+        item_description = (EditText)findViewById(R.id.product_name);
         gtin = (EditText)findViewById(R.id.gtin);
 
-        Button btn = (Button)findViewById(R.id.get_link);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String test = gtin.getText().toString();
 
-
-            }
-        });
-
-        Button save = (Button)findViewById(R.id.btn_save);
+        Button save = (Button)findViewById(R.id.btn_next);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,7 +152,7 @@ public class addProductPage extends AppCompatActivity {
                                 public void run() {
                                     Toast toast = Toast.makeText(getApplicationContext(),"Product Added", Toast.LENGTH_SHORT);
                                     toast.show();
-                                    Intent intent = new Intent(getApplicationContext(), dashboard.class);
+                                    Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
                                     intent.putExtra("sid", sid);
                                     startActivity(intent);
                                 }
@@ -353,16 +344,6 @@ public class addProductPage extends AppCompatActivity {
         /*To whomever creates the xml to this page change all texts fields to appropriate Id's
         Constraints must also be fixed for proper formatting*/
 
-        getLink = (Button)findViewById(R.id.get_link);
-        getLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), grabBrowserUrl.class));
-            }
-        });
-
-        link = (EditText)findViewById(R.id.link);
-        link.setText(grabBrowserUrl.current_url);
 
 
     }
