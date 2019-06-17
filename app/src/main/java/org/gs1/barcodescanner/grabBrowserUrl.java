@@ -18,11 +18,16 @@ public class grabBrowserUrl extends AppCompatActivity {
 
     private WebView web;
     static String current_url;
-
+    String sid;
+    String new_uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grab_browser_url);
+
+        Intent intent = getIntent();
+        sid = intent.getStringExtra("sid");
+        new_uri = intent.getStringExtra("new_uri");
 
         web = (WebView) findViewById(R.id.webView);
         web.getSettings().setLoadsImagesAutomatically(true);
@@ -43,7 +48,10 @@ public class grabBrowserUrl extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(),current_url, Toast.LENGTH_SHORT);
                 toast.show();
 
-                startActivity(new Intent(getApplicationContext(), addProductPage1.class));
+                Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
+                intent.putExtra("sid", sid);
+                intent.putExtra("new_uri", new_uri);
+                startActivity(intent);
             }
         });
     }

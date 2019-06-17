@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import okhttp3.Call;
@@ -141,7 +142,7 @@ public class dashboard extends AppCompatActivity {
 
                         }
 //                        System.out.println("list     " + list);
-//                        Collections.reverse(list);
+                        Collections.reverse(list);
 
 //                        last_product_id = product_list.get(product_list.size() -1 );
 

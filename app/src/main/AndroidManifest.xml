@@ -12,14 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".addProductPage1"></activity>
+        <activity
+            android:name=".addProductPage1"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".addProductPage"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".landingPage"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".grabBrowserUrl" />
+        <activity
+            android:name=".grabBrowserUrl"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".product_page"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -29,7 +33,9 @@
         <activity
             android:name=".loginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".mybrowser" />
+        <activity
+            android:name=".mybrowser"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ScanCodeActivity"
             android:theme="@style/AppTheme.NoActionBar" />

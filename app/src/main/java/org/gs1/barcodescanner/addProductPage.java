@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -29,17 +28,14 @@ public class addProductPage extends AppCompatActivity {
     String sid;
     EditText gtin;
     EditText item_description;
-    JSONObject body;
     String url = "https://data.gs1.org/api/api.php";
     OkHttpClient client = new OkHttpClient();
     MediaType JSON = MediaType.parse("application/json charset=utf-8");
     JSONObject body1;
     JSONObject body2;
-    JSONObject body3;
+
     String new_uri;
 
-    Button getLink;
-    EditText link;
     Toast toast;
 
     //    static Integer new_product_id;
@@ -53,14 +49,15 @@ public class addProductPage extends AppCompatActivity {
 //        String last_product_id = intent.getStringExtra("last_product_id");
 
         sid = intent.getStringExtra("sid");
+        System.out.println("page 1:   " + sid);
 //        new_product_id = Integer.parseInt(last_product_id) + 1;
 //        System.out.println("product_id =   " + new_product_id);
 
         item_description = (EditText) findViewById(R.id.product_name);
         gtin = (EditText) findViewById(R.id.gtin);
 
-        Button save = (Button) findViewById(R.id.btn_next);
-        save.setOnClickListener(new View.OnClickListener() {
+        Button next = (Button) findViewById(R.id.btn_next);
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -92,17 +89,17 @@ public class addProductPage extends AppCompatActivity {
                         public void onResponse(Call call, Response response) throws IOException {
                             if (response.isSuccessful()) {
                                 final String jsonString1 = response.body().string();
-                                System.out.println("new_uri_request:   " + jsonString1);
+//                                System.out.println("new_uri_request:   " + jsonString1);
 //                            System.out.println(jsonString1.getClass().getName());
                                 try {
                                     JSONObject jsonObject = new JSONObject(jsonString1);
                                     new_uri = jsonObject.getString("new_uri_request_id");
-                                    System.out.println(new_uri);
+//                                    System.out.println(new_uri);
 
                                 } catch (JSONException e) {
                                     System.out.println("error in json obj");
                                 }
-                                System.out.println("outside");
+//                                System.out.println("outside");
 
                                 body2 = new JSONObject();
                                 try {
@@ -142,7 +139,7 @@ public class addProductPage extends AppCompatActivity {
                                     public void onResponse(Call call, Response response) throws IOException {
                                         if (response.isSuccessful()) {
                                             final String jsonString3 = response.body().string();
-                                            System.out.println("save_existing_uri_request:   " + jsonString3);
+//                                            System.out.println("save_existing_uri_request:   " + jsonString3);
 
                                         }
                                     }
@@ -155,6 +152,7 @@ public class addProductPage extends AppCompatActivity {
                                         toast.show();
                                         Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
                                         intent.putExtra("sid", sid);
+                                        intent.putExtra("new_uri", new_uri);
                                         startActivity(intent);
                                     }
                                 });
@@ -345,14 +343,14 @@ public class addProductPage extends AppCompatActivity {
             }
         });
 
-        ImageView logo;
-        logo = (ImageView) findViewById(R.id.banner_logo);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
+//        ImageView logo;
+//        logo = (ImageView) findViewById(R.id.banner_logo);
+//        logo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }
