@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -177,6 +178,16 @@ public class product_page extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(product_page.this, "Not yet implemented", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ImageView logo;
+        logo = (ImageView)findViewById(R.id.banner_logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
