@@ -43,42 +43,31 @@
             android:layout_marginTop="40dp"
             android:orientation="vertical">
 
+            <!--<ImageButton-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
 
             <TextView
-                android:id="@+id/text_GTIN"
+                android:id="@+id/title_link_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:text="GTIN"
+                android:text="Link 1"
                 android:textColor="#454545"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/gtin"
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/background2"
-                android:inputType="number"
-                android:maxLength="14"
-                android:paddingLeft="15dp" />
-
             <TextView
-                android:id="@+id/text_lang"
+                android:id="@+id/text_attribute"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:text="Language"
-                android:textColor="#454545"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+                android:text="Attribute Name"
+                android:textColor="#888B8D"
+                android:textSize="18dp" />
 
             <EditText
-                android:id="@+id/lang"
+                android:id="@+id/item_description"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
                 android:layout_marginLeft="25dp"
@@ -87,11 +76,66 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/background2"
                 android:inputType="text"
-                android:maxLength="14"
                 android:paddingLeft="15dp" />
 
             <TextView
-                android:id="@+id/text_default_lang"
+                android:id="@+id/text_link_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:text="Link Type"
+                android:textColor="#888B8D"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/link_type"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background2"
+                android:inputType="textPersonName"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:id="@+id/text_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:text="Link"
+                android:textColor="#888B8D"
+                android:textSize="18dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/link"
+                    android:layout_width="300dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/background2"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="15dp" />
+
+                <Button
+                    android:id="@+id/get_link"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="25dp"
+                    android:background="#B1B3B3" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_default_link"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
@@ -107,7 +151,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_lang_yes"
+                    android:id="@+id/btn_link_yes"
                     android:layout_width="104dp"
                     android:layout_height="38dp"
                     android:layout_marginLeft="25dp"
@@ -119,39 +163,69 @@
                     android:textSize="18sp" />
 
                 <Button
-                    android:id="@+id/btn_lang_no"
+                    android:id="@+id/btn_link_no"
                     android:layout_width="104dp"
                     android:layout_height="38dp"
                     android:layout_marginLeft="25dp"
                     android:background="@drawable/background2"
-                    android:gravity="center"
                     android:text="No"
                     android:textAllCaps="false"
                     android:textColor="#888B8D"
                     android:textSize="18sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/text_product_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:text="Product Name"
-                android:textColor="#454545"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/product_name"
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:layout_marginLeft="25dp"
+                <TextView
+                    android:id="@+id/text_startdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start Date"
+                    android:textColor="#888B8D"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/text_enddate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="80dp"
+                    android:text="End Date"
+                    android:textColor="#888B8D"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/background2"
-                android:inputType="text"
-                android:paddingLeft="15dp" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/picker_startdate"
+                    android:layout_width="130dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="25dp"
+                    android:background="@drawable/background2"
+                    android:inputType="date"
+                    android:paddingLeft="15dp" />
+
+                <EditText
+                    android:id="@+id/picker_enddate"
+                    android:layout_width="130dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="25dp"
+                    android:background="@drawable/background2"
+                    android:inputType="date"
+                    android:paddingLeft="15dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,18 +234,49 @@
                 android:gravity="center">
 
                 <Button
-                    android:id="@+id/btn_next"
+                    android:id="@+id/btn_save"
                     android:layout_width="104dp"
+                    android:layout_height="38dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#F26334"
+                    android:gravity="center"
+                    android:text="Save"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_golive"
+                    android:layout_width="104dp"
+                    android:layout_marginRight="10dp"
                     android:layout_height="38dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="#F26334"
                     android:gravity="center"
-                    android:text="Next"
+                    android:text="Go Live"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_delete"
+                    android:layout_width="104dp"
+                    android:layout_height="38dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#F26334"
+                    android:gravity="center"
+                    android:text="Delete"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+
 </LinearLayout>
