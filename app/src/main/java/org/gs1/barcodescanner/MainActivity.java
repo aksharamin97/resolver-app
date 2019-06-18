@@ -44,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //if(Permission is granted) else-> request
                 if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                    startActivity(new Intent(getApplicationContext(), ScanCodeActivity.class));
+                    Intent intent = new Intent(getApplicationContext(), ScanCodeActivity.class);
+                    intent.putExtra("FROM_ACTIVITY", "A");
+                    startActivity(intent);
                 } else {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
                 }
@@ -83,4 +85,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+    }
+
 }
