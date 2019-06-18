@@ -63,7 +63,15 @@ public class addProductPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (!gtin.getText().toString().equals("") && !item_description.getText().toString().equals("")) {
+                if (gtin.getText().toString().equals("") || item_description.getText().toString().equals("")) {
+
+                    toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+                else {
+                    toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
+                    toast.show();
 
                     if (checkDigit(gtin.getText().toString())) {
 
@@ -231,10 +239,6 @@ public class addProductPage extends AppCompatActivity {
 //                    }
 //                });
                     }
-                }
-                    else {
-                    toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
-                    toast.show();
                 }
             }//end of onclick
         });//end of set on click listener
