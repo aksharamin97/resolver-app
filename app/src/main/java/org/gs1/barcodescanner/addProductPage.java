@@ -26,6 +26,10 @@ import okhttp3.Response;
 
 public class addProductPage extends AppCompatActivity {
     String sid;
+    String GTIN;
+    String name;
+    String product_id;
+
     EditText gtin;
     EditText item_description;
     String url = "https://data.gs1.org/api/api.php";
@@ -33,6 +37,7 @@ public class addProductPage extends AppCompatActivity {
     MediaType JSON = MediaType.parse("application/json charset=utf-8");
     JSONObject body1;
     JSONObject body2;
+    JSONObject body3;
 
     String new_uri;
 
@@ -49,12 +54,20 @@ public class addProductPage extends AppCompatActivity {
 //        String last_product_id = intent.getStringExtra("last_product_id");
 
         sid = intent.getStringExtra("sid");
-        System.out.println("page 1:   " + sid);
+        GTIN = intent.getStringExtra("GTIN");
+        name = intent.getStringExtra("name");
+        product_id = intent.getStringExtra("product_id");
+        System.out.println(GTIN);
+        System.out.println(name);
+//        System.out.println("page 1:   " + sid);
 //        new_product_id = Integer.parseInt(last_product_id) + 1;
 //        System.out.println("product_id =   " + new_product_id);
-
         item_description = (EditText) findViewById(R.id.product_name);
         gtin = (EditText) findViewById(R.id.gtin);
+
+        item_description.setText(name);
+        gtin.setText(GTIN);
+
 
         Button next = (Button) findViewById(R.id.btn_next);
         next.setOnClickListener(new View.OnClickListener() {
@@ -236,6 +249,70 @@ public class addProductPage extends AppCompatActivity {
                 }
             }//end of onclick
         });//end of set on click listener
+
+
+
+        Button save = (Button)findViewById(R.id.btn_save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                body3 = new JSONObject();
+                try {
+                    body3.put("command", "save_existing_uri_request");
+                    body3.put("session_id", sid);
+                    body3.put("uri_request_id", product_id);
+                    body3.put("alpha_code", "gtin");
+                    body3.put("alpha_value", gtin.getText().toString());
+                    body3.put("item_description", item_description.getText().toString());
+                    body3.put("include_in_sitemap", "1");
+                    body3.put("active", "0");
+                    body3.put("uri_prefix_1", "");
+                    body3.put("uri_suffix_1", "");
+                    body3.put("uri_prefix_2", "");
+                    body3.put("uri_suffix_2", "");
+                    body3.put("uri_prefix_3", "");
+                    body3.put("uri_suffix_3", "");
+                    body3.put("uri_prefix_4", "");
+                    body3.put("uri_suffix_4", "");
+                } catch (JSONException e) {
+                    Log.d("OKHTTP3", "JSON Exception");
+                    e.printStackTrace();
+                }
+                RequestBody req_body3 = RequestBody.create(JSON, body3.toString());
+                Request request3 = new Request.Builder()
+                        .url(url)
+                        .post(req_body3)
+                        .build();
+
+                client.newCall(request3).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                        System.out.println("Call 3 Error");
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()){
+                            final String jsonString3 = response.body().string();
+                            System.out.println(jsonString3);
+                            addProductPage.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast toast = Toast.makeText(getApplicationContext(),"Product Saved", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                    Intent intent = new Intent(getApplicationContext(), dashboard.class);
+                                    intent.putExtra("sid", sid);
+                                    intent.putExtra("new_uri", new_uri);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
 
     }
 

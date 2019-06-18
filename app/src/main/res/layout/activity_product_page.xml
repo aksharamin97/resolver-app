@@ -44,10 +44,16 @@
         android:textSize="25dp"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/btn_edit_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Product" />
+
     <ListView
         android:id="@+id/linkLv"
         android:layout_width="match_parent"
-        android:layout_height="519dp"
+        android:layout_height="452dp"
         android:divider="@null"
         android:dividerHeight="0dp" />
 
