@@ -118,7 +118,6 @@ public class dashboard extends AppCompatActivity {
 //                            System.out.println("name in loop = " + name);
 //                            System.out.println("gtin in loop = " + gtin);
                             HashMap<String, String> contact = new HashMap<>();
-                            HashMap<String, Bitmap> productStat = new HashMap<>();
                             contact.put("name", name);
                             contact.put("gtin", gtin);
 //                            contact.put("active", active);
@@ -158,7 +157,6 @@ public class dashboard extends AppCompatActivity {
                                         new String[]{"name", "gtin", "suspending", "active", "status"},
                                         new int[]{R.id.name, R.id.gtin, R.id.suspending, R.id.active, R.id.status});
 //
-
                                 lv.setAdapter(adapter);
 
                                 TextView dashboard_title = findViewById(R.id.dashboard_title);
@@ -187,7 +185,6 @@ public class dashboard extends AppCompatActivity {
                                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                        System.out.println(position);
                                         Intent intent = new Intent(getApplicationContext(), product_page.class);
                                         intent.putExtra("name", list.get(position).get("name"));
                                         intent.putExtra("gtin", list.get(position).get("gtin"));
