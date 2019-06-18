@@ -63,7 +63,7 @@ public class addProductPage extends AppCompatActivity {
 
                 if (gtin.getText().toString().compareTo("") != 0 && item_description.getText().toString().compareTo("") != 0) {
 
-                    if (checkDigit(gtin.getText().toString())){
+                    if (checkDigit(gtin.getText().toString())) {
 
                         body1 = new JSONObject();
                         try {
@@ -146,7 +146,6 @@ public class addProductPage extends AppCompatActivity {
                                             }
                                         }
                                     });
-
                                     addProductPage.this.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -155,72 +154,16 @@ public class addProductPage extends AppCompatActivity {
                                             Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
                                             intent.putExtra("sid", sid);
                                             intent.putExtra("new_uri", new_uri);
+                                            intent.putExtra("gtin", gtin.getText().toString());
+                                            intent.putExtra("item_description", item_description.getText().toString());
                                             startActivity(intent);
                                         }
                                     });
-//                            else{
-//                                addProductPage.this.runOnUiThread(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        Intent intent = new Intent(getApplicationContext(), dashboard.class);
-//                                        intent.putExtra("sid", sid);
-//                                        startActivity(intent);
-//                                    }
-//                                });
-//                            }
                                 }
                             }
                         });
 /////////////////////////////////////////////////////////////////////////////////////////
-//                body2 = new JSONObject();
-//                try {
-//                    body2.put("command", "get_request_uri_data");
-//                    body2.put("session_id", sid);
-//                    body2.put("uri_request_id", new_product_id);
-//                } catch (JSONException e) {
-//                    Log.d("OKHTTP3", "JSON Exception");
-//                    e.printStackTrace();
-//                }
-//                RequestBody req_body2 = RequestBody.create(JSON, body2.toString());
-//                Request request2 = new Request.Builder()
-//                        .url(url)
-//                        .post(req_body2)
-//                        .build();
-//
-//                client.newCall(request2).enqueue(new Callback() {
-//                    @Override
-//                    public void onFailure(Call call, IOException e) {
-//                        e.printStackTrace();
-//                        System.out.println("Call 2 Error");
-//                    }
-//
-//                    @Override
-//                    public void onResponse(Call call, Response response) throws IOException {
-//                        if (response.isSuccessful()){
-//                            final String jsonString2 = response.body().string();
-//                            System.out.println("get_request_uri_data:   " + jsonString2);
-//
-//                            addProductPage.this.runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    Toast toast = Toast.makeText(getApplicationContext(),"Request URI Successful", Toast.LENGTH_SHORT);
-//                                    toast.show();
-//                                }
-//                            });
-////                            else{
-////                                addProductPage.this.runOnUiThread(new Runnable() {
-////                                    @Override
-////                                    public void run() {
-////                                        Intent intent = new Intent(getApplicationContext(), dashboard.class);
-////                                        intent.putExtra("sid", sid);
-////                                        startActivity(intent);
-////                                    }
-////                                });
-////                            }
-//                        }
-//                    }
-//                });
-//
+//API CALL TEMPLATE
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -285,60 +228,9 @@ public class addProductPage extends AppCompatActivity {
 //                        }
 //                    }
 //                });
-
-
-//                final MediaType JSON = MediaType.parse("application/json charset=utf-8");
-//                body = new JSONObject();
-//                try {
-//                    body.put("command", "save_existing_uri_request");
-//                    body.put("session_id", sid);
-//                    body.put("uri_request_id", new_product_id.toString());
-//                    body.put("alpha_code", "gtin");
-//                    body.put("alpha_value", gtin.getText().toString());
-//                    body.put("item_description", item_description.getText().toString());
-//                    body.put("include_in_sitemap", "1");
-//                    body.put("active", "0");
-//                    body.put("uri_prefix_1", "");
-//                    body.put("uri_suffix_1", "");
-//                    body.put("uri_prefix_2", "");
-//                    body.put("uri_suffix_2", "");
-//                    body.put("uri_prefix_3", "");
-//                    body.put("uri_suffix_3", "");
-//                    body.put("uri_prefix_4", "");
-//                    body.put("uri_suffix_4", "");
-//
-//                } catch (JSONException e) {
-//                    Log.d("OKHTTP3", "JSON Exception");
-//                    e.printStackTrace();
-//                }
-//
-//                RequestBody req_body = RequestBody.create(JSON, body.toString());
-//                Request request = new Request.Builder()
-//                        .url(url)
-//                        .post(req_body)
-//                        .build();
-//                client.newCall(request).enqueue(new Callback() {
-//                    @Override
-//                    public void onFailure(Call call, IOException e) {
-//                        e.printStackTrace();
-//                        System.out.println("API call failed");
-//                    }
-//
-//                    @Override
-//                    public void onResponse(Call call, Response response) throws IOException {
-//                        if (response.isSuccessful()) {
-//                            System.out.println(body.toString());
-//                            System.out.println(response.body().string());
-//
-////                            Toast toast = Toast.makeText(getApplicationContext(),"Product Added", Toast.LENGTH_SHORT);
-////                            toast.show();
-//                            Intent intent = new Intent(getApplicationContext(), dashboard.class);
-//                            startActivity(intent);
-//                        }
-//                    }
-//                });
                     }
-                } else {
+                }
+                    else {
                     toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
                     toast.show();
                 }

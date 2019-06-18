@@ -20,6 +20,8 @@ public class grabBrowserUrl extends AppCompatActivity {
     static String current_url;
     String sid;
     String new_uri;
+    String gtin;
+    String item_description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,9 @@ public class grabBrowserUrl extends AppCompatActivity {
         Intent intent = getIntent();
         sid = intent.getStringExtra("sid");
         new_uri = intent.getStringExtra("new_uri");
+        gtin = intent.getStringExtra("gtin");
+        item_description = intent.getStringExtra("item_description");
+
 
         web = (WebView) findViewById(R.id.webView);
         web.getSettings().setLoadsImagesAutomatically(true);
@@ -51,6 +56,8 @@ public class grabBrowserUrl extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
                 intent.putExtra("sid", sid);
                 intent.putExtra("new_uri", new_uri);
+                intent.putExtra("gtin", gtin);
+                intent.putExtra("item_description", item_description);
                 startActivity(intent);
             }
         });
