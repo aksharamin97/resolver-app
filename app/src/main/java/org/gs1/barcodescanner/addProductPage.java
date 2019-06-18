@@ -27,6 +27,7 @@ import okhttp3.Response;
 public class addProductPage extends AppCompatActivity {
     String sid;
     EditText gtin;
+    static String scannedGTIN;
     EditText item_description;
     String url = "https://data.gs1.org/api/api.php";
     OkHttpClient client = new OkHttpClient();
@@ -55,13 +56,14 @@ public class addProductPage extends AppCompatActivity {
 
         item_description = (EditText) findViewById(R.id.product_name);
         gtin = (EditText) findViewById(R.id.gtin);
+        gtin.setText(scannedGTIN);
 
         Button next = (Button) findViewById(R.id.btn_next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (gtin.getText().toString().compareTo("") != 0 && item_description.getText().toString().compareTo("") != 0) {
+                if (!gtin.getText().toString().equals("") && !item_description.getText().toString().equals("")) {
 
                     if (checkDigit(gtin.getText().toString())) {
 
@@ -237,6 +239,18 @@ public class addProductPage extends AppCompatActivity {
             }//end of onclick
         });//end of set on click listener
 
+        Button scanGTIN = (Button)findViewById(R.id.scanGTIN);
+        scanGTIN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ScanCodeActivity.class);
+                intent.putExtra("FROM_ACTIVITY", "B");
+                startActivity(intent);
+            }
+        });
+
+        scannedGTIN = "";
+
     }
 
     private boolean checkDigit(String gtin) {
@@ -273,5 +287,10 @@ public class addProductPage extends AppCompatActivity {
             return pass = false;
         }
 
+    }
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), dashboard.class);
+        intent.putExtra("sid", loginActivity.session_id);
+        startActivity(intent);
     }
 }
