@@ -184,6 +184,13 @@
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/scanGTIN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Get GTIN" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

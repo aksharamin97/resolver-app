@@ -31,6 +31,7 @@ public class addProductPage extends AppCompatActivity {
     String product_id;
 
     EditText gtin;
+    static String scannedGTIN;
     EditText item_description;
     String url = "https://data.gs1.org/api/api.php";
     OkHttpClient client = new OkHttpClient();
@@ -62,8 +63,10 @@ public class addProductPage extends AppCompatActivity {
 //        System.out.println("page 1:   " + sid);
 //        new_product_id = Integer.parseInt(last_product_id) + 1;
 //        System.out.println("product_id =   " + new_product_id);
+
         item_description = (EditText) findViewById(R.id.product_name);
         gtin = (EditText) findViewById(R.id.gtin);
+        gtin.setText(scannedGTIN);
 
         item_description.setText(name);
         gtin.setText(GTIN);
@@ -74,7 +77,15 @@ public class addProductPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (gtin.getText().toString().compareTo("") != 0 && item_description.getText().toString().compareTo("") != 0) {
+                if (gtin.getText().toString().equals("") || item_description.getText().toString().equals("")) {
+
+                    toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+                else {
+                    toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
+                    toast.show();
 
                     if (checkDigit(gtin.getText().toString())) {
 
@@ -243,10 +254,6 @@ public class addProductPage extends AppCompatActivity {
 //                });
                     }
                 }
-                    else {
-                    toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
             }//end of onclick
         });//end of set on click listener
 
@@ -314,6 +321,18 @@ public class addProductPage extends AppCompatActivity {
             }
         });
 
+        Button scanGTIN = (Button)findViewById(R.id.scanGTIN);
+        scanGTIN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ScanCodeActivity.class);
+                intent.putExtra("FROM_ACTIVITY", "B");
+                startActivity(intent);
+            }
+        });
+
+        scannedGTIN = "";
+
     }
 
     private boolean checkDigit(String gtin) {
@@ -350,5 +369,10 @@ public class addProductPage extends AppCompatActivity {
             return pass = false;
         }
 
+    }
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), dashboard.class);
+        intent.putExtra("sid", loginActivity.session_id);
+        startActivity(intent);
     }
 }

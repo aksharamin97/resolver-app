@@ -11,6 +11,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
+
+
     ZXingScannerView ScannerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +25,21 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
 
     @Override
     public void handleResult(Result result) {
-        mybrowser.gtin = result.getText();
-        Intent intent = new Intent(getApplicationContext(), landingPage.class);
-        startActivity(intent);
-        onBackPressed();
+        Intent mIntent = getIntent();
+        String previousActivity= mIntent.getStringExtra("FROM_ACTIVITY");
+        if (previousActivity.equals("A")) {
+            mybrowser.gtin = result.getText();
+            Intent intent = new Intent(getApplicationContext(), landingPage.class);
+            startActivity(intent);
+            onBackPressed();
+        }
+        else{
+            addProductPage.scannedGTIN = result.getText();
+            Intent intent = new Intent(getApplicationContext(), addProductPage.class);
+            startActivity(intent);
+            onBackPressed();
+        }
+
     }
 
     @Override
