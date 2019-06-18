@@ -50,6 +50,8 @@ public class addProductPage1 extends AppCompatActivity {
         System.out.println("new uri:   " + new_uri);
 
         link = (EditText)findViewById(R.id.link);
+
+
         System.out.println("link:   " + link.getText().toString());
 
         item_description = (EditText)findViewById(R.id.item_description);
@@ -89,13 +91,13 @@ public class addProductPage1 extends AppCompatActivity {
                 intent.putExtra("sid", sid);
                 intent.putExtra("new_uri", new_uri);
                 startActivity(intent);
-
             }
         });
 
-
-        link = (EditText)findViewById(R.id.link);
         link.setText(grabBrowserUrl.current_url);
+        grabBrowserUrl.current_url = "";
+
+
 
 //        ImageView logo;
 //        logo = (ImageView)findViewById(R.id.banner_logo);
