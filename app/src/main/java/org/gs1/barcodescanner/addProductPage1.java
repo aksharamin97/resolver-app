@@ -55,6 +55,7 @@ public class addProductPage1 extends AppCompatActivity {
         gtin = intent.getStringExtra("gtin");
         item_description = intent.getStringExtra("item_description");
         link = (EditText)findViewById(R.id.link);
+
         alt_attribute_name = (EditText)findViewById(R.id.alt_attribute_name);
 
 
@@ -158,13 +159,15 @@ public class addProductPage1 extends AppCompatActivity {
                 intent.putExtra("gtin", gtin);
                 intent.putExtra("item_description", item_description);
                 startActivity(intent);
-
             }
         });
 
 
 //        link = (EditText)findViewById(R.id.link);
         link.setText(grabBrowserUrl.current_url);
+        grabBrowserUrl.current_url = "";
+
+
 
 //        ImageView logo;
 //        logo = (ImageView)findViewById(R.id.banner_logo);

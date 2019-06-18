@@ -18,12 +18,12 @@
 
     <TextView
         android:id="@+id/link"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:padding="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textSize="16dp"
-        android:layout_height="wrap_content"
         android:background="@drawable/background2"
         android:paddingBottom="2dip"
         android:textColor="@color/colorAccent" />

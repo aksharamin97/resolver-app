@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -162,7 +163,18 @@ public class dashboard extends AppCompatActivity {
                                 String dashboard_title_text = "You currently have " + list.size() + " products";
                                 SpannableString ss = new SpannableString(dashboard_title_text);
                                 ForegroundColorSpan fcsPrimary = new ForegroundColorSpan(Color.parseColor("#F26334"));
-                                ss.setSpan(fcsPrimary, 18, 21, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                                Scanner sc = new Scanner(String.valueOf(list.size()));
+                                int Number, Count = 0;
+                                Number = sc.nextInt();
+
+                                while(Number > 0){
+                                    Number = Number/10;
+                                    Count = Count + 1;
+                                }
+
+                                ss.setSpan(fcsPrimary, 18, 19+Count, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
 
                                 dashboard_title.setText(ss);
 
