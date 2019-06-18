@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".editLinkPage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow"
+        android:elevation="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/banner_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:src="@drawable/gs1_logo" />
+
+        <TextView
+            android:id="@+id/banner_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="left|center_vertical"
+
+            android:text="Resolver"
+            android:textColor="@color/colorPrimary"
+            android:textSize="26sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical">
+
+            <!--<ImageButton-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+
+            <TextView
+                android:id="@+id/edit_title_link_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:text="LinkType"
+                android:textColor="#454545"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/edit_text_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:text="Link"
+                android:textColor="#888B8D"
+                android:textSize="18dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edit_link"
+                    android:layout_width="300dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/background2"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="15dp" />
+
+                <Button
+                    android:id="@+id/edit_get_link"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="25dp"
+                    android:background="#B1B3B3" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/edit_text_link_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:text="Link Type"
+                android:textColor="#888B8D"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/edit_link_type"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background2"
+                android:inputType="textPersonName"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:id="@+id/edit_text_attribute"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:text="Alt Attribute Name"
+                android:textColor="#888B8D"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/edit_item_description"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background2"
+                android:inputType="text"
+                android:paddingLeft="15dp" />
+
+
+            <TextView
+                android:id="@+id/edit_text_default_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:text="Default Language?"
+                android:textColor="#888B8D"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/edit_btn_link_yes"
+                    android:layout_width="104dp"
+                    android:layout_height="38dp"
+                    android:layout_marginLeft="25dp"
+                    android:background="@drawable/background2"
+                    android:gravity="center"
+                    android:text="Yes"
+                    android:textAllCaps="false"
+                    android:textColor="#888B8D"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/edit_btn_link_no"
+                    android:layout_width="104dp"
+                    android:layout_height="38dp"
+                    android:layout_marginLeft="25dp"
+                    android:background="@drawable/background2"
+                    android:text="No"
+                    android:textAllCaps="false"
+                    android:textColor="#888B8D"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/edit_text_startdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start Date"
+                    android:textColor="#888B8D"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/edit_text_enddate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="80dp"
+                    android:text="End Date"
+                    android:textColor="#888B8D"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edit_picker_startdate"
+                    android:layout_width="130dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="25dp"
+                    android:background="@drawable/background2"
+                    android:inputType="date"
+                    android:paddingLeft="15dp" />
+
+                <EditText
+                    android:id="@+id/edit_picker_enddate"
+                    android:layout_width="130dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="25dp"
+                    android:background="@drawable/background2"
+                    android:inputType="date"
+                    android:paddingLeft="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/edit_btn_save"
+                    android:layout_width="104dp"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#F26334"
+                    android:gravity="center"
+                    android:text="Save"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

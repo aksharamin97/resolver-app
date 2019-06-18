@@ -36,6 +36,7 @@ public class product_page extends AppCompatActivity {
 
     JSONArray json_array;
     String link;
+    String uri_response_id;
     String attribute_type;
 //    ArrayList<HashMap<String, String>> product_list;
 
@@ -45,6 +46,7 @@ public class product_page extends AppCompatActivity {
     ArrayList<HashMap<String, String>> linkList;
     ListView linkLv;
     TextView productTitle;
+    TextView productUri;
 
 
     @Override
@@ -56,11 +58,13 @@ public class product_page extends AppCompatActivity {
         final String gtin = intent.getStringExtra("gtin");
         String active = intent.getStringExtra("active");
         final String product_id = intent.getStringExtra("product_id");
-        String sid = intent.getStringExtra("sid");
+        final String sid = intent.getStringExtra("sid");
         linkList = new ArrayList<>();
 
         productTitle = (TextView)findViewById(R.id.productTitle);
+        productUri = (TextView) findViewById(R.id.productGTIN);
         linkLv = (ListView)findViewById(R.id.linkLv);
+
 
 
 //        TextView t_name = (TextView)findViewById(R.id.name);
@@ -102,20 +106,24 @@ public class product_page extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String jsonString = response.body().string();
-                    System.out.println(jsonString);
+//                    System.out.println(jsonString);
                     try{
                         json_array = new JSONArray(jsonString);
 //                        final HashMap<String, String> product = new HashMap<>();
                         for (int i = 0; i < json_array.length(); i++) {
                             JSONObject jsonobject = json_array.getJSONObject(i);
                             link = jsonobject.getString("destination_uri");
+                            uri_response_id = jsonobject.getString("uri_response_id");
                             attribute_type =  jsonobject.getString("alt_attribute_name");
+
                             HashMap<String, String> product = new HashMap<>();
                             product.put("link_type", attribute_type);
                             product.put("link", link);
+                            product.put("uri_response_id", uri_response_id);
                             linkList.add(product);
 //                            product_list.add(product);
                         }
+                        System.out.println(linkList);
 //                        System.out.println(product);
 //                        final TableLayout tl = (TableLayout)findViewById(R.id.tl);
                         runOnUiThread(new Runnable() {
@@ -135,6 +143,7 @@ public class product_page extends AppCompatActivity {
 //                                }
 //                                System.out.println(linkList);
                                 productTitle.setText(name);
+                                productUri.setText("https://id.gs1.org/gtin/" + gtin);
                                 ListAdapter adapter = new SimpleAdapter(
                                         product_page.this, linkList,
                                         R.layout.activity_product_page_item, new String[]{"link_type", "link"}
@@ -145,11 +154,26 @@ public class product_page extends AppCompatActivity {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                                        System.out.println(list.get(position).get("name"));
-                                        Uri webaddress = Uri.parse(linkList.get(position).get("link"));
-                                        Intent intent = new Intent(Intent.ACTION_VIEW, webaddress);
-                                        if(intent.resolveActivity(getPackageManager()) != null) {
-                                            startActivity(intent);
-                                        }
+
+                                        Intent intent = new Intent(getApplicationContext(), editLinkPage.class);
+                                        intent.putExtra("sid", sid);
+//                                        intent.putExtra("attribute_type", linkList.get(position).get("attribute_type"));
+                                        intent.putExtra("link_type", linkList.get(position).get("link_type"));
+                                        intent.putExtra("link", linkList.get(position).get("link"));
+                                        intent.putExtra("uri_response_id", linkList.get(position).get("uri_response_id"));
+
+                                        startActivity(intent);
+
+////                                        System.out.println(position);
+//                                            Intent intent = new Intent(getApplicationContext(), product_page.class);
+//                                            intent.putExtra("name", list.get(position).get("name"));
+//                                            intent.putExtra("gtin", list.get(position).get("gtin"));
+//                                            intent.putExtra("active", list.get(position).get("active"));
+//                                            intent.putExtra("product_id", list.get(position).get("product_id"));
+//                                            intent.putExtra("sid", sid);
+//                                            startActivity(intent);
+////                                        Toast toast = Toast.makeText(getApplicationContext(),list.get(position).get("name"), Toast.LENGTH_SHORT);
+////                                        toast.show();
                                     }
                                 });
                             }
