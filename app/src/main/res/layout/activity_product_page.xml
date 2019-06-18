@@ -10,8 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="2dp"
         android:background="@drawable/shadow"
+        android:elevation="2dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -33,15 +33,6 @@
             android:textSize="26sp" />
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="25dp"
-        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btn_edit_product"
@@ -49,82 +40,66 @@
         android:layout_height="wrap_content"
         android:text="Edit Product" />
 
+
+    <TextView
+        android:id="@+id/productTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/productGTIN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/background"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text=""
+        android:textColor="@color/colorPrimary"
+        android:textSize="17dp"
+        android:textStyle="bold" />
+
     <ListView
         android:id="@+id/linkLv"
-        android:layout_width="match_parent"
-        android:layout_height="452dp"
+        android:layout_width="wrap_content"
+        android:layout_height="316dp"
+        android:layout_marginBottom="20dp"
         android:divider="@null"
         android:dividerHeight="0dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="115dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:text="Delete" />
 
-            <TextView
-                android:id="@+id/productTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="25dp"
-                android:textStyle="bold" />
+        <Button
+            android:id="@+id/viewInBrowser"
+            android:layout_width="168dp"
+            android:layout_height="wrap_content"
+            android:text="View in Browser" />
 
-            <TextView
-                android:id="@+id/productGTIN"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="30dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text=""
-                android:textColor="@color/colorPrimary"
-                android:background="@drawable/background"
-                android:textSize="17dp"
-                android:textStyle="bold"/>
-
-            <ListView
-                android:id="@+id/linkLv"
-                android:layout_width="wrap_content"
-                android:layout_height="480dp"
-                android:layout_marginBottom="20dp"
-                android:divider="@null"
-                android:dividerHeight="0dp">
-
-            </ListView>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/deleteBtn"
-                    android:layout_width="115dp"
-                    android:layout_height="wrap_content"
-                    android:text="Delete" />
-
-                <Button
-                    android:id="@+id/viewInBrowser"
-                    android:layout_width="168dp"
-                    android:layout_height="wrap_content"
-                    android:text="View in Browser" />
-
-                <Button
-                    android:id="@+id/editBtn"
-                    android:layout_width="159dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="Edit" />
-
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        <Button
+            android:id="@+id/addLinkBtn"
+            android:layout_width="159dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Add Link" />
+    </LinearLayout>
 
 </LinearLayout>
