@@ -63,99 +63,101 @@ public class addProductPage extends AppCompatActivity {
 
                 if (gtin.getText().toString().compareTo("") != 0 && item_description.getText().toString().compareTo("") != 0) {
 
-                    body1 = new JSONObject();
-                    try {
-                        body1.put("command", "new_uri_request");
-                        body1.put("session_id", sid);
+                    if (checkDigit(gtin.getText().toString())){
 
-                    } catch (JSONException e) {
-                        Log.d("OKHTTP3", "JSON Exception");
-                        e.printStackTrace();
-                    }
-                    RequestBody req_body1 = RequestBody.create(JSON, body1.toString());
-                    Request request1 = new Request.Builder()
-                            .url(url)
-                            .post(req_body1)
-                            .build();
+                        body1 = new JSONObject();
+                        try {
+                            body1.put("command", "new_uri_request");
+                            body1.put("session_id", sid);
 
-                    client.newCall(request1).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
+                        } catch (JSONException e) {
+                            Log.d("OKHTTP3", "JSON Exception");
                             e.printStackTrace();
-                            System.out.println("Call 1 Error");
                         }
+                        RequestBody req_body1 = RequestBody.create(JSON, body1.toString());
+                        Request request1 = new Request.Builder()
+                                .url(url)
+                                .post(req_body1)
+                                .build();
 
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            if (response.isSuccessful()) {
-                                final String jsonString1 = response.body().string();
+                        client.newCall(request1).enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                e.printStackTrace();
+                                System.out.println("Call 1 Error");
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                if (response.isSuccessful()) {
+                                    final String jsonString1 = response.body().string();
 //                                System.out.println("new_uri_request:   " + jsonString1);
 //                            System.out.println(jsonString1.getClass().getName());
-                                try {
-                                    JSONObject jsonObject = new JSONObject(jsonString1);
-                                    new_uri = jsonObject.getString("new_uri_request_id");
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(jsonString1);
+                                        new_uri = jsonObject.getString("new_uri_request_id");
 //                                    System.out.println(new_uri);
 
-                                } catch (JSONException e) {
-                                    System.out.println("error in json obj");
-                                }
+                                    } catch (JSONException e) {
+                                        System.out.println("error in json obj");
+                                    }
 //                                System.out.println("outside");
 
-                                body2 = new JSONObject();
-                                try {
-                                    body2.put("command", "save_existing_uri_request");
-                                    body2.put("session_id", sid);
-                                    body2.put("uri_request_id", new_uri);
-                                    body2.put("alpha_code", "gtin");
-                                    body2.put("alpha_value", gtin.getText().toString());
-                                    body2.put("item_description", item_description.getText().toString());
-                                    body2.put("include_in_sitemap", "1");
-                                    body2.put("active", "0");
-                                    body2.put("uri_prefix_1", "");
-                                    body2.put("uri_suffix_1", "");
-                                    body2.put("uri_prefix_2", "");
-                                    body2.put("uri_suffix_2", "");
-                                    body2.put("uri_prefix_3", "");
-                                    body2.put("uri_suffix_3", "");
-                                    body2.put("uri_prefix_4", "");
-                                    body2.put("uri_suffix_4", "");
-                                } catch (JSONException e) {
-                                    Log.d("OKHTTP3", "JSON Exception");
-                                    e.printStackTrace();
-                                }
-                                RequestBody req_body2 = RequestBody.create(JSON, body2.toString());
-                                Request request2 = new Request.Builder()
-                                        .url(url)
-                                        .post(req_body2)
-                                        .build();
-                                client.newCall(request2).enqueue(new Callback() {
-                                    @Override
-                                    public void onFailure(Call call, IOException e) {
+                                    body2 = new JSONObject();
+                                    try {
+                                        body2.put("command", "save_existing_uri_request");
+                                        body2.put("session_id", sid);
+                                        body2.put("uri_request_id", new_uri);
+                                        body2.put("alpha_code", "gtin");
+                                        body2.put("alpha_value", gtin.getText().toString());
+                                        body2.put("item_description", item_description.getText().toString());
+                                        body2.put("include_in_sitemap", "1");
+                                        body2.put("active", "0");
+                                        body2.put("uri_prefix_1", "");
+                                        body2.put("uri_suffix_1", "");
+                                        body2.put("uri_prefix_2", "");
+                                        body2.put("uri_suffix_2", "");
+                                        body2.put("uri_prefix_3", "");
+                                        body2.put("uri_suffix_3", "");
+                                        body2.put("uri_prefix_4", "");
+                                        body2.put("uri_suffix_4", "");
+                                    } catch (JSONException e) {
+                                        Log.d("OKHTTP3", "JSON Exception");
                                         e.printStackTrace();
-                                        System.out.println("Call 2 Error");
                                     }
+                                    RequestBody req_body2 = RequestBody.create(JSON, body2.toString());
+                                    Request request2 = new Request.Builder()
+                                            .url(url)
+                                            .post(req_body2)
+                                            .build();
+                                    client.newCall(request2).enqueue(new Callback() {
+                                        @Override
+                                        public void onFailure(Call call, IOException e) {
+                                            e.printStackTrace();
+                                            System.out.println("Call 2 Error");
+                                        }
 
-                                    @Override
-                                    public void onResponse(Call call, Response response) throws IOException {
-                                        if (response.isSuccessful()) {
-                                            final String jsonString3 = response.body().string();
+                                        @Override
+                                        public void onResponse(Call call, Response response) throws IOException {
+                                            if (response.isSuccessful()) {
+                                                final String jsonString3 = response.body().string();
 //                                            System.out.println("save_existing_uri_request:   " + jsonString3);
 
+                                            }
                                         }
-                                    }
-                                });
+                                    });
 
-                                addProductPage.this.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast toast = Toast.makeText(getApplicationContext(), "Product Added", Toast.LENGTH_SHORT);
-                                        toast.show();
-                                        Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
-                                        intent.putExtra("sid", sid);
-                                        intent.putExtra("new_uri", new_uri);
-                                        startActivity(intent);
-                                    }
-                                });
+                                    addProductPage.this.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast toast = Toast.makeText(getApplicationContext(), "Product Added", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                            Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
+                                            intent.putExtra("sid", sid);
+                                            intent.putExtra("new_uri", new_uri);
+                                            startActivity(intent);
+                                        }
+                                    });
 //                            else{
 //                                addProductPage.this.runOnUiThread(new Runnable() {
 //                                    @Override
@@ -166,9 +168,9 @@ public class addProductPage extends AppCompatActivity {
 //                                    }
 //                                });
 //                            }
+                                }
                             }
-                        }
-                    });
+                        });
 /////////////////////////////////////////////////////////////////////////////////////////
 //                body2 = new JSONObject();
 //                try {
@@ -335,22 +337,49 @@ public class addProductPage extends AppCompatActivity {
 //                        }
 //                    }
 //                });
+                    }
                 } else {
                     toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
                     toast.show();
                 }
+            }//end of onclick
+        });//end of set on click listener
 
+    }
+
+    private boolean checkDigit(String gtin) {
+        int odds = 0;
+        int evens = 0;
+        char num;
+        int sum;
+        int nearestTen;
+        int rem;
+        int checkDigit;
+        boolean pass;
+
+
+        for(int i = 0; i<gtin.length() -1; i++){
+            if(i%2 == 0){
+                num = gtin.charAt(i);
+                odds += (num - '0') * 3;
             }
-        });
+            else{
+                num = gtin.charAt(i);
+                evens += (num - '0') * 1;
+            }
+        }
+        sum = odds + evens;
+        rem = sum%10;
+        nearestTen =  (sum - rem)+10;
+        checkDigit = nearestTen -  sum;
 
-//        ImageView logo;
-//        logo = (ImageView) findViewById(R.id.banner_logo);
-//        logo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        if(Integer.parseInt(gtin.substring(gtin.length()-1)) == checkDigit)
+            return pass = true;
+        else {
+            toast = Toast.makeText(getApplicationContext(), "Invalid check digit. Digit should be " + checkDigit+ "", Toast.LENGTH_SHORT);
+            toast.show();
+            return pass = false;
+        }
+
     }
 }
