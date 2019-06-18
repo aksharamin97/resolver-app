@@ -42,6 +42,7 @@ public class product_page extends AppCompatActivity {
 
     Button viewInBrowser;
     Button deleteBtn;
+    Button edit_product;
 
     ArrayList<HashMap<String, String>> linkList;
     ListView linkLv;
@@ -185,6 +186,19 @@ public class product_page extends AppCompatActivity {
                     }
 
                 }
+            }
+        });
+
+        edit_product = (Button)findViewById(R.id.btn_edit_product);
+        edit_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), addProductPage.class);
+                intent.putExtra("sid", sid);
+                intent.putExtra("name", name);
+                intent.putExtra("GTIN", gtin);
+                intent.putExtra("product_id", product_id);
+                startActivity(intent);
             }
         });
 

@@ -35,7 +35,26 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_edit_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Product" />
+
+    <ListView
+        android:id="@+id/linkLv"
+        android:layout_width="match_parent"
+        android:layout_height="452dp"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
