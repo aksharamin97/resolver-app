@@ -44,6 +44,7 @@ public class dashboard extends AppCompatActivity {
     String name;
     String gtin;
     String active;
+    String status;
     String product_id;
     String new_uri;
     String last_product_id;
@@ -116,16 +117,16 @@ public class dashboard extends AppCompatActivity {
                             JSONObject jsonobject = json_array.getJSONObject(i);
                             name = jsonobject.getString("item_description");
                             gtin = jsonobject.getString("alpha_value");
-                            active = jsonobject.getString("active");
+                            status = jsonobject.getString("active");
                             product_id = jsonobject.getString("uri_request_id");
 //                            System.out.println("name in loop = " + name);
 //                            System.out.println("gtin in loop = " + gtin);
                             HashMap<String, String> contact = new HashMap<>();
                             contact.put("name", name);
                             contact.put("gtin", gtin);
-//                            contact.put("active", active);
+                            contact.put("status1", status);
                             contact.put("product_id", product_id);
-                            if(active.compareTo("1")==0) {
+                            if(status.compareTo("1")==0) {
                                 contact.put("status", "Active");
                                 contact.put("active", "• ");
                                 contact.put("suspending", "");
@@ -202,7 +203,7 @@ public class dashboard extends AppCompatActivity {
                                         Intent intent = new Intent(getApplicationContext(), product_page.class);
                                         intent.putExtra("name", list.get(position).get("name"));
                                         intent.putExtra("gtin", list.get(position).get("gtin"));
-                                        intent.putExtra("active", list.get(position).get("active"));
+                                        intent.putExtra("active", list.get(position).get("status1"));
                                         intent.putExtra("product_id", list.get(position).get("product_id"));
                                         intent.putExtra("sid", sid);
                                         intent.putExtra("new_uri", new_uri);

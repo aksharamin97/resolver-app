@@ -123,15 +123,16 @@ public class addProductPage1 extends AppCompatActivity {
                                 public void run() {
                                     Toast toast = Toast.makeText(getApplicationContext(),"Product Active", Toast.LENGTH_SHORT);
                                     toast.show();
+                                    Intent intent = new Intent(getApplicationContext(), dashboard.class);
+                                    intent.putExtra("sid", sid);
+                                    intent.putExtra("new_uri", new_uri);
+                                    startActivity(intent);
                                 }
                             });
                         }
                     }
                 });
-                Intent intent = new Intent(getApplicationContext(), dashboard.class);
-                intent.putExtra("sid", sid);
-                intent.putExtra("new_uri", new_uri);
-                startActivity(intent);
+
             }
         });
 
@@ -158,6 +159,7 @@ public class addProductPage1 extends AppCompatActivity {
                 intent.putExtra("new_uri", new_uri);
                 intent.putExtra("gtin", gtin);
                 intent.putExtra("item_description", item_description);
+                intent.putExtra("FROM_ACTIVITY", "A");
                 startActivity(intent);
             }
         });
