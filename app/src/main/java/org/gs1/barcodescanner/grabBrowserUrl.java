@@ -23,6 +23,8 @@ public class grabBrowserUrl extends AppCompatActivity {
     String link;
     String gtin;
     String item_description;
+    String attribute_name;
+    String uri_response_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,8 @@ public class grabBrowserUrl extends AppCompatActivity {
         link = intent.getStringExtra("link");
         gtin = intent.getStringExtra("gtin");
         item_description = intent.getStringExtra("item_description");
+        attribute_name = intent.getStringExtra("attribute_name");
+        uri_response_id = intent.getStringExtra("uri_response_id");
 
         web = (WebView) findViewById(R.id.webView);
         web.getSettings().setLoadsImagesAutomatically(true);
@@ -56,12 +60,24 @@ public class grabBrowserUrl extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(),current_url, Toast.LENGTH_SHORT);
                 toast.show();
 
-                Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
-                intent.putExtra("sid", sid);
-                intent.putExtra("new_uri", new_uri);
-                intent.putExtra("gtin", gtin);
-                intent.putExtra("item_description", item_description);
-                startActivity(intent);
+                Intent mIntent = getIntent();
+                String previousActivity= mIntent.getStringExtra("FROM_ACTIVITY");
+                if (previousActivity.equals("A")) {
+                    Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
+                    intent.putExtra("sid", sid);
+                    intent.putExtra("new_uri", new_uri);
+                    intent.putExtra("gtin", gtin);
+                    intent.putExtra("item_description", item_description);
+                    startActivity(intent);
+                }
+                if(previousActivity.equals("B")){
+                    Intent intent = new Intent(getApplicationContext(), editLinkPage.class);
+                    intent.putExtra("sid", sid);
+                    intent.putExtra("link", current_url);
+                    intent.putExtra("attribute_name", attribute_name);
+                    intent.putExtra("uri_response_id", uri_response_id);
+                    startActivity(intent);
+                }
             }
         });
     }
