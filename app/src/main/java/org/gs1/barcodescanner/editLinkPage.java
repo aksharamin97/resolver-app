@@ -49,11 +49,12 @@ public class editLinkPage extends AppCompatActivity {
         setContentView(R.layout.activity_edit_link_page);
 
         Intent intent = getIntent();
-        final String link_type = intent.getStringExtra("link_type");
+//        final String link_type = intent.getStringExtra("link_type");
         final String sid = intent.getStringExtra("sid");
         final String link = intent.getStringExtra("link");
         final String uri_response_id = intent.getStringExtra("uri_response_id");
         final String product_id = intent.getStringExtra("product_id");
+        final String attribute_name = intent.getStringExtra("attribute_name");
 
 
         edit_title_link_type = (TextView) findViewById(R.id.edit_title_link_type);
@@ -61,11 +62,13 @@ public class editLinkPage extends AppCompatActivity {
         edit_item_description = (EditText) findViewById(R.id.edit_item_description);
         edit_link_type = (EditText) findViewById(R.id.edit_link_type);
 
-
+        edit_item_description.setText(attribute_name);
+        System.out.println(attribute_name);
         edit_title_link_type.setText(sid);
         edit_link.setText(link);
+        System.out.println("LINK:    " + link);
         edit_link_type.setText("productDescriptionPage");
-        edit_item_description.setText(link_type);
+//        edit_item_description.setText(link_type);
 
         edit_btn_save = (Button) findViewById(R.id.edit_btn_save);
         edit_btn_save.setOnClickListener(new View.OnClickListener() {
@@ -85,10 +88,12 @@ public class editLinkPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), grabBrowserUrl.class);
-//                intent.putExtra("sid", sid);
-//                intent.putExtra("link_type", link_type);
+                intent.putExtra("sid", sid);
+                intent.putExtra("attribute_name", edit_item_description.getText().toString());
+                intent.putExtra("uri_response_id", uri_response_id);
 //                intent.putExtra("new_uri", new_uri);
 //                intent.putExtra("link", link);
+                intent.putExtra("FROM_ACTIVITY", "B");
                 startActivity(intent);
                 edit_link.setText(grabBrowserUrl.current_url);
             }
@@ -212,5 +217,10 @@ public class editLinkPage extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), product_page.class);
+        intent.putExtra("sid", sid);
+        startActivity(intent);
+    }
 }

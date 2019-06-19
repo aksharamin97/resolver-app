@@ -89,10 +89,10 @@
             android:text="Delete" />
 
         <Button
-            android:id="@+id/viewInBrowser"
+            android:id="@+id/btn_active_suspend"
             android:layout_width="168dp"
             android:layout_height="wrap_content"
-            android:text="View in Browser" />
+            android:text="HEHE" />
 
         <Button
             android:id="@+id/addLinkBtn"
