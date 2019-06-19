@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.MeasureSpec;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,12 +39,15 @@ public class product_page extends AppCompatActivity {
     JSONArray json_array;
     String link;
     String uri_response_id;
+    String product_id;
     String attribute_type;
+    String new_uri;
 //    ArrayList<HashMap<String, String>> product_list;
 
     Button viewInBrowser;
     Button deleteBtn;
     Button edit_product;
+    TextView add_link;
 
     ArrayList<HashMap<String, String>> linkList;
     ListView linkLv;
@@ -57,6 +62,8 @@ public class product_page extends AppCompatActivity {
         Intent intent = getIntent();
         final String name = intent.getStringExtra("name");
         final String gtin = intent.getStringExtra("gtin");
+        new_uri = intent.getStringExtra("new_uri");
+        product_id = intent.getStringExtra("product_id");
         String active = intent.getStringExtra("active");
         final String product_id = intent.getStringExtra("product_id");
         final String sid = intent.getStringExtra("sid");
@@ -65,7 +72,6 @@ public class product_page extends AppCompatActivity {
         productTitle = (TextView)findViewById(R.id.productTitle);
         productUri = (TextView) findViewById(R.id.productGTIN);
         linkLv = (ListView)findViewById(R.id.linkLv);
-
 
 
 //        TextView t_name = (TextView)findViewById(R.id.name);
@@ -151,17 +157,38 @@ public class product_page extends AppCompatActivity {
                                         , new int[]{R.id.linkType, R.id.link});
 
                                 linkLv.setAdapter(adapter);
+
+                                if (adapter == null) {
+                                    // pre-condition
+                                    return;
+                                }
+
+                                int totalHeight = 0;
+                                int desiredWidth = MeasureSpec.makeMeasureSpec(linkLv.getWidth(), MeasureSpec.AT_MOST);
+                                for (int i = 0; i < adapter.getCount(); i++) {
+                                    View listItem = adapter.getView(i, null, linkLv);
+                                    listItem.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
+                                    totalHeight += listItem.getMeasuredHeight();
+                                }
+
+                                ViewGroup.LayoutParams params = linkLv.getLayoutParams();
+                                params.height = totalHeight + (linkLv.getDividerHeight() * (adapter.getCount() - 1));
+                                linkLv.setLayoutParams(params);
+                                linkLv.requestLayout();
+
+
                                 linkLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                        System.out.println(list.get(position).get("name"));
 
                                         Intent intent = new Intent(getApplicationContext(), editLinkPage.class);
                                         intent.putExtra("sid", sid);
-//                                        intent.putExtra("attribute_type", linkList.get(position).get("attribute_type"));
-                                        intent.putExtra("link_type", linkList.get(position).get("link_type"));
+                                        intent.putExtra("attribute_type", linkList.get(position).get("attribute_type"));
+                                        intent.putExtra("new_uri", linkList.get(position).get("new_uri)"));
                                         intent.putExtra("link", linkList.get(position).get("link"));
                                         intent.putExtra("uri_response_id", linkList.get(position).get("uri_response_id"));
+
+
 
                                         startActivity(intent);
 
@@ -190,6 +217,8 @@ public class product_page extends AppCompatActivity {
         });
 
         edit_product = (Button)findViewById(R.id.btn_edit_product);
+        add_link = (TextView) findViewById(R.id.add_link);
+
         edit_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,36 +227,48 @@ public class product_page extends AppCompatActivity {
                 intent.putExtra("name", name);
                 intent.putExtra("GTIN", gtin);
                 intent.putExtra("product_id", product_id);
+
+                startActivity(intent);
+            }
+        });
+        add_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), addNewLink.class);
+                intent.putExtra("sid", sid);
+                intent.putExtra("gtin", gtin);
+                intent.putExtra("product_id", product_id);
+
                 startActivity(intent);
             }
         });
 
-        viewInBrowser = findViewById(R.id.viewInBrowser);
-        viewInBrowser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mybrowser.gtin = gtin;
-                startActivity(new Intent(getApplicationContext(), mybrowser.class));
-            }
-        });
-
-        deleteBtn = findViewById(R.id.deleteBtn);
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(product_page.this, "Not yet implemented", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        ImageView logo;
-        logo = (ImageView)findViewById(R.id.banner_logo);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
+//        viewInBrowser = findViewById(R.id.viewInBrowser);
+//        viewInBrowser.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mybrowser.gtin = gtin;
+//                startActivity(new Intent(getApplicationContext(), mybrowser.class));
+//            }
+//        });
+//
+//        deleteBtn = findViewById(R.id.deleteBtn);
+//        deleteBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(product_page.this, "Not yet implemented", Toast.LENGTH_LONG).show();
+//            }
+//        });
+//
+//        ImageView logo;
+//        logo = (ImageView)findViewById(R.id.banner_logo);
+//        logo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 }

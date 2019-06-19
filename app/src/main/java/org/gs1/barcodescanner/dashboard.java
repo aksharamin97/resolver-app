@@ -45,6 +45,7 @@ public class dashboard extends AppCompatActivity {
     String gtin;
     String active;
     String product_id;
+    String new_uri;
     String last_product_id;
     JSONArray json_array;
 //    HashMap<String, String> hash = new HashMap<>();
@@ -71,6 +72,8 @@ public class dashboard extends AppCompatActivity {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         Intent intent = getIntent();
         final String sid = intent.getStringExtra("sid");
+//        final String new_uri = intent.getStringExtra("new_uri");
+        System.out.println(new_uri);
         //String sid = "8391xulq7aklik7w3ibf3b5m42yl3mjvv3swssea8cy7317wbu";
         OkHttpClient client = new OkHttpClient();
 
@@ -86,7 +89,7 @@ public class dashboard extends AppCompatActivity {
             e.printStackTrace();
         }
         RequestBody req_body = RequestBody.create(JSON, body.toString());
-        Request request = new Request.Builder()
+        final Request request = new Request.Builder()
                 .url(url)
                 .post(req_body)
                 .build();
@@ -202,6 +205,7 @@ public class dashboard extends AppCompatActivity {
                                         intent.putExtra("active", list.get(position).get("active"));
                                         intent.putExtra("product_id", list.get(position).get("product_id"));
                                         intent.putExtra("sid", sid);
+                                        intent.putExtra("new_uri", new_uri);
                                         startActivity(intent);
 //                                        Toast toast = Toast.makeText(getApplicationContext(),list.get(position).get("name"), Toast.LENGTH_SHORT);
 //                                        toast.show();
