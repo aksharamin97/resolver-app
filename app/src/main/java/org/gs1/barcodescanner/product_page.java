@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.MeasureSpec;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,8 +39,10 @@ public class product_page extends AppCompatActivity {
     JSONArray json_array;
     String link;
     String uri_response_id;
+    String product_id;
     String attribute_type;
-//    ArrayList<HashMap<String, String>> product_list;
+    String new_uri;
+    //    ArrayList<HashMap<String, String>> product_list;
     String url = "https://data.gs1.org/api/api.php";
     MediaType JSON = MediaType.parse("application/json charset=utf-8");
     OkHttpClient client = new OkHttpClient();
@@ -46,6 +50,7 @@ public class product_page extends AppCompatActivity {
     Button viewInBrowser;
     Button deleteBtn;
     Button edit_product;
+    TextView add_link;
 
     ArrayList<HashMap<String, String>> linkList;
     ListView linkLv;
@@ -62,17 +67,18 @@ public class product_page extends AppCompatActivity {
         Intent intent = getIntent();
         final String name = intent.getStringExtra("name");
         final String gtin = intent.getStringExtra("gtin");
+
+        new_uri = intent.getStringExtra("new_uri");
+//         product_id = intent.getStringExtra("product_id");
         final String active = intent.getStringExtra("active");
         final String product_id = intent.getStringExtra("product_id");
         final String sid = intent.getStringExtra("sid");
         linkList = new ArrayList<>();
 
-        productTitle = (TextView)findViewById(R.id.productTitle);
+        productTitle = (TextView) findViewById(R.id.productTitle);
         productUri = (TextView) findViewById(R.id.productGTIN);
-        linkLv = (ListView)findViewById(R.id.linkLv);
+        linkLv = (ListView) findViewById(R.id.linkLv);
         btn_active_suspend = (Button) findViewById(R.id.btn_active_suspend);
-
-
 
 
 //        TextView t_name = (TextView)findViewById(R.id.name);
@@ -83,7 +89,6 @@ public class product_page extends AppCompatActivity {
 //        t_active.setText(active);
 //        TextView t_pid = (TextView)findViewById(R.id.product_id);
 //        t_pid.setText(product_id);
-
 
 
         OkHttpClient client = new OkHttpClient();
@@ -115,14 +120,14 @@ public class product_page extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     String jsonString = response.body().string();
 //                    System.out.println(jsonString);
-                    try{
+                    try {
                         json_array = new JSONArray(jsonString);
 //                        final HashMap<String, String> product = new HashMap<>();
                         for (int i = 0; i < json_array.length(); i++) {
                             JSONObject jsonobject = json_array.getJSONObject(i);
                             link = jsonobject.getString("destination_uri");
                             uri_response_id = jsonobject.getString("uri_response_id");
-                            attribute_type =  jsonobject.getString("alt_attribute_name");
+                            attribute_type = jsonobject.getString("alt_attribute_name");
 
                             HashMap<String, String> product = new HashMap<>();
                             product.put("link_type", attribute_type);
@@ -146,18 +151,39 @@ public class product_page extends AppCompatActivity {
                                         , new int[]{R.id.linkType, R.id.link});
 
                                 linkLv.setAdapter(adapter);
+
+                                if (adapter == null) {
+                                    // pre-condition
+                                    return;
+                                }
+
+                                int totalHeight = 0;
+                                int desiredWidth = MeasureSpec.makeMeasureSpec(linkLv.getWidth(), MeasureSpec.AT_MOST);
+                                for (int i = 0; i < adapter.getCount(); i++) {
+                                    View listItem = adapter.getView(i, null, linkLv);
+                                    listItem.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
+                                    totalHeight += listItem.getMeasuredHeight();
+                                }
+
+                                ViewGroup.LayoutParams params = linkLv.getLayoutParams();
+                                params.height = totalHeight + (linkLv.getDividerHeight() * (adapter.getCount() - 1));
+                                linkLv.setLayoutParams(params);
+                                linkLv.requestLayout();
+
+
                                 linkLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                        System.out.println(list.get(position).get("name"));
 
                                         Intent intent = new Intent(getApplicationContext(), editLinkPage.class);
                                         intent.putExtra("sid", sid);
-//                                        intent.putExtra("attribute_type", linkList.get(position).get("attribute_type"));
+                                        intent.putExtra("attribute_type", linkList.get(position).get("attribute_type"));
+                                        intent.putExtra("new_uri", linkList.get(position).get("new_uri)"));
                                         intent.putExtra("attribute_name", linkList.get(position).get("link_type"));
                                         intent.putExtra("link", linkList.get(position).get("link"));
                                         intent.putExtra("uri_response_id", linkList.get(position).get("uri_response_id"));
                                         intent.putExtra("product_id", linkList.get(position).get("product_id"));
+
 
                                         startActivity(intent);
 
@@ -176,8 +202,7 @@ public class product_page extends AppCompatActivity {
                             }
                         });
 //
-                    }
-                    catch (JSONException e) {
+                    } catch (JSONException e) {
                         System.out.println("FAIL" + e);
                     }
 
@@ -185,7 +210,9 @@ public class product_page extends AppCompatActivity {
             }
         });
 
-        edit_product = (Button)findViewById(R.id.btn_edit_product);
+        edit_product = (Button) findViewById(R.id.btn_edit_product);
+        add_link = (TextView) findViewById(R.id.add_link);
+
         edit_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,11 +221,25 @@ public class product_page extends AppCompatActivity {
                 intent.putExtra("name", name);
                 intent.putExtra("gtin", gtin);
                 intent.putExtra("product_id", product_id);
+
+
                 startActivity(intent);
             }
         });
 
-//        viewInBrowser = findViewById(R.id.viewInBrowser);
+        add_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), addNewLink.class);
+                intent.putExtra("sid", sid);
+                intent.putExtra("gtin", gtin);
+                intent.putExtra("product_id", product_id);
+
+                startActivity(intent);
+            }
+        });
+
+
         productUri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,7 +247,7 @@ public class product_page extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), mybrowser.class));
             }
         });
-        if (active.equals("1")){
+        if (active.equals("1")) {
             btn_active_suspend.setText("Suspend");
         }
         if (active.equals("0")) {
@@ -217,7 +258,7 @@ public class product_page extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (active.equals("1")){
+                if (active.equals("1")) {
                     setStatus(sid, product_id, gtin, name, "0");
                     btn_active_suspend.setText("Active");
                 }
@@ -237,21 +278,41 @@ public class product_page extends AppCompatActivity {
                 Toast.makeText(product_page.this, "Not yet implemented", Toast.LENGTH_LONG).show();
             }
         });
-
-        ImageView logo;
-        logo = (ImageView)findViewById(R.id.banner_logo);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
 
-    private void setStatus(String sid, String new_uri, String gtin, String item_description, String status) {
+//        viewInBrowser = findViewById(R.id.viewInBrowser);
+//        viewInBrowser.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mybrowser.gtin = gtin;
+//                startActivity(new Intent(getApplicationContext(), mybrowser.class));
+//            }
+//        });
+//
+//        deleteBtn = findViewById(R.id.deleteBtn);
+//        deleteBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(product_page.this, "Not yet implemented", Toast.LENGTH_LONG).show();
+//            }
+//        });
+//
+//        ImageView logo;
+//        logo = (ImageView)findViewById(R.id.banner_logo);
+//        logo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(intent);
+//            }
+//        });*/
+
+}
+
+
+    private void setStatus(String sid, String new_uri, String gtin, String
+            item_description, String status) {
         JSONObject body = new JSONObject();
         try {
             body.put("command", "save_existing_uri_request");
@@ -285,16 +346,17 @@ public class product_page extends AppCompatActivity {
                 e.printStackTrace();
                 System.out.println("Call 2 Error");
             }
+
             //
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     final String jsonString3 = response.body().string();
                     System.out.println(jsonString3);
                     product_page.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast toast = Toast.makeText(getApplicationContext(),"Status Changed", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Status Changed", Toast.LENGTH_SHORT);
                             toast.show();
 
                         }

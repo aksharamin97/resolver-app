@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 //if(Permission is granted) else-> request
                 if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(getApplicationContext(), ScanCodeActivity.class);
-                    intent.putExtra("FROM_ACTIVITY", "A");
+                        intent.putExtra("FROM_ACTIVITY", "A");
                     startActivity(intent);
                 } else {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
