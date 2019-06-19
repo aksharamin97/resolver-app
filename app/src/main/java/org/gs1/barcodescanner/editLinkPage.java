@@ -1,28 +1,19 @@
 package org.gs1.barcodescanner;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -31,8 +22,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static com.google.android.gms.tasks.Tasks.call;
 
 public class editLinkPage extends AppCompatActivity {
 
@@ -50,6 +39,7 @@ public class editLinkPage extends AppCompatActivity {
     String sid;
     String new_uri;
     JSONObject body1;
+    JSONObject body2;
     MediaType JSON = MediaType.parse("application/json charset=utf-8");
     OkHttpClient client = new OkHttpClient();
 
@@ -63,6 +53,7 @@ public class editLinkPage extends AppCompatActivity {
         final String sid = intent.getStringExtra("sid");
         final String link = intent.getStringExtra("link");
         final String uri_response_id = intent.getStringExtra("uri_response_id");
+        final String product_id = intent.getStringExtra("product_id");
 
 
         edit_title_link_type = (TextView) findViewById(R.id.edit_title_link_type);
@@ -103,15 +94,65 @@ public class editLinkPage extends AppCompatActivity {
             }
         });
 
+        Button delete = (Button)findViewById(R.id.edit_btn_delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                body2 = new JSONObject();
+                try {
+                    body2.put("command", "delete_uri_response");
+                    body2.put("session_id", sid);
+                    body2.put("uri_response_id", uri_response_id);
+                } catch (JSONException e) {
+                    Log.d("OKHTTP3", "JSON Exception");
+                    e.printStackTrace();
+                }
+                RequestBody req_body2 = RequestBody.create(JSON, body2.toString());
+                Request request2 = new Request.Builder()
+                        .url(url)
+                        .post(req_body2)
+                        .build();
+
+                client.newCall(request2).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                        System.out.println("Call 2 Error");
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()) {
+                            final String jsonString1 = response.body().string();
+                            System.out.println(jsonString1);
+
+                            editLinkPage.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast toast = Toast.makeText(getApplicationContext(), "Link Deleted", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                    Intent intent = new Intent(getApplicationContext(), dashboard.class);
+                                    intent.putExtra("sid", sid);
+//                                    intent.putExtra("product_id", product_id);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    }
+                });
+
+            }
+        });
+
 
     }
 
     private void call(String sid, String uri_response_id, EditText link, EditText item_description) {
         body1 = new JSONObject();
-        System.out.println(sid);
-        System.out.println(uri_response_id);
-        System.out.println(link.getText().toString());
-        System.out.println(item_description.getText().toString());
+//        System.out.println(sid);
+//        System.out.println(uri_response_id);
+//        System.out.println(link.getText().toString());
+//        System.out.println(item_description.getText().toString());
         try {
             body1.put("command", "save_existing_uri_response");
             body1.put("session_id", sid);
@@ -171,4 +212,5 @@ public class editLinkPage extends AppCompatActivity {
             }
         });
     }
+
 }

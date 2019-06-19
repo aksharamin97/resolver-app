@@ -1,7 +1,6 @@
 package org.gs1.barcodescanner;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -121,6 +120,7 @@ public class product_page extends AppCompatActivity {
                             product.put("link_type", attribute_type);
                             product.put("link", link);
                             product.put("uri_response_id", uri_response_id);
+                            product.put("product_id", product_id);
                             linkList.add(product);
 //                            product_list.add(product);
                         }
@@ -130,19 +130,6 @@ public class product_page extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-//                                for (String i : product.keySet()) {
-//                                    TableRow row = new TableRow(product_page.this);
-//                                    TextView tv_type = new TextView(product_page.this);
-//                                    TextView tv_link = new TextView(product_page.this);
-////                                    System.out.println(i);
-////                                    System.out.println(product.get(i));
-//                                    tv_type.setText(product.get(i));
-//                                    tv_link.setText(i);
-//                                    row.addView(tv_type);
-//                                    row.addView(tv_link);
-//                                    tl.addView(row);
-//                                }
-//                                System.out.println(linkList);
                                 productTitle.setText(name);
                                 productUri.setText("https://id.gs1.org/gtin/" + gtin);
                                 ListAdapter adapter = new SimpleAdapter(
@@ -162,6 +149,7 @@ public class product_page extends AppCompatActivity {
                                         intent.putExtra("link_type", linkList.get(position).get("link_type"));
                                         intent.putExtra("link", linkList.get(position).get("link"));
                                         intent.putExtra("uri_response_id", linkList.get(position).get("uri_response_id"));
+                                        intent.putExtra("product_id", linkList.get(position).get("product_id"));
 
                                         startActivity(intent);
 
@@ -230,4 +218,5 @@ public class product_page extends AppCompatActivity {
         });
 
     }
+
 }
