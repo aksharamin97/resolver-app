@@ -74,7 +74,7 @@ public class dashboard extends AppCompatActivity {
         Intent intent = getIntent();
         final String sid = intent.getStringExtra("sid");
 //        final String new_uri = intent.getStringExtra("new_uri");
-        System.out.println(new_uri);
+//        System.out.println(new_uri);
         //String sid = "8391xulq7aklik7w3ibf3b5m42yl3mjvv3swssea8cy7317wbu";
         OkHttpClient client = new OkHttpClient();
 

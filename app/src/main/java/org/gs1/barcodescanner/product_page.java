@@ -137,7 +137,7 @@ public class product_page extends AppCompatActivity {
                             linkList.add(product);
 //                            product_list.add(product);
                         }
-                        System.out.println(linkList);
+//                        System.out.println(linkList);
 //                        System.out.println(product);
 //                        final TableLayout tl = (TableLayout)findViewById(R.id.tl);
                         runOnUiThread(new Runnable() {

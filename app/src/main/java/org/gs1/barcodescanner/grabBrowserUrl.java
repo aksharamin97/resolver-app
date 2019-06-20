@@ -25,6 +25,7 @@ public class grabBrowserUrl extends AppCompatActivity {
     String item_description;
     String attribute_name;
     String uri_response_id;
+    String product_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class grabBrowserUrl extends AppCompatActivity {
         Intent intent = getIntent();
         sid = intent.getStringExtra("sid");
         new_uri = intent.getStringExtra("new_uri");
-
+        product_id = intent.getStringExtra("product_id");
         link = intent.getStringExtra("link");
         gtin = intent.getStringExtra("gtin");
         item_description = intent.getStringExtra("item_description");
@@ -70,10 +71,19 @@ public class grabBrowserUrl extends AppCompatActivity {
                     intent.putExtra("item_description", item_description);
                     startActivity(intent);
                 }
-                if(previousActivity.equals("B")){
+                if(previousActivity.equals("editLinkPage")){
                     Intent intent = new Intent(getApplicationContext(), editLinkPage.class);
                     intent.putExtra("sid", sid);
                     intent.putExtra("link", current_url);
+                    intent.putExtra("attribute_name", attribute_name);
+                    intent.putExtra("uri_response_id", uri_response_id);
+                    startActivity(intent);
+                }
+                if(previousActivity.equals("addNewLink")){
+                    Intent intent = new Intent(getApplicationContext(), addNewLink.class);
+                    intent.putExtra("sid", sid);
+                    intent.putExtra("link", current_url);
+                    intent.putExtra("product_id", product_id);
                     intent.putExtra("attribute_name", attribute_name);
                     intent.putExtra("uri_response_id", uri_response_id);
                     startActivity(intent);

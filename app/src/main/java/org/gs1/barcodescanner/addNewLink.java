@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.util.ProcessUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,7 +53,13 @@ public class addNewLink extends AppCompatActivity {
         gtin = intent.getStringExtra("gtin");
         product_id = intent.getStringExtra("product_id");
         final String uri_response_id = intent.getStringExtra("uri_response_id");
+        final String grab_link = intent.getStringExtra("link");
+
+
         link = (EditText)findViewById(R.id.addNewLink_link);
+        link.setText(grab_link);
+        System.out.println("DIS     "+link.getText().toString());
+        System.out.println("PRODUCT_ID     " + product_id);
         alt_attribute_name = (EditText)findViewById(R.id.addNewLink_alt_attribute_name);
 
 
@@ -61,6 +69,8 @@ public class addNewLink extends AppCompatActivity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("LINK      "+link.getText().toString());
+                System.out.println("ATTRIBUTE _NAME     "+alt_attribute_name.getText().toString());
                 call(sid, product_id, link, alt_attribute_name);
                 Intent intent = new Intent(getApplicationContext(), dashboard.class);
                 intent.putExtra("sid", sid);
@@ -76,13 +86,15 @@ public class addNewLink extends AppCompatActivity {
                 intent.putExtra("new_uri", new_uri);
                 intent.putExtra("gtin", gtin);
                 intent.putExtra("item_description", item_description);
+                intent.putExtra("product_id", product_id);
+                intent.putExtra("FROM_ACTIVITY", "addNewLink");
                 startActivity(intent);
             }
         });
 
 
-        link.setText(grabBrowserUrl.current_url);
-        grabBrowserUrl.current_url = "";
+//        link.setText(grabBrowserUrl.current_url);
+//        grabBrowserUrl.current_url = "";
 
 
 
@@ -134,7 +146,7 @@ public class addNewLink extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()){
                     final String jsonString1 = response.body().string();
-                    System.out.println(jsonString1);
+                    System.out.println("OUTPUT    " + jsonString1);
 
                     addNewLink.this.runOnUiThread(new Runnable() {
                         @Override
