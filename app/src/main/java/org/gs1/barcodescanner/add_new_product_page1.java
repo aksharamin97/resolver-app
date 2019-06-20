@@ -58,7 +58,7 @@ public class add_new_product_page1 extends AppCompatActivity {
         product_id = intent.getStringExtra("product_id");
         item_description = (EditText) findViewById(R.id.product_name);
         gtin = (EditText) findViewById(R.id.gtin);
-        gtin.setText(scannedGTIN);
+//        gtin.setText(scannedGTIN);
 
         item_description.setText(product_name);
         gtin.setText(GTIN);
@@ -74,7 +74,7 @@ public class add_new_product_page1 extends AppCompatActivity {
                     toast.show();
                 }
                 else {
-                    if (checkDigit(gtin.getText().toString())) {
+                    if(Integer.parseInt(gtin.getText().toString().substring(gtin.length()-1)) == checkDigit(gtin.getText().toString())) {
                         body1 = new JSONObject();
                         try {
                             body1.put("command", "new_uri_request");
@@ -170,6 +170,11 @@ public class add_new_product_page1 extends AppCompatActivity {
                         });
 
                     }
+                    else {
+                        toast = Toast.makeText(getApplicationContext(), "Invalid check digit. Digit should be " + checkDigit(gtin.getText().toString())+ "", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
                 }
             }//end of onclick
         });//end of set on click listener
@@ -183,7 +188,8 @@ public class add_new_product_page1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), barcode_scanner_page.class);
-                intent.putExtra("FROM_ACTIVITY", "B");
+                intent.putExtra("sid", sid);
+                intent.putExtra("FROM_ACTIVITY", "new_product_page1");
                 startActivity(intent);
             }
         });
@@ -192,7 +198,7 @@ public class add_new_product_page1 extends AppCompatActivity {
 
     }
 
-    private boolean checkDigit(String gtin) {
+    public static int checkDigit(String gtin) {
         int odds = 0;
         int evens = 0;
         char num;
@@ -210,7 +216,7 @@ public class add_new_product_page1 extends AppCompatActivity {
             }
             else{
                 num = gtin.charAt(i);
-                evens += (num - '0') * 1;
+                evens += (num - '0');
             }
         }
         sum = odds + evens;
@@ -218,15 +224,10 @@ public class add_new_product_page1 extends AppCompatActivity {
         nearestTen =  (sum - rem)+10;
         checkDigit = nearestTen -  sum;
         if(checkDigit == 10) {
-            checkDigit = 0;
+            return checkDigit = 0;
         }
-
-        if(Integer.parseInt(gtin.substring(gtin.length()-1)) == checkDigit)
-            return pass = true;
         else {
-            toast = Toast.makeText(getApplicationContext(), "Invalid check digit. Digit should be " + checkDigit+ "", Toast.LENGTH_SHORT);
-            toast.show();
-            return pass = false;
+            return checkDigit;
         }
 
     }

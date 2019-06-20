@@ -29,6 +29,10 @@ public class edit_product_info_page extends AppCompatActivity {
     OkHttpClient client = new OkHttpClient();
     MediaType JSON = MediaType.parse("application/json charset=utf-8");
 
+    Toast toast;
+
+    Button scanGTIN;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,8 @@ public class edit_product_info_page extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                body1 = new JSONObject();
+                if (Integer.parseInt(GTIN.getText().toString().substring(gtin.length() - 1)) == add_new_product_page1.checkDigit(GTIN.getText().toString())){
+                    body1 = new JSONObject();
                 try {
                     body1.put("command", "save_existing_uri_request");
                     body1.put("session_id", sid);
@@ -89,13 +94,13 @@ public class edit_product_info_page extends AppCompatActivity {
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             final String jsonString3 = response.body().string();
                             System.out.println(jsonString3);
                             edit_product_info_page.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast toast = Toast.makeText(getApplicationContext(),"Product Saved", Toast.LENGTH_SHORT);
+                                    Toast toast = Toast.makeText(getApplicationContext(), "Product Saved", Toast.LENGTH_SHORT);
                                     toast.show();
                                     Intent intent = new Intent(getApplicationContext(), dashboard.class);
                                     intent.putExtra("sid", sid);
@@ -105,7 +110,26 @@ public class edit_product_info_page extends AppCompatActivity {
                         }
                     }
                 });
+              }
+                else {
+                    toast = Toast.makeText(getApplicationContext(), "Invalid check digit. Digit should be " + add_new_product_page1.checkDigit(GTIN.getText().toString())+ "", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
+
+        scanGTIN = (Button)findViewById(R.id.scanGTIN);
+        scanGTIN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), barcode_scanner_page.class);
+                intent.putExtra("product_name", product_name);
+                intent.putExtra("uri_request_id", uri_request_id);
+                intent.putExtra("sid", sid);
+                intent.putExtra("FROM_ACTIVITY", "edit_product_info_page");
+                startActivity(intent);
+            }
+        });
+
     }
 }
