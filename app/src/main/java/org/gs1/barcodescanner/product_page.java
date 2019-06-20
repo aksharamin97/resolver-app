@@ -308,8 +308,6 @@ public class product_page extends AppCompatActivity {
 //            }
 //        });*/
 
-}
-
 
     private void setStatus(String sid, String new_uri, String gtin, String
             item_description, String status) {
