@@ -51,7 +51,7 @@ public class product_link_page extends AppCompatActivity {
     TextView product_title;
     TextView productUri;
     Button btn_active_suspend;
-
+    String active;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class product_link_page extends AppCompatActivity {
         Intent intent = getIntent();
         final String product_name = intent.getStringExtra("product_name");
         final String gtin = intent.getStringExtra("gtin");
-        final String active = intent.getStringExtra("active");
+        active = intent.getStringExtra("active");
         final String uri_request_id = intent.getStringExtra("uri_request_id");
         final String sid = intent.getStringExtra("sid");
         list = new ArrayList<>();
@@ -296,6 +296,13 @@ public class product_link_page extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), dashboard.class);
+        intent.putExtra("active", active);
+        intent.putExtra("sid", login_page.session_id);
+        startActivity(intent);
     }
 
 }
