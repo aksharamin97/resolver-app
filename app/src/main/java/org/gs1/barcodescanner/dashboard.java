@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -41,23 +40,15 @@ import okhttp3.Response;
 
 
 public class dashboard extends AppCompatActivity {
-    String name;
+    String product_name;
     String gtin;
-    String active;
     String status;
-    String product_id;
-    String new_uri;
-    String last_product_id;
+    String uri_request_id;
     JSONArray json_array;
-//    HashMap<String, String> hash = new HashMap<>();
     String url = "https://data.gs1.org/api/api.php";
     ArrayList<HashMap<String, String>> list;
-//    ArrayList<String> product_list = new ArrayList<String>();
-    ListView lv;
-//    String titlePosition;
-
-
-    Button addProduct;
+    ListView list_view;
+    Button btn_add_new_product;
 
     static String jsonString = "";
 
@@ -66,16 +57,12 @@ public class dashboard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ///changed///
         setContentView(R.layout.dashboard_lv);
         list = new ArrayList<>();
-        lv = (ListView) findViewById(R.id.list);
+        list_view = findViewById(R.id.list_view);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         Intent intent = getIntent();
         final String sid = intent.getStringExtra("sid");
-//        final String new_uri = intent.getStringExtra("new_uri");
-//        System.out.println(new_uri);
-        //String sid = "8391xulq7aklik7w3ibf3b5m42yl3mjvv3swssea8cy7317wbu";
         OkHttpClient client = new OkHttpClient();
 
         final MediaType JSON = MediaType.parse("application/json charset=utf-8");
@@ -107,49 +94,30 @@ public class dashboard extends AppCompatActivity {
                     jsonString = response.body().string();
                     try {
                         json_array = new JSONArray(jsonString);
-//                        JSONObject jsonobject = json_array.getJSONObject(0);
-//                        name = jsonobject.getString("item_description");
-//                        gtin = jsonobject.getString("alpha_value");
-//                        System.out.println(name);
-//                        System.out.println(gtin);
-//                        addRow(name, gtin);
                         for (int i = 0; i < json_array.length(); i++) {
                             JSONObject jsonobject = json_array.getJSONObject(i);
-                            name = jsonobject.getString("item_description");
+                            product_name = jsonobject.getString("item_description");
                             gtin = jsonobject.getString("alpha_value");
                             status = jsonobject.getString("active");
-                            product_id = jsonobject.getString("uri_request_id");
-//                            System.out.println("name in loop = " + name);
-//                            System.out.println("gtin in loop = " + gtin);
-                            HashMap<String, String> contact = new HashMap<>();
-                            contact.put("name", name);
-                            contact.put("gtin", gtin);
-                            contact.put("status1", status);
-                            contact.put("product_id", product_id);
+                            uri_request_id = jsonobject.getString("uri_request_id");
+                            HashMap<String, String> dict = new HashMap<>();
+                            dict.put("product_name", product_name);
+                            dict.put("gtin", gtin);
+                            dict.put("status1", status);
+                            dict.put("uri_request_id", uri_request_id);
                             if(status.compareTo("1")==0) {
-                                contact.put("status", "Active");
-                                contact.put("active", "• ");
-                                contact.put("suspending", "");
+                                dict.put("status", "Active");
+                                dict.put("active", "• ");
+                                dict.put("suspending", "");
                             }
                             else{
-                                contact.put("status", "Draft");
-                                contact.put("active", "");
-                                contact.put("suspending", "• ");
+                                dict.put("status", "Draft");
+                                dict.put("active", "");
+                                dict.put("suspending", "• ");
                             }
-
-//                            System.out.println("hash/dict = " + contact);
-                            list.add(contact);
-//                            System.out.println("Current Contact List in loop = " + list);
-//                            list.put(name, gtin);
-//                            product_list.add(product_id);
-
+                            list.add(dict);
                         }
-//                        System.out.println("list     " + list);
                         Collections.reverse(list);
-
-//                        last_product_id = product_list.get(product_list.size() -1 );
-
-//                        System.out.println("Final Contact List = " + list);
 
                         runOnUiThread(new Runnable() {
 
@@ -158,10 +126,10 @@ public class dashboard extends AppCompatActivity {
                             public void run() {
                                 final ListAdapter adapter = new SimpleAdapter(
                                         dashboard.this, list, R.layout.dashboard_lv_item,
-                                        new String[]{"name", "gtin", "suspending", "active", "status"},
-                                        new int[]{R.id.name, R.id.gtin, R.id.suspending, R.id.active, R.id.status});
+                                        new String[]{"product_name", "gtin", "suspending", "active", "status"},
+                                        new int[]{R.id.product_name, R.id.gtin, R.id.suspending, R.id.active, R.id.status});
 //
-                                lv.setAdapter(adapter);
+                                list_view.setAdapter(adapter);
 
                                 TextView dashboard_title = findViewById(R.id.dashboard_title);
                                 String dashboard_title_text = "You currently have " + list.size() + " products";
@@ -176,40 +144,34 @@ public class dashboard extends AppCompatActivity {
                                     Number = Number/10;
                                     Count = Count + 1;
                                 }
-
                                 ss.setSpan(fcsPrimary, 18, 19+Count, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
                                 dashboard_title.setText(ss);
 
-                                SearchView sv = (SearchView)findViewById(R.id.dashboard_search_bar);
-                                sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                                    @Override
-                                    public boolean onQueryTextSubmit(String query) {
+//                                SearchView sv = (SearchView)findViewById(R.id.dashboard_search_bar);
+//                                sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                                    @Override
+//                                    public boolean onQueryTextSubmit(String query) {
+//
+//                                        return false;
+//                                    }
+//
+//                                    @Override
+//                                    public boolean onQueryTextChange(String newText) {
+//                                        ((SimpleAdapter) adapter).getFilter().filter(newText);
+//                                        return false;
+//                                    }
+//                                });
 
-                                        return false;
-                                    }
-
-                                    @Override
-                                    public boolean onQueryTextChange(String newText) {
-                                        ((SimpleAdapter) adapter).getFilter().filter(newText);
-                                        return false;
-                                    }
-                                });
-
-                                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        Intent intent = new Intent(getApplicationContext(), product_page.class);
-                                        intent.putExtra("name", list.get(position).get("name"));
+                                        Intent intent = new Intent(getApplicationContext(), product_link_page.class);
+                                        intent.putExtra("product_name", list.get(position).get("product_name"));
                                         intent.putExtra("gtin", list.get(position).get("gtin"));
                                         intent.putExtra("active", list.get(position).get("status1"));
-                                        intent.putExtra("product_id", list.get(position).get("product_id"));
+                                        intent.putExtra("uri_request_id", list.get(position).get("uri_request_id"));
                                         intent.putExtra("sid", sid);
-                                        intent.putExtra("new_uri", new_uri);
                                         startActivity(intent);
-//                                        Toast toast = Toast.makeText(getApplicationContext(),list.get(position).get("name"), Toast.LENGTH_SHORT);
-//                                        toast.show();
                                 }
                                 });
 
@@ -224,13 +186,12 @@ public class dashboard extends AppCompatActivity {
             }
         });
 
-        addProduct = findViewById(R.id.addProduct);
-        addProduct.setOnClickListener(new View.OnClickListener() {
+        btn_add_new_product = findViewById(R.id.btn_add_new_product);
+        btn_add_new_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), addProductPage.class);
+                Intent intent = new Intent(getApplicationContext(), add_new_product_page1.class);
                 intent.putExtra("sid", sid);
-//                intent.putExtra("last_product_id", last_product_id);
                 startActivity(intent);
             }
         });
@@ -240,7 +201,7 @@ public class dashboard extends AppCompatActivity {
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), main_page.class);
                 startActivity(intent);
             }
         });
@@ -249,7 +210,7 @@ public class dashboard extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), main_page.class);
         startActivity(intent);
     }
 }

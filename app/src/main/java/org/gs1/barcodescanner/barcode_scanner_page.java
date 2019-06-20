@@ -1,7 +1,6 @@
 package org.gs1.barcodescanner;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -9,7 +8,7 @@ import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public class barcode_scanner_page extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
 
 
@@ -27,15 +26,15 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
     public void handleResult(Result result) {
         Intent mIntent = getIntent();
         String previousActivity= mIntent.getStringExtra("FROM_ACTIVITY");
-        if (previousActivity.equals("A")) {
-            mybrowser.gtin = result.getText();
-            Intent intent = new Intent(getApplicationContext(), landingPage.class);
+        if (previousActivity.equals("main_page")) {
+            in_app_browser.search_gtin = result.getText();
+            Intent intent = new Intent(getApplicationContext(), consumer_landing_page.class);
             startActivity(intent);
             onBackPressed();
         }
         else{
-            addProductPage.scannedGTIN = result.getText();
-            Intent intent = new Intent(getApplicationContext(), addProductPage.class);
+            add_new_product_page1.scannedGTIN = result.getText();
+            Intent intent = new Intent(getApplicationContext(), add_new_product_page1.class);
             startActivity(intent);
             onBackPressed();
         }
@@ -45,7 +44,6 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
     @Override
     protected void onPause() {
         super.onPause();
-
         ScannerView.stopCamera();
     }
 

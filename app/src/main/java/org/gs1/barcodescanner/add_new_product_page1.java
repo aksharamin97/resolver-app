@@ -24,10 +24,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class addProductPage extends AppCompatActivity {
+public class add_new_product_page1 extends AppCompatActivity {
     String sid;
     String GTIN;
-    String name;
+    String product_name;
     String product_id;
 
     EditText gtin;
@@ -38,9 +38,8 @@ public class addProductPage extends AppCompatActivity {
     MediaType JSON = MediaType.parse("application/json charset=utf-8");
     JSONObject body1;
     JSONObject body2;
-    JSONObject body3;
 
-    String new_uri;
+    String uri_request_id;
 
     Toast toast;
 
@@ -49,26 +48,19 @@ public class addProductPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_product_page);
+        setContentView(R.layout.add_new_product_page1);
 
         Intent intent = getIntent();
-//        String last_product_id = intent.getStringExtra("last_product_id");
 
         sid = intent.getStringExtra("sid");
         GTIN = intent.getStringExtra("GTIN");
-        name = intent.getStringExtra("name");
+        product_name = intent.getStringExtra("product_name");
         product_id = intent.getStringExtra("product_id");
-        System.out.println(GTIN);
-        System.out.println(name);
-//        System.out.println("page 1:   " + sid);
-//        new_product_id = Integer.parseInt(last_product_id) + 1;
-//        System.out.println("product_id =   " + new_product_id);
-
         item_description = (EditText) findViewById(R.id.product_name);
         gtin = (EditText) findViewById(R.id.gtin);
         gtin.setText(scannedGTIN);
 
-        item_description.setText(name);
+        item_description.setText(product_name);
         gtin.setText(GTIN);
 
 
@@ -78,17 +70,11 @@ public class addProductPage extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (gtin.getText().toString().equals("") || item_description.getText().toString().equals("")) {
-
                     toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-
                 else {
-                    toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
-                    toast.show();
-
                     if (checkDigit(gtin.getText().toString())) {
-
                         body1 = new JSONObject();
                         try {
                             body1.put("command", "new_uri_request");
@@ -115,23 +101,19 @@ public class addProductPage extends AppCompatActivity {
                             public void onResponse(Call call, Response response) throws IOException {
                                 if (response.isSuccessful()) {
                                     final String jsonString1 = response.body().string();
-//                                System.out.println("new_uri_request:   " + jsonString1);
-//                            System.out.println(jsonString1.getClass().getName());
                                     try {
                                         JSONObject jsonObject = new JSONObject(jsonString1);
-                                        new_uri = jsonObject.getString("new_uri_request_id");
-//                                    System.out.println(new_uri);
+                                        uri_request_id = jsonObject.getString("new_uri_request_id");
 
                                     } catch (JSONException e) {
                                         System.out.println("error in json obj");
                                     }
-//                                System.out.println("outside");
 
                                     body2 = new JSONObject();
                                     try {
                                         body2.put("command", "save_existing_uri_request");
                                         body2.put("session_id", sid);
-                                        body2.put("uri_request_id", new_uri);
+                                        body2.put("uri_request_id", uri_request_id);
                                         body2.put("alpha_code", "gtin");
                                         body2.put("alpha_value", gtin.getText().toString());
                                         body2.put("item_description", item_description.getText().toString());
@@ -170,88 +152,23 @@ public class addProductPage extends AppCompatActivity {
                                             }
                                         }
                                     });
-                                    addProductPage.this.runOnUiThread(new Runnable() {
+                                    add_new_product_page1.this.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             Toast toast = Toast.makeText(getApplicationContext(), "Product Added", Toast.LENGTH_SHORT);
                                             toast.show();
-                                            Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
+                                            Intent intent = new Intent(getApplicationContext(), add_new_product_page2.class);
                                             intent.putExtra("sid", sid);
-                                            intent.putExtra("new_uri", new_uri);
+                                            intent.putExtra("uri_request_id", uri_request_id);
                                             intent.putExtra("gtin", gtin.getText().toString());
-                                            intent.putExtra("item_description", item_description.getText().toString());
+                                            intent.putExtra("product_name", item_description.getText().toString());
                                             startActivity(intent);
                                         }
                                     });
                                 }
                             }
                         });
-/////////////////////////////////////////////////////////////////////////////////////////
-//API CALL TEMPLATE
-///////////////////////////////////////////////////////////////////////////////////////////
 
-
-//                body3 = new JSONObject();
-//                try {
-//                    body3.put("command", "save_existing_uri_request");
-//                    body3.put("session_id", sid);
-//                    body3.put("uri_request_id", new_uri);
-//                    body3.put("alpha_code", "gtin");
-//                    body3.put("alpha_value", gtin.getText().toString());
-//                    body3.put("item_description", item_description.getText().toString());
-//                    body3.put("include_in_sitemap", "1");
-//                    body3.put("active", "0");
-//                    body3.put("uri_prefix_1", "");
-//                    body3.put("uri_suffix_1", "");
-//                    body3.put("uri_prefix_2", "");
-//                    body3.put("uri_suffix_2", "");
-//                    body3.put("uri_prefix_3", "");
-//                    body3.put("uri_suffix_3", "");
-//                    body3.put("uri_prefix_4", "");
-//                    body3.put("uri_suffix_4", "");
-//                } catch (JSONException e) {
-//                    Log.d("OKHTTP3", "JSON Exception");
-//                    e.printStackTrace();
-//                }
-//                RequestBody req_body3 = RequestBody.create(JSON, body3.toString());
-//                Request request3 = new Request.Builder()
-//                        .url(url)
-//                        .post(req_body3)
-//                        .build();
-//
-//                client.newCall(request3).enqueue(new Callback() {
-//                    @Override
-//                    public void onFailure(Call call, IOException e) {
-//                        e.printStackTrace();
-//                        System.out.println("Call 3 Error");
-//                    }
-//
-//                    @Override
-//                    public void onResponse(Call call, Response response) throws IOException {
-//                        if (response.isSuccessful()){
-//                            final String jsonString3 = response.body().string();
-//                            System.out.println("save_existing_uri_request:   " + jsonString3);
-//
-////                            addProductPage.this.runOnUiThread(new Runnable() {
-////                                @Override
-////                                public void run() {
-////                                    Toast toast = Toast.makeText(getApplicationContext(),"Saving URI Successful", Toast.LENGTH_SHORT);
-////                                    toast.show();
-////                                }
-////                            });
-////                            else{
-////                                addProductPage.this.runOnUiThread(new Runnable() {
-////                                    @Override
-////                                    public void run() {
-////                                        Intent intent = new Intent(getApplicationContext(), dashboard.class);
-////                                        intent.putExtra("sid", sid);
-////                                        startActivity(intent);
-////                                    }
-////                                });
-////                            }
-//                        }
-//                    }
-//                });
                     }
                 }
             }//end of onclick
@@ -265,7 +182,7 @@ public class addProductPage extends AppCompatActivity {
         scanGTIN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ScanCodeActivity.class);
+                Intent intent = new Intent(getApplicationContext(), barcode_scanner_page.class);
                 intent.putExtra("FROM_ACTIVITY", "B");
                 startActivity(intent);
             }
@@ -315,7 +232,7 @@ public class addProductPage extends AppCompatActivity {
     }
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), dashboard.class);
-        intent.putExtra("sid", loginActivity.session_id);
+        intent.putExtra("sid", login_page.session_id);
         startActivity(intent);
     }
 }

@@ -14,33 +14,34 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
-public class grabBrowserUrl extends AppCompatActivity {
+public class grab_browser_url extends AppCompatActivity {
 
     private WebView web;
     static String current_url;
     String sid;
-    String new_uri;
     String link;
     String gtin;
-    String item_description;
-    String attribute_name;
+    String alt_attribute_name;
     String uri_response_id;
-    String product_id;
+    String product_name;
+    String uri_request_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grab_browser_url);
+        setContentView(R.layout.grab_browser_url);
 
         Intent intent = getIntent();
         sid = intent.getStringExtra("sid");
-        new_uri = intent.getStringExtra("new_uri");
-        product_id = intent.getStringExtra("product_id");
         link = intent.getStringExtra("link");
         gtin = intent.getStringExtra("gtin");
-        item_description = intent.getStringExtra("item_description");
-        attribute_name = intent.getStringExtra("attribute_name");
+        alt_attribute_name = intent.getStringExtra("alt_attribute_name");
         uri_response_id = intent.getStringExtra("uri_response_id");
+
+
+        product_name = intent.getStringExtra("product_name");
+        uri_request_id = intent.getStringExtra("uri_request_id");
+
 
         web = (WebView) findViewById(R.id.webView);
         web.getSettings().setLoadsImagesAutomatically(true);
@@ -63,29 +64,29 @@ public class grabBrowserUrl extends AppCompatActivity {
 
                 Intent mIntent = getIntent();
                 String previousActivity= mIntent.getStringExtra("FROM_ACTIVITY");
-                if (previousActivity.equals("A")) {
-                    Intent intent = new Intent(getApplicationContext(), addProductPage1.class);
+                if (previousActivity.equals("add_new_product_page2")) {
+                    Intent intent = new Intent(getApplicationContext(), add_new_product_page2.class);
                     intent.putExtra("sid", sid);
-                    intent.putExtra("new_uri", new_uri);
+                    intent.putExtra("uri_request_id", uri_request_id);
                     intent.putExtra("gtin", gtin);
-                    intent.putExtra("item_description", item_description);
+                    intent.putExtra("product_name", product_name);
+                    intent.putExtra("alt_attribute_name", alt_attribute_name);
                     startActivity(intent);
                 }
-                if(previousActivity.equals("editLinkPage")){
-                    Intent intent = new Intent(getApplicationContext(), editLinkPage.class);
+                if (previousActivity.equals("edit_link_page")) {
+                    Intent intent = new Intent(getApplicationContext(), edit_link_page.class);
                     intent.putExtra("sid", sid);
                     intent.putExtra("link", current_url);
-                    intent.putExtra("attribute_name", attribute_name);
+                    intent.putExtra("alt_attribute_name", alt_attribute_name);
                     intent.putExtra("uri_response_id", uri_response_id);
                     startActivity(intent);
                 }
-                if(previousActivity.equals("addNewLink")){
-                    Intent intent = new Intent(getApplicationContext(), addNewLink.class);
+                if (previousActivity.equals("add_new_link_page")) {
+                    Intent intent = new Intent(getApplicationContext(), add_new_link_page.class);
                     intent.putExtra("sid", sid);
                     intent.putExtra("link", current_url);
-                    intent.putExtra("product_id", product_id);
-                    intent.putExtra("attribute_name", attribute_name);
-                    intent.putExtra("uri_response_id", uri_response_id);
+                    intent.putExtra("alt_attribute_name", alt_attribute_name);
+                    intent.putExtra("uri_request_id", uri_request_id);
                     startActivity(intent);
                 }
             }

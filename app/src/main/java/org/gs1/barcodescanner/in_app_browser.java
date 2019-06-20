@@ -6,22 +6,21 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 
-
-public class mybrowser extends AppCompatActivity {
+public class in_app_browser extends AppCompatActivity {
 
     private WebView web;
 
-    static String gtin;
+    static String search_gtin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mybrowser);
+        setContentView(R.layout.in_app_browser);
 
         web = (WebView) findViewById(R.id.webView);
         web.getSettings().setLoadsImagesAutomatically(true);
         WebSettings webSettings = web.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        web.loadUrl("https://id.gs1.org/gtin/"+ gtin + "?linkType=all");
+        web.loadUrl("https://id.gs1.org/gtin/" + search_gtin + "?linkType=all");
     }
 }

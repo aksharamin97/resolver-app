@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".addProductPage1">
+    tools:context=".add_new_product_page2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,10 +68,9 @@
                     android:id="@+id/gtin"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="0dp"
-                    android:layout_marginRight="0dp"
                     android:background="@drawable/background2"
                     android:inputType="textPersonName"
+                    android:maxLength="14"
                     android:paddingLeft="15dp"
                     app:layout_constraintEnd_toEndOf="parent" />
 

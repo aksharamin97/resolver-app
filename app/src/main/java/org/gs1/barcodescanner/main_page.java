@@ -10,11 +10,10 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class main_page extends AppCompatActivity {
     private static final int REQUEST_CAMERA = 1;
 
     @Override
@@ -26,10 +25,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_page);
 
-        RelativeLayout btn_scan;
-        btn_scan = findViewById(R.id.btn_scan);
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        RelativeLayout btn_scan_product;
+        btn_scan_product = findViewById(R.id.btn_scan_product);
 
         //If the permission is not  already granted then ask,if it is already granted then just do nothing for the permission section
         if (!(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)) {
@@ -38,46 +39,49 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        btn_scan.setOnClickListener(new View.OnClickListener() {
+        btn_scan_product.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 //if(Permission is granted) else-> request
                 if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent(getApplicationContext(), ScanCodeActivity.class);
-                        intent.putExtra("FROM_ACTIVITY", "A");
+                    Intent intent = new Intent(getApplicationContext(), barcode_scanner_page.class);
+                    intent.putExtra("FROM_ACTIVITY", "main_page");
                     startActivity(intent);
                 } else {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
                 }
             }
         });
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+        RelativeLayout btn_log_product;
+        btn_log_product = findViewById(R.id.btn_log_product);
 
-        RelativeLayout btn_log;
-        btn_log = findViewById(R.id.btn_log);
-
-        btn_log.setOnClickListener(new View.OnClickListener() {
+        btn_log_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(loginActivity.session_id.compareTo("") == 0 || dashboard.jsonString.compareTo("") == 0)
-                    startActivity(new Intent(getApplicationContext(), loginActivity.class));
+                if (login_page.session_id.equals("") || dashboard.jsonString.equals(""))
+                    startActivity(new Intent(getApplicationContext(), login_page.class));
                 else {
                     Intent intent = new Intent(getApplicationContext(), dashboard.class);
-                    intent.putExtra("sid", loginActivity.session_id);
+                    intent.putExtra("sid", login_page.session_id);
                     startActivity(intent);
                 }
             }
         });
-        final EditText editText;
-        editText = findViewById(R.id.editText);
 
-        editText.setOnKeyListener(new View.OnKeyListener() {
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+        final EditText editText_search_gtin;
+        editText_search_gtin = findViewById(R.id.editText_search_gtin);
+
+        editText_search_gtin.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                        mybrowser.gtin = editText.getText().toString();
-                        startActivity(new Intent(getApplicationContext(), landingPage.class));
+                        in_app_browser.search_gtin = editText_search_gtin.getText().toString();
+                        startActivity(new Intent(getApplicationContext(), consumer_landing_page.class));
                         return true;
                     }
                 }

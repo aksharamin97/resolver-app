@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".addNewLink">
+    tools:context=".add_new_link_page">
 
     <LinearLayout
         android:layout_width="match_parent"

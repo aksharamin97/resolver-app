@@ -23,17 +23,15 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class editLinkPage extends AppCompatActivity {
+public class edit_link_page extends AppCompatActivity {
 
-    EditText gtin;
 
-    Button editGetLink;
     Button edit_btn_save;
 
     EditText edit_link;
     EditText edit_link_type;
     TextView edit_title_link_type;
-    EditText edit_item_description;
+    EditText edit_alt_attribute_name;
 
     String url = "https://data.gs1.org/api/api.php";
     String sid;
@@ -46,39 +44,34 @@ public class editLinkPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_link_page);
+        setContentView(R.layout.edit_link_page);
 
         Intent intent = getIntent();
-//        final String link_type = intent.getStringExtra("link_type");
         final String sid = intent.getStringExtra("sid");
         final String link = intent.getStringExtra("link");
         final String uri_response_id = intent.getStringExtra("uri_response_id");
-        final String product_id = intent.getStringExtra("product_id");
-        final String attribute_name = intent.getStringExtra("attribute_name");
+        final String alt_attribute_name = intent.getStringExtra("alt_attribute_name");
 
 
         edit_title_link_type = (TextView) findViewById(R.id.edit_title_link_type);
         edit_link = (EditText) findViewById(R.id.edit_link);
-        edit_item_description = (EditText) findViewById(R.id.edit_item_description);
+        edit_alt_attribute_name = findViewById(R.id.edit_alt_attribute_name);
         edit_link_type = (EditText) findViewById(R.id.edit_link_type);
 
-        edit_item_description.setText(attribute_name);
-//        System.out.println(attribute_name);
-        edit_title_link_type.setText(sid);
+        edit_alt_attribute_name.setText(alt_attribute_name);
+        edit_title_link_type.setText("Edit Link");
         edit_link.setText(link);
-//        System.out.println("LINK:    " + link);
-        edit_link_type.setText("productDescriptionPage");
-//        edit_item_description.setText(link_type);
+        edit_link_type.setText("productDescriptionPage"); //Hardcoded for now
 
         edit_btn_save = (Button) findViewById(R.id.edit_btn_save);
         edit_btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                call(sid, uri_response_id, edit_link, edit_item_description);
+                save_call(sid, uri_response_id, edit_link, edit_alt_attribute_name);
                 Intent intent = new Intent(getApplicationContext(), dashboard.class);
                 intent.putExtra("sid", sid);
                 startActivity(intent);
-                grabBrowserUrl.current_url = "";
+                grab_browser_url.current_url = "";
             }
         });
 
@@ -87,15 +80,13 @@ public class editLinkPage extends AppCompatActivity {
         get_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), grabBrowserUrl.class);
+                Intent intent = new Intent(getApplicationContext(), grab_browser_url.class);
                 intent.putExtra("sid", sid);
-                intent.putExtra("attribute_name", edit_item_description.getText().toString());
+                intent.putExtra("alt_attribute_name", edit_alt_attribute_name.getText().toString());
                 intent.putExtra("uri_response_id", uri_response_id);
-//                intent.putExtra("new_uri", new_uri);
-//                intent.putExtra("link", link);
-                intent.putExtra("FROM_ACTIVITY", "editLinkPage");
+                intent.putExtra("FROM_ACTIVITY", "edit_link_page");
                 startActivity(intent);
-                edit_link.setText(grabBrowserUrl.current_url);
+                edit_link.setText(grab_browser_url.current_url);
             }
         });
 
@@ -131,14 +122,13 @@ public class editLinkPage extends AppCompatActivity {
                             final String jsonString1 = response.body().string();
                             System.out.println(jsonString1);
 
-                            editLinkPage.this.runOnUiThread(new Runnable() {
+                            edit_link_page.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     Toast toast = Toast.makeText(getApplicationContext(), "Link Deleted", Toast.LENGTH_SHORT);
                                     toast.show();
                                     Intent intent = new Intent(getApplicationContext(), dashboard.class);
                                     intent.putExtra("sid", sid);
-//                                    intent.putExtra("product_id", product_id);
                                     startActivity(intent);
                                 }
                             });
@@ -152,12 +142,8 @@ public class editLinkPage extends AppCompatActivity {
 
     }
 
-    private void call(String sid, String uri_response_id, EditText link, EditText item_description) {
+    private void save_call(String sid, String uri_response_id, EditText link, EditText item_description) {
         body1 = new JSONObject();
-//        System.out.println(sid);
-//        System.out.println(uri_response_id);
-//        System.out.println(link.getText().toString());
-//        System.out.println(item_description.getText().toString());
         try {
             body1.put("command", "save_existing_uri_response");
             body1.put("session_id", sid);
@@ -196,23 +182,14 @@ public class editLinkPage extends AppCompatActivity {
                     final String jsonString1 = response.body().string();
                     System.out.println(jsonString1);
 
-                    editLinkPage.this.runOnUiThread(new Runnable() {
+                    edit_link_page.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast toast = Toast.makeText(getApplicationContext(), "Link Added", Toast.LENGTH_SHORT);
                             toast.show();
                         }
                     });
-//                            else{
-//                                addProductPage.this.runOnUiThread(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        Intent intent = new Intent(getApplicationContext(), dashboard.class);
-//                                        intent.putExtra("sid", sid);
-//                                        startActivity(intent);
-//                                    }
-//                                });
-//                            }
+
                 }
             }
         });

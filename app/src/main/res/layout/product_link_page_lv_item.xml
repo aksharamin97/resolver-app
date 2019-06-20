@@ -6,7 +6,7 @@
     android:paddingBottom="20dp">
 
     <TextView
-        android:id="@+id/linkType"
+        android:id="@+id/alt_attribute_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"

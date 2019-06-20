@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -28,10 +27,10 @@ import okhttp3.Response;
 //import org.json.simple.parser.JSONParser;
 //import org.json.simple.parser.*;
 
-public class loginActivity extends AppCompatActivity {
-    public TextView res;
-    public EditText uname;
-    public EditText pass;
+public class login_page extends AppCompatActivity {
+
+    public EditText username;
+    public EditText password;
 
     private CheckBox logCheck;
 
@@ -39,25 +38,20 @@ public class loginActivity extends AppCompatActivity {
     public static final String TEXT = "text";
     public static final String TEXT2 = "text2";
     public static final String SWITCH1 = "switch1";
-
     private String text;
     private String text2;
     private boolean switchOnOff;
-
-    /*public String firstName = "";
-    public String lastName = "";
-    public String memberName = "";*/
     public static String session_id = "";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_page);
 
         logCheck = (CheckBox)findViewById(R.id.logCheck);
-        uname = (EditText)findViewById(R.id.username);
-        pass = (EditText)findViewById(R.id.password);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
         Button btn = (Button)findViewById(R.id.btn_login);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +62,8 @@ public class loginActivity extends AppCompatActivity {
                 JSONObject body = new JSONObject();
                 try {
                     body.put("command", "get_session");
-                    body.put("email", uname.getText().toString());
-                    body.put("password", pass.getText().toString());
+                    body.put("email", username.getText().toString());
+                    body.put("password", password.getText().toString());
                 } catch (JSONException e) {
                     Log.d("OKHTTP3", "JSON Exception");
                     e.printStackTrace();
@@ -93,9 +87,6 @@ public class loginActivity extends AppCompatActivity {
                             final String jsonString = response.body().string();
                             try {
                                 JSONObject json = new JSONObject(jsonString);
-                                /*firstName = json.getString("firstname");
-                                lastName = json.getString("surname");
-                                memberName = json.getString("member_name");*/
                                 session_id = json.getString("session_id");
 
                             }
@@ -105,7 +96,7 @@ public class loginActivity extends AppCompatActivity {
 
                             final String sid = session_id;
                             if (sid.compareTo("LOGIN FAILED") == 0){
-                                loginActivity.this.runOnUiThread(new Runnable() {
+                                login_page.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         Toast toast = Toast.makeText(getApplicationContext(),"Login Failed", Toast.LENGTH_SHORT);
@@ -114,7 +105,7 @@ public class loginActivity extends AppCompatActivity {
                                 });
                             }
                             else{
-                                loginActivity.this.runOnUiThread(new Runnable() {
+                                login_page.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         Intent intent = new Intent(getApplicationContext(), dashboard.class);
@@ -145,8 +136,8 @@ public class loginActivity extends AppCompatActivity {
    private void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TEXT, uname.getText().toString());
-       editor.putString(TEXT2, pass.getText().toString());
+       editor.putString(TEXT, username.getText().toString());
+       editor.putString(TEXT2, password.getText().toString());
         editor.putBoolean(SWITCH1, logCheck.isChecked());
 
         editor.apply();
@@ -172,8 +163,8 @@ public class loginActivity extends AppCompatActivity {
     }
 
     public void updateView(){
-        uname.setText(text);
-        pass.setText(text2);
+        username.setText(text);
+        password.setText(text2);
         logCheck.setChecked(switchOnOff);
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////

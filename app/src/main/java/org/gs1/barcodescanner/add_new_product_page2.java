@@ -1,15 +1,13 @@
 package org.gs1.barcodescanner;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.gms.common.util.ProcessUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,20 +22,19 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class addNewLink extends AppCompatActivity {
+public class add_new_product_page2 extends AppCompatActivity {
 
     Button btn_save;
     Button get_link;
+    Button btn_add;
+    String product_name;
     EditText link;
-    EditText alt_attribute_name;
-
+    EditText add_alt_attribute_name;
     String url = "https://data.gs1.org/api/api.php";
     String sid;
-    String new_uri;
-    String product_id;
+    String uri_request_id;
     String gtin;
-    String item_description;
-
+    String alt_attribute_name;
     JSONObject body1;
     MediaType JSON = MediaType.parse("application/json charset=utf-8");
     OkHttpClient client = new OkHttpClient();
@@ -46,82 +43,82 @@ public class addNewLink extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_link);
-
+        setContentView(R.layout.add_new_product_page2);
         Intent intent = getIntent();
         sid = intent.getStringExtra("sid");
+        uri_request_id = intent.getStringExtra("uri_request_id");
         gtin = intent.getStringExtra("gtin");
-        product_id = intent.getStringExtra("product_id");
-        final String uri_response_id = intent.getStringExtra("uri_response_id");
-        final String grab_link = intent.getStringExtra("link");
+        product_name = intent.getStringExtra("product_name");
+        alt_attribute_name = intent.getStringExtra("alt_attribute_name");
+        link = (EditText)findViewById(R.id.link);
 
+        System.out.println("id   " + uri_request_id);
+        System.out.println("gtin   " + gtin);
+        System.out.println("product_name   " + product_name);
+        System.out.println("sid   " + sid);
 
-        link = (EditText)findViewById(R.id.addNewLink_link);
-        link.setText(grab_link);
-        System.out.println("DIS     "+link.getText().toString());
-        System.out.println("PRODUCT_ID     " + product_id);
-        alt_attribute_name = (EditText)findViewById(R.id.addNewLink_alt_attribute_name);
+        add_alt_attribute_name = (EditText)findViewById(R.id.alt_attribute_name);
+        add_alt_attribute_name.setText(alt_attribute_name);
 
-
-        btn_save  = (Button) findViewById(R.id.addNewLink_btn_save);
-        get_link = (Button)findViewById(R.id.addNewLink_get_link);
-
+        btn_save  = (Button) findViewById(R.id.btn_save);
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("LINK      "+link.getText().toString());
-                System.out.println("ATTRIBUTE _NAME     "+alt_attribute_name.getText().toString());
-                call(sid, product_id, link, alt_attribute_name);
+                System.out.println("LINK  "+link.getText().toString());
+                System.out.println("Attribute ALT    " +add_alt_attribute_name.getText().toString());
+                link_call(sid, uri_request_id, link, add_alt_attribute_name);
                 Intent intent = new Intent(getApplicationContext(), dashboard.class);
                 intent.putExtra("sid", sid);
                 startActivity(intent);
             }
         });
 
-        get_link.setOnClickListener(new View.OnClickListener() {
+
+        btn_add = (Button)findViewById(R.id.btn_add);
+        btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), grabBrowserUrl.class);
+                link_call(sid, uri_request_id, link, add_alt_attribute_name);
+                Intent intent = new Intent(getApplicationContext(), add_new_product_page2.class);
                 intent.putExtra("sid", sid);
-                intent.putExtra("new_uri", new_uri);
-                intent.putExtra("gtin", gtin);
-                intent.putExtra("item_description", item_description);
-                intent.putExtra("product_id", product_id);
-                intent.putExtra("FROM_ACTIVITY", "addNewLink");
+                intent.putExtra("uri_request_id", uri_request_id);
                 startActivity(intent);
             }
         });
 
 
-//        link.setText(grabBrowserUrl.current_url);
-//        grabBrowserUrl.current_url = "";
+        get_link = (Button)findViewById(R.id.get_link);
+        get_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), grab_browser_url.class);
+                intent.putExtra("sid", sid);
+                intent.putExtra("uri_request_id", uri_request_id);
+                intent.putExtra("gtin", gtin);
+                intent.putExtra("product_name", product_name);
+                intent.putExtra("alt_attribute_name",add_alt_attribute_name.getText().toString());
+                intent.putExtra("FROM_ACTIVITY", "add_new_product_page2");
+                startActivity(intent);
+            }
+        });
 
 
-
-//        ImageView logo;
-//        logo = (ImageView)findViewById(R.id.banner_logo);
-//        logo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        link.setText(grab_browser_url.current_url);
+        grab_browser_url.current_url = "";
 
     }
 
-    private void call(String sid, String product_id, EditText link, EditText alt_attribute_name) {
+    private void link_call(String sid, String uri_request_id, EditText link, EditText add_alt_attribute_name) {
         try {
-
             body1 = new JSONObject();
             body1.put("command", "save_new_uri_response");
             body1.put("session_id", sid);
-            body1.put("uri_request_id", product_id);
+            body1.put("uri_request_id", uri_request_id);
             body1.put("attribute_id", "1");
             body1.put("iana_language", "en");
             body1.put("destination_uri", link.getText().toString());
-            body1.put("default_uri", "0");
-            body1.put("alt_attribute_name", alt_attribute_name.getText().toString());
+            body1.put("default_uri", "1");
+            body1.put("alt_attribute_name", add_alt_attribute_name.getText().toString());
             body1.put("active_start_date", "");
             body1.put("active_end_date", "");
             body1.put("forward_request_querystrings", "1");
@@ -146,25 +143,16 @@ public class addNewLink extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()){
                     final String jsonString1 = response.body().string();
-                    System.out.println("OUTPUT    " + jsonString1);
+                    System.out.println(jsonString1);
 
-                    addNewLink.this.runOnUiThread(new Runnable() {
+                    add_new_product_page2.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast toast = Toast.makeText(getApplicationContext(),"Link Added", Toast.LENGTH_SHORT);
                             toast.show();
                         }
                     });
-//                            else{
-//                                addNewLink.this.runOnUiThread(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        Intent intent = new Intent(getApplicationContext(), dashboard.class);
-//                                        intent.putExtra("sid", sid);
-//                                        startActivity(intent);
-//                                    }
-//                                });
-//                            }
+
                 }
             }
         });

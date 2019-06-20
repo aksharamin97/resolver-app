@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".editProductPage">
+    tools:context=".edit_link_page">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,16 +43,30 @@
             android:layout_marginTop="40dp"
             android:orientation="vertical">
 
+            <!--<ImageButton-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
 
             <TextView
-                android:id="@+id/text_GTIN"
+                android:id="@+id/edit_title_link_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:text="GTIN"
+                android:text="LinkType"
                 android:textColor="#454545"
                 android:textSize="18dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/edit_text_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:text="Link"
+                android:textColor="#888B8D"
+                android:textSize="18dp" />
+
+
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
@@ -63,42 +77,61 @@
                 android:layout_marginBottom="10dp">
 
                 <EditText
-                    android:id="@+id/gtin"
+                    android:id="@+id/edit_link"
                     android:layout_width="match_parent"
-                    android:layout_height="62dp"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginLeft="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp"
                     android:background="@drawable/background2"
-                    android:inputType="number"
-                    android:maxLength="14"
+                    android:inputType="textPersonName"
                     android:paddingLeft="15dp"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent" />
 
                 <Button
-                    android:id="@+id/scanGTIN"
+                    android:id="@+id/edit_get_link"
                     android:layout_width="50sp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginEnd="0dp"
                     android:layout_marginRight="0dp"
                     android:background="@drawable/background3"
-                    android:drawableLeft="@drawable/ic_camera_alt_darkgray_24dp"
+                    android:drawableLeft="@drawable/ic_insert_link_darkgray_24dp"
                     android:paddingLeft="14sp"
-                    app:layout_constraintEnd_toEndOf="@+id/gtin" />
+                    app:layout_constraintEnd_toEndOf="@+id/edit_link" />
             </android.support.constraint.ConstraintLayout>
 
             <TextView
-                android:id="@+id/text_lang"
+                android:id="@+id/edit_text_link_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:text="Language"
-                android:textColor="#454545"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+                android:text="Link Type"
+                android:textColor="#888B8D"
+                android:textSize="18dp" />
 
             <EditText
-                android:id="@+id/lang"
+                android:id="@+id/edit_link_type"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background2"
+                android:inputType="textPersonName"
+                android:paddingLeft="15dp" />
+
+            <TextView
+                android:id="@+id/edit_text_attribute"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:text="Alt Attribute Name"
+                android:textColor="#888B8D"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/edit_alt_attribute_name"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
                 android:layout_marginLeft="25dp"
@@ -107,11 +140,11 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/background2"
                 android:inputType="text"
-                android:maxLength="14"
                 android:paddingLeft="15dp" />
 
+
             <TextView
-                android:id="@+id/text_default_lang"
+                android:id="@+id/edit_text_default_link"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
@@ -127,7 +160,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_lang_yes"
+                    android:id="@+id/edit_btn_link_yes"
                     android:layout_width="104dp"
                     android:layout_height="38dp"
                     android:layout_marginLeft="25dp"
@@ -139,52 +172,94 @@
                     android:textSize="18sp" />
 
                 <Button
-                    android:id="@+id/btn_lang_no"
+                    android:id="@+id/edit_btn_link_no"
                     android:layout_width="104dp"
                     android:layout_height="38dp"
                     android:layout_marginLeft="25dp"
                     android:background="@drawable/background2"
-                    android:gravity="center"
                     android:text="No"
                     android:textAllCaps="false"
                     android:textColor="#888B8D"
                     android:textSize="18sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/text_product_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:text="Product Name"
-                android:textColor="#454545"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/product_name"
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:layout_marginLeft="25dp"
+                <TextView
+                    android:id="@+id/edit_text_startdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start Date"
+                    android:textColor="#888B8D"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/edit_text_enddate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="80dp"
+                    android:text="End Date"
+                    android:textColor="#888B8D"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/background2"
-                android:inputType="text"
-                android:paddingLeft="15dp" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edit_picker_startdate"
+                    android:layout_width="130dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="25dp"
+                    android:background="@drawable/background2"
+                    android:inputType="date"
+                    android:paddingLeft="15dp" />
+
+                <EditText
+                    android:id="@+id/edit_picker_enddate"
+                    android:layout_width="130dp"
+                    android:layout_height="62dp"
+                    android:layout_marginLeft="25dp"
+                    android:background="@drawable/background2"
+                    android:inputType="date"
+                    android:paddingLeft="15dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30sp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_save"
+                    android:id="@+id/edit_btn_delete"
                     android:layout_width="104dp"
                     android:layout_height="38dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:layout_marginRight="50dp"
+                    android:text="Delete"
+                    android:textAllCaps="false"
+                    android:textColor="#B1B3B3"
+                    android:background="@drawable/background2"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/edit_btn_save"
+                    android:layout_width="104dp"
+                    android:layout_height="38dp"
+                    android:layout_marginLeft="50dp"
                     android:background="#F26334"
                     android:gravity="center"
                     android:text="Save"
@@ -193,7 +268,10 @@
                     android:textSize="18sp" />
 
 
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+
 </LinearLayout>

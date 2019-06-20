@@ -14,43 +14,43 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".addNewLink"
+            android:name=".add_new_link_page"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".editLinkPage"
+            android:name=".edit_link_page"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".editProductPage"
+            android:name=".edit_product_info_page"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".addProductPage1"
+            android:name=".add_new_product_page2"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".addProductPage"
+            android:name=".add_new_product_page1"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".landingPage"
+            android:name=".consumer_landing_page"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".grabBrowserUrl"
+            android:name=".grab_browser_url"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".product_page"
+            android:name=".product_link_page"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".dashboard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".loginActivity"
+            android:name=".login_page"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".mybrowser"
+            android:name=".in_app_browser"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ScanCodeActivity"
+            android:name=".barcode_scanner_page"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name=".main_page"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,8 +1,8 @@
 package org.gs1.barcodescanner;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +22,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class editProductPage extends AppCompatActivity {
+public class edit_product_info_page extends AppCompatActivity {
 
     JSONObject body1;
     String url = "https://data.gs1.org/api/api.php";
@@ -33,19 +33,19 @@ public class editProductPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_product_page);
+        setContentView(R.layout.edit_product_info_page);
 
         Intent intent = getIntent();
-        final String name = intent.getStringExtra("name");
+        final String product_name = intent.getStringExtra("product_name");
         final String gtin = intent.getStringExtra("gtin");
-        final String product_id = intent.getStringExtra("product_id");
+        final String uri_request_id = intent.getStringExtra("uri_request_id");
         final String sid = intent.getStringExtra("sid");
 
         final EditText GTIN = (EditText)findViewById(R.id.gtin);
         final EditText item_description = (EditText)findViewById(R.id.product_name);
 
         GTIN.setText(gtin);
-        item_description.setText(name);
+        item_description.setText(product_name);
 
         Button save = (Button)findViewById(R.id.btn_save);
         save.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +56,7 @@ public class editProductPage extends AppCompatActivity {
                 try {
                     body1.put("command", "save_existing_uri_request");
                     body1.put("session_id", sid);
-                    body1.put("uri_request_id", product_id);
+                    body1.put("uri_request_id", uri_request_id);
                     body1.put("alpha_code", "gtin");
                     body1.put("alpha_value", GTIN.getText().toString());
                     body1.put("item_description", item_description.getText().toString());
@@ -92,14 +92,13 @@ public class editProductPage extends AppCompatActivity {
                         if (response.isSuccessful()){
                             final String jsonString3 = response.body().string();
                             System.out.println(jsonString3);
-                            editProductPage.this.runOnUiThread(new Runnable() {
+                            edit_product_info_page.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     Toast toast = Toast.makeText(getApplicationContext(),"Product Saved", Toast.LENGTH_SHORT);
                                     toast.show();
                                     Intent intent = new Intent(getApplicationContext(), dashboard.class);
                                     intent.putExtra("sid", sid);
-//                                    intent.putExtra("new_uri", new_uri);
                                     startActivity(intent);
                                 }
                             });
