@@ -13,11 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".addNewLink"></activity>
+        <activity
+            android:name=".addNewLink"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".editLinkPage"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".editProductPage"></activity>
+        <activity
+            android:name=".editProductPage"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".addProductPage1"
             android:theme="@style/AppTheme.NoActionBar" />

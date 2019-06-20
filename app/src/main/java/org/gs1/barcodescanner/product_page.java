@@ -251,7 +251,7 @@ public class product_page extends AppCompatActivity {
             btn_active_suspend.setText("Suspend");
         }
         if (active.equals("0")) {
-            btn_active_suspend.setText("Active");
+            btn_active_suspend.setText("Go Live");
         }
 
         btn_active_suspend.setOnClickListener(new View.OnClickListener() {
