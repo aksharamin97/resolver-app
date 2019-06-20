@@ -32,8 +32,7 @@
             android:name=".consumer_landing_page"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".grab_browser_url"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".grab_browser_url"/>
         <activity
             android:name=".product_link_page"
             android:theme="@style/AppTheme.NoActionBar" />
