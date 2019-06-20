@@ -119,43 +119,28 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/makeActive"
+            android:id="@+id/deleteBtn"
             android:layout_width="104dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="30dp"
-            android:background="#F26334"
+            android:layout_marginRight="50dp"
             android:gravity="center"
-            android:text="Make Active"
+            android:text="Delete"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:textColor="#B1B3B3"
+            android:background="@drawable/background2"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn_active_suspend"
             android:layout_width="104dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="50dp"
             android:background="#F26334"
             android:gravity="center"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:text="HEHE" />
+            android:textSize="18sp"/>
 
-
-        <Button
-            android:id="@+id/deleteBtn"
-            android:layout_width="104dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
-            android:background="#F26334"
-            android:gravity="center"
-            android:text="Delete"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 </LinearLayout>
     </ScrollView>

@@ -94,7 +94,7 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="0dp"
                     android:layout_marginRight="0dp"
-                    android:background="#B1B3B3"
+                    android:background="@drawable/background3"
                     android:drawableLeft="@drawable/ic_insert_link_darkgray_24dp"
                     android:paddingLeft="14sp"
                     app:layout_constraintEnd_toEndOf="@+id/edit_link" />
@@ -238,37 +238,36 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30sp"
                 android:gravity="center"
                 android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/edit_btn_save"
-                    android:layout_width="104dp"
-                    android:layout_height="38dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="#F26334"
-                    android:gravity="center"
-                    android:text="Save"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/edit_btn_delete"
                     android:layout_width="104dp"
                     android:layout_height="38dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:layout_marginRight="50dp"
+                    android:text="Delete"
+                    android:textAllCaps="false"
+                    android:textColor="#B1B3B3"
+                    android:background="@drawable/background2"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/edit_btn_save"
+                    android:layout_width="104dp"
+                    android:layout_height="38dp"
                     android:background="#F26334"
                     android:gravity="center"
-                    android:text="Delete"
+                    android:layout_marginLeft="50dp"
+                    android:text="Save"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
+
+
 
             </LinearLayout>
         </LinearLayout>
