@@ -77,14 +77,15 @@ public class addProductPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                if (gtin.getText().toString().equals("") || item_description.getText().toString().equals("")) {
-//
-//                    toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
-//                    toast.show();
-//                }
-//
-//                else {
-//
+                if (gtin.getText().toString().equals("") || item_description.getText().toString().equals("")) {
+
+                    toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+                else {
+                    toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
+                    toast.show();
 
                     if (checkDigit(gtin.getText().toString())) {
 
@@ -252,73 +253,13 @@ public class addProductPage extends AppCompatActivity {
 //                    }
 //                });
                     }
-//                }
+                }
             }//end of onclick
         });//end of set on click listener
 
 
 
-//        Button save = (Button)findViewById(R.id.btn_save);
-//        save.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                body3 = new JSONObject();
-//                try {
-//                    body3.put("command", "save_existing_uri_request");
-//                    body3.put("session_id", sid);
-//                    body3.put("uri_request_id", product_id);
-//                    body3.put("alpha_code", "gtin");
-//                    body3.put("alpha_value", gtin.getText().toString());
-//                    body3.put("item_description", item_description.getText().toString());
-//                    body3.put("include_in_sitemap", "1");
-//                    body3.put("active", "0");
-//                    body3.put("uri_prefix_1", "");
-//                    body3.put("uri_suffix_1", "");
-//                    body3.put("uri_prefix_2", "");
-//                    body3.put("uri_suffix_2", "");
-//                    body3.put("uri_prefix_3", "");
-//                    body3.put("uri_suffix_3", "");
-//                    body3.put("uri_prefix_4", "");
-//                    body3.put("uri_suffix_4", "");
-//                } catch (JSONException e) {
-//                    Log.d("OKHTTP3", "JSON Exception");
-//                    e.printStackTrace();
-//                }
-//                RequestBody req_body3 = RequestBody.create(JSON, body3.toString());
-//                Request request3 = new Request.Builder()
-//                        .url(url)
-//                        .post(req_body3)
-//                        .build();
-//
-//                client.newCall(request3).enqueue(new Callback() {
-//                    @Override
-//                    public void onFailure(Call call, IOException e) {
-//                        e.printStackTrace();
-//                        System.out.println("Call 3 Error");
-//                    }
-//
-//                    @Override
-//                    public void onResponse(Call call, Response response) throws IOException {
-//                        if (response.isSuccessful()){
-//                            final String jsonString3 = response.body().string();
-//                            System.out.println(jsonString3);
-//                            addProductPage.this.runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    Toast toast = Toast.makeText(getApplicationContext(),"Product Saved", Toast.LENGTH_SHORT);
-//                                    toast.show();
-//                                    Intent intent = new Intent(getApplicationContext(), dashboard.class);
-//                                    intent.putExtra("sid", sid);
-//                                    intent.putExtra("new_uri", new_uri);
-//                                    startActivity(intent);
-//                                }
-//                            });
-//                        }
-//                    }
-//                });
-//            }
-//        });
+
 
         Button scanGTIN = (Button)findViewById(R.id.scanGTIN);
         scanGTIN.setOnClickListener(new View.OnClickListener() {
@@ -359,6 +300,9 @@ public class addProductPage extends AppCompatActivity {
         rem = sum%10;
         nearestTen =  (sum - rem)+10;
         checkDigit = nearestTen -  sum;
+        if(checkDigit == 10) {
+            checkDigit = 0;
+        }
 
         if(Integer.parseInt(gtin.substring(gtin.length()-1)) == checkDigit)
             return pass = true;

@@ -63,10 +63,10 @@ public class editLinkPage extends AppCompatActivity {
         edit_link_type = (EditText) findViewById(R.id.edit_link_type);
 
         edit_item_description.setText(attribute_name);
-        System.out.println(attribute_name);
+//        System.out.println(attribute_name);
         edit_title_link_type.setText(sid);
         edit_link.setText(link);
-        System.out.println("LINK:    " + link);
+//        System.out.println("LINK:    " + link);
         edit_link_type.setText("productDescriptionPage");
 //        edit_item_description.setText(link_type);
 
@@ -93,7 +93,7 @@ public class editLinkPage extends AppCompatActivity {
                 intent.putExtra("uri_response_id", uri_response_id);
 //                intent.putExtra("new_uri", new_uri);
 //                intent.putExtra("link", link);
-                intent.putExtra("FROM_ACTIVITY", "B");
+                intent.putExtra("FROM_ACTIVITY", "editLinkPage");
                 startActivity(intent);
                 edit_link.setText(grabBrowserUrl.current_url);
             }
@@ -217,10 +217,5 @@ public class editLinkPage extends AppCompatActivity {
             }
         });
     }
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), product_page.class);
-        intent.putExtra("sid", sid);
-        startActivity(intent);
-    }
+
 }
