@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,18 +10,30 @@
 
     <Button
         android:id="@+id/btn_geturl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="url"
-        tools:layout_editor_absoluteX="164dp"
-        tools:layout_editor_absoluteY="612dp" />
+        android:layout_width="150sp"
+        android:layout_height="0sp"
+        android:layout_marginEnd="128dp"
+        android:layout_marginRight="128dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/shape_flag"
+        android:text="Capture"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_constraintBottom_toBottomOf="@+id/webView"
+        tools:layout_constraintEnd_toEndOf="parent" />
 
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="687dp">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-134dp"
+        tools:layout_editor_absoluteY="0dp">
 
 
     </WebView>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

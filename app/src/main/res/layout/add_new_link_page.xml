@@ -240,6 +240,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:gravity="center">
 
                 <Button
@@ -247,8 +249,6 @@
                     android:layout_width="104dp"
                     android:layout_height="38dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
                     android:background="#F26334"
                     android:gravity="center"
                     android:text="Save"
