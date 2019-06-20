@@ -32,9 +32,27 @@ public class barcode_scanner_page extends AppCompatActivity implements ZXingScan
             startActivity(intent);
             onBackPressed();
         }
-        else{
-            add_new_product_page1.scannedGTIN = result.getText();
+        if (previousActivity.equals("add_new_product_page1")){
+            Intent mintent = getIntent();
+            String sid = mintent.getStringExtra("sid");
+
             Intent intent = new Intent(getApplicationContext(), add_new_product_page1.class);
+            intent.putExtra("sid", sid);
+            intent.putExtra("GTIN", result.getText());
+            startActivity(intent);
+            onBackPressed();
+        }
+        else{
+            Intent mintent = getIntent();
+            String sid = mintent.getStringExtra("sid");
+            String product_name = mintent.getStringExtra("product_name");
+            String uri_request_id = mintent.getStringExtra("uri_request_id");
+
+            Intent intent = new Intent(getApplicationContext(), edit_product_info_page.class);
+            intent.putExtra("sid", sid);
+            intent.putExtra("gtin", result.getText());
+            intent.putExtra("product_name", product_name);
+            intent.putExtra("uri_request_id", uri_request_id);
             startActivity(intent);
             onBackPressed();
         }
