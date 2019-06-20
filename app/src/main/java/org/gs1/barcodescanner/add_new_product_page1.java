@@ -189,7 +189,8 @@ public class add_new_product_page1 extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), barcode_scanner_page.class);
                 intent.putExtra("sid", sid);
-                intent.putExtra("FROM_ACTIVITY", "new_product_page1");
+                intent.putExtra("uri_request_id", uri_request_id);
+                intent.putExtra("FROM_ACTIVITY", "add_new_product_page1");
                 startActivity(intent);
             }
         });
