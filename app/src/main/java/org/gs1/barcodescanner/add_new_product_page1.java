@@ -207,8 +207,9 @@ public class add_new_product_page1 extends AppCompatActivity {
         int nearestTen;
         int rem;
         int checkDigit;
-        boolean pass;
 
+        if(gtin.length()%2 != 0)
+            gtin = "0" + gtin;
 
         for(int i = 0; i<gtin.length() -1; i++){
             if(i%2 == 0){
