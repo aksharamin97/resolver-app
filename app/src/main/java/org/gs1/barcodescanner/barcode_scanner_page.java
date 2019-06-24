@@ -44,7 +44,7 @@ public class barcode_scanner_page extends AppCompatActivity implements ZXingScan
             startActivity(intent);
             onBackPressed();
         }
-        else{
+        if(previousActivity.equals("edit_product_info_page")){
             Intent mintent = getIntent();
             String sid = mintent.getStringExtra("sid");
             String product_name = mintent.getStringExtra("product_name");
