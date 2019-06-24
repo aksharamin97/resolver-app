@@ -35,7 +35,6 @@ public class edit_link_page extends AppCompatActivity {
 
     String url = "https://data.gs1.org/api/api.php";
     String sid;
-    String new_uri;
     JSONObject body1;
     JSONObject body2;
     MediaType JSON = MediaType.parse("application/json charset=utf-8");

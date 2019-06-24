@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -63,6 +64,7 @@ public class dashboard extends AppCompatActivity {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         Intent intent = getIntent();
         final String sid = intent.getStringExtra("sid");
+
         OkHttpClient client = new OkHttpClient();
 
         final MediaType JSON = MediaType.parse("application/json charset=utf-8");
@@ -147,20 +149,32 @@ public class dashboard extends AppCompatActivity {
                                 ss.setSpan(fcsPrimary, 18, 19+Count, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                                 dashboard_title.setText(ss);
 
-//                                SearchView sv = (SearchView)findViewById(R.id.dashboard_search_bar);
-//                                sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//                                    @Override
-//                                    public boolean onQueryTextSubmit(String query) {
-//
-//                                        return false;
-//                                    }
-//
-//                                    @Override
-//                                    public boolean onQueryTextChange(String newText) {
-//                                        ((SimpleAdapter) adapter).getFilter().filter(newText);
-//                                        return false;
-//                                    }
-//                                });
+                                SearchView sv = (SearchView)findViewById(R.id.dashboard_search_bar);
+                                sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                    @Override
+                                    public boolean onQueryTextSubmit(String query) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onQueryTextChange(String newText) {
+                                        ((SimpleAdapter) adapter).getFilter().filter(newText);
+                                        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                Object new_id = adapter.getItem(position);
+                                                Intent intent = new Intent(getApplicationContext(), product_link_page.class);
+                                                intent.putExtra("product_name", ((HashMap) new_id).get("product_name").toString());
+                                                intent.putExtra("gtin",  ((HashMap) new_id).get("gtin").toString());
+                                                intent.putExtra("active",  ((HashMap) new_id).get("status1").toString());
+                                                intent.putExtra("uri_request_id",  ((HashMap) new_id).get("uri_request_id").toString());
+                                                intent.putExtra("sid", sid);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                        return false;
+                                    }
+                                });
 
                                 list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
