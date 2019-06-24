@@ -40,7 +40,6 @@ public class main_page extends AppCompatActivity {
 
 
         btn_scan_product.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 //if(Permission is granted) else-> request

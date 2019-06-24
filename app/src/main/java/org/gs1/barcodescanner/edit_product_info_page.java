@@ -56,7 +56,8 @@ public class edit_product_info_page extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (Integer.parseInt(GTIN.getText().toString().substring(gtin.length() - 1)) == add_new_product_page1.checkDigit(GTIN.getText().toString())){
+                String newGTIN = GTIN.getText().toString();
+                if (Integer.parseInt(newGTIN.substring(newGTIN.length() - 1)) == add_new_product_page1.checkDigit(newGTIN)){
                     body1 = new JSONObject();
                 try {
                     body1.put("command", "save_existing_uri_request");
