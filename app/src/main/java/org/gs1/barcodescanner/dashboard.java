@@ -59,7 +59,7 @@ public class dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_lv);
-        list = new ArrayList<>();
+        list = new ArrayList<>();//ArrayList full of Hashmaps which contain product data that is going to be displayed
         list_view = findViewById(R.id.list_view);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         Intent intent = getIntent();
@@ -67,6 +67,7 @@ public class dashboard extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
 
+        //Resolver API calls
         final MediaType JSON = MediaType.parse("application/json charset=utf-8");
         JSONObject body = new JSONObject();
         try {
@@ -92,6 +93,7 @@ public class dashboard extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                //On successful api call
                 if (response.isSuccessful()) {
                     jsonString = response.body().string();
                     try {
@@ -102,23 +104,32 @@ public class dashboard extends AppCompatActivity {
                             gtin = jsonobject.getString("alpha_value");
                             status = jsonobject.getString("active");
                             uri_request_id = jsonobject.getString("uri_request_id");
+                            //Hashmap "dict" is used to store data by key value pairs like python dictionaries
+                            //dict's keys and values are both strings
                             HashMap<String, String> dict = new HashMap<>();
+                            //adding all product attributes to dict
                             dict.put("product_name", product_name);
                             dict.put("gtin", gtin);
                             dict.put("status1", status);
                             dict.put("uri_request_id", uri_request_id);
+                            //if status is active set active to "• "
                             if(status.compareTo("1")==0) {
                                 dict.put("status", "Active");
                                 dict.put("active", "• ");
                                 dict.put("suspending", "");
                             }
+                            //if status is Draft set suspending to "• "
+                            //this allows a red dot to be printed if a product is suspending and a green dot if product is active
                             else{
                                 dict.put("status", "Draft");
                                 dict.put("active", "");
                                 dict.put("suspending", "• ");
                             }
+                            //dict is then added to list
                             list.add(dict);
+                            //this is repeated until all products in the json object are added to list
                         }
+                        //list is inverted so newest elements are displayed first in list
                         Collections.reverse(list);
 
                         runOnUiThread(new Runnable() {
@@ -126,6 +137,7 @@ public class dashboard extends AppCompatActivity {
                             @SuppressLint("ResourceType")
                             @Override
                             public void run() {
+                                //ListAdapters shows what is displayed in each element of list
                                 final ListAdapter adapter = new SimpleAdapter(
                                         dashboard.this, list, R.layout.dashboard_lv_item,
                                         new String[]{"product_name", "gtin", "suspending", "active", "status"},
@@ -133,6 +145,7 @@ public class dashboard extends AppCompatActivity {
 //
                                 list_view.setAdapter(adapter);
 
+                                //Displays number of items in list at top of screen
                                 TextView dashboard_title = findViewById(R.id.dashboard_title);
                                 String dashboard_title_text = "You currently have " + list.size() + " products";
                                 SpannableString ss = new SpannableString(dashboard_title_text);
@@ -156,6 +169,7 @@ public class dashboard extends AppCompatActivity {
                                         return false;
                                     }
 
+                                    //On very text change list view is update
                                     @Override
                                     public boolean onQueryTextChange(String newText) {
                                         ((SimpleAdapter) adapter).getFilter().filter(newText);
@@ -176,6 +190,7 @@ public class dashboard extends AppCompatActivity {
                                     }
                                 });
 
+                                //When a product is pressed on the listview product link page is opened along with all necessary information
                                 list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -186,7 +201,7 @@ public class dashboard extends AppCompatActivity {
                                         intent.putExtra("uri_request_id", list.get(position).get("uri_request_id"));
                                         intent.putExtra("sid", sid);
                                         startActivity(intent);
-                                }
+                                    }
                                 });
 
 

@@ -118,6 +118,7 @@
                 android:layout_marginRight="25dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/background2"
+                android:hint="productdescription"
                 android:inputType="textPersonName"
                 android:paddingLeft="15dp" />
 
@@ -224,6 +225,7 @@
                     android:layout_marginLeft="25dp"
                     android:background="@drawable/background2"
                     android:inputType="date"
+                    android:hint="04/10/2019"
                     android:paddingLeft="15dp" />
 
                 <EditText
@@ -233,6 +235,7 @@
                     android:layout_marginLeft="25dp"
                     android:background="@drawable/background2"
                     android:inputType="date"
+                    android:hint="03/01/2020"
                     android:paddingLeft="15dp" />
             </LinearLayout>
 

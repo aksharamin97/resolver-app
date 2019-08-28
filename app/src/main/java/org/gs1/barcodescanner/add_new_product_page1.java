@@ -33,6 +33,8 @@ public class add_new_product_page1 extends AppCompatActivity {
     EditText gtin;
     static String scannedGTIN;
     EditText item_description;
+    EditText lang;
+
     String url = "https://data.gs1.org/api/api.php";
     OkHttpClient client = new OkHttpClient();
     MediaType JSON = MediaType.parse("application/json charset=utf-8");
@@ -60,20 +62,30 @@ public class add_new_product_page1 extends AppCompatActivity {
         gtin = (EditText) findViewById(R.id.gtin);
 //        gtin.setText(scannedGTIN);
 
+        //Language is hardcoded to english
+        //cannot be changed in current version
+        lang = (EditText)findViewById(R.id.lang);
+        lang.setEnabled(false);
+
         item_description.setText(product_name);
         gtin.setText(GTIN);
 
 
         Button next = (Button) findViewById(R.id.btn_next);
+        //on press user is brought to next page where they can begin to add links to product
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //if gtin editText of item_description editText is missiing toast is displayed and no api call is made
                 if (gtin.getText().toString().equals("") || item_description.getText().toString().equals("")) {
                     toast = Toast.makeText(getApplicationContext(), "Missing Credentials", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else {
+                    //if all required fields are filled check digit for gtin is checked
+                    //if it passes api call is made
+                    //method checkDigit() is used to check. method is written below
                     if(Integer.parseInt(gtin.getText().toString().substring(gtin.length()-1)) == checkDigit(gtin.getText().toString())) {
                         body1 = new JSONObject();
                         try {
@@ -152,6 +164,8 @@ public class add_new_product_page1 extends AppCompatActivity {
                                             }
                                         }
                                     });
+                                    //when call is successful user is notified by toast
+                                    //intent to open add_new_product_page2 is made and carries all necessary credentials
                                     add_new_product_page1.this.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -170,6 +184,7 @@ public class add_new_product_page1 extends AppCompatActivity {
                         });
 
                     }
+                    //if check digit is invalid user is notified what the expected check digit should be
                     else {
                         toast = Toast.makeText(getApplicationContext(), "Invalid check digit. Digit should be " + checkDigit(gtin.getText().toString())+ "", Toast.LENGTH_SHORT);
                         toast.show();
@@ -199,19 +214,25 @@ public class add_new_product_page1 extends AppCompatActivity {
 
     }
 
+    //method gtin requires the parameter gtin as a string
     public static int checkDigit(String gtin) {
-        int odds = 0;
-        int evens = 0;
+        int odds = 0;//sum of odd elements in gtin times 3
+        int evens = 0;//sum of even elements in gtin
         char num;
         int sum;
         int nearestTen;
         int rem;
         int checkDigit;
 
+        //if gtin length is an odd number add a '0' to the beginning to make it even
+        //algorithm below only works if gtin length even
         if(gtin.length()%2 != 0)
             gtin = "0" + gtin;
 
+        //for loop goes through every element in gtin
         for(int i = 0; i<gtin.length() -1; i++){
+            //if element in gtin is even then number is multiplied by three and added to odds
+            //it is added to odds due java positioning staring at 0, ex i = 0 then position of element = 1
             if(i%2 == 0){
                 num = gtin.charAt(i);
                 odds += (num - '0') * 3;

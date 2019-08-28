@@ -39,11 +39,13 @@ public class consumer_landing_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.consumer_landing_page);
 
-        landing_page_title = findViewById(R.id.landing_page_title);
-        linkLv = (ListView)findViewById(R.id.linkLv);
-        linkList = new ArrayList<>();
-        btn_go_resolver = findViewById(R.id.btn_go_resolver);
 
+        landing_page_title = findViewById(R.id.landing_page_title);
+        linkLv = (ListView)findViewById(R.id.linkLv);//List view of links
+        linkList = new ArrayList<>();
+
+        //go resolver button brings user to Resolvers original product page in a browser
+        btn_go_resolver = findViewById(R.id.btn_go_resolver);
         btn_go_resolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +57,7 @@ public class consumer_landing_page extends AppCompatActivity {
     }
 
 
+    //getWebsite gets all data from Resolver page and displays it on screen
     String scriptcontent;
     private void getWebsite() {
         new Thread(new Runnable() {
@@ -117,6 +120,7 @@ public class consumer_landing_page extends AppCompatActivity {
             }
         }).start();
 
+        //GS1 logo
         ImageView logo;
         logo = (ImageView)findViewById(R.id.banner_logo);
         logo.setOnClickListener(new View.OnClickListener() {

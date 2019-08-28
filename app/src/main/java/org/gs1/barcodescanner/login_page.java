@@ -49,10 +49,13 @@ public class login_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
+        //Connections from front end to back end
         logCheck = (CheckBox)findViewById(R.id.logCheck);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         Button btn = (Button)findViewById(R.id.btn_login);
+
+        //When login button 'btn' is pressed api calls are made to ensure valid login
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +98,9 @@ public class login_page extends AppCompatActivity {
                             }
 
                             final String sid = session_id;
-                            if (sid.compareTo("LOGIN FAILED") == 0){
+                            //if invalid login then toast displays 'Login Failed'
+                            //invalid sid's return LOGIN FAILED
+                            if (sid.equals("LOGIN FAILED")){
                                 login_page.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -118,10 +123,12 @@ public class login_page extends AppCompatActivity {
                     }
                 });
 
-                    if (logCheck.isChecked())
-                        saveData();
-                    else
-                        clearData();
+                //Check box for saving username and password
+                if (logCheck.isChecked())
+                    //see saveData and clearData methods below
+                    saveData();
+                else
+                    clearData();
             }
         });
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,29 +139,32 @@ public class login_page extends AppCompatActivity {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////
-   private void saveData() {
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //SharedPreferences are used for local saved data
+    //Username and password are stored locally when check box is checked
+    private void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-       editor.putString(TEXT, username.getText().toString());
-       editor.putString(TEXT2, password.getText().toString());
-        editor.putBoolean(SWITCH1, logCheck.isChecked());
+        editor.putString(TEXT, username.getText().toString());//username
+        editor.putString(TEXT2, password.getText().toString());//password
+        editor.putBoolean(SWITCH1, logCheck.isChecked());//check box state
 
         editor.apply();
 
         //Toast.makeText(this,"Data saved", Toast.LENGTH_SHORT).show();
     }
-
+    //Clears local data
     private  void clearData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TEXT, "");
+        editor.putString(TEXT, "");//username and password set to empty strings
         editor.putString(TEXT2, "");
-        editor.putBoolean(SWITCH1, false);
+        editor.putBoolean(SWITCH1, false);//check box set to false
 
         editor.apply();
     }
 
+    //Default conditions for sharedPreferences
     public void loadData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         text = sharedPreferences.getString(TEXT, "");
@@ -162,6 +172,7 @@ public class login_page extends AppCompatActivity {
         switchOnOff = sharedPreferences.getBoolean(SWITCH1,false);
     }
 
+    //sets both edit texts and check box to whatever is saved in shared preferences
     public void updateView(){
         username.setText(text);
         password.setText(text2);

@@ -32,6 +32,9 @@ public class edit_link_page extends AppCompatActivity {
     EditText edit_link_type;
     TextView edit_title_link_type;
     EditText edit_alt_attribute_name;
+    EditText link_type;
+    EditText edit_picker_enddate;
+    EditText edit_picker_startdate;
 
     String url = "https://data.gs1.org/api/api.php";
     String sid;
@@ -51,7 +54,17 @@ public class edit_link_page extends AppCompatActivity {
         final String uri_response_id = intent.getStringExtra("uri_response_id");
         final String alt_attribute_name = intent.getStringExtra("alt_attribute_name");
 
+        //Link type start date and end date are hardcoded and unchangeable for current version
+        //back end is not built for these so example text is in place
+        link_type = (EditText)findViewById(R.id.edit_link_type);
+        link_type.setEnabled(false);
+        edit_picker_enddate = (EditText)findViewById(R.id.edit_picker_enddate);
+        edit_picker_enddate.setEnabled(false);
+        edit_picker_startdate = (EditText)findViewById(R.id.edit_picker_startdate);
+        edit_picker_startdate.setEnabled(false);
 
+
+        //Front end back end connections
         edit_title_link_type = (TextView) findViewById(R.id.edit_title_link_type);
         edit_link = (EditText) findViewById(R.id.edit_link);
         edit_alt_attribute_name = findViewById(R.id.edit_alt_attribute_name);
@@ -63,6 +76,7 @@ public class edit_link_page extends AppCompatActivity {
         edit_link_type.setText("productDescriptionPage"); //Hardcoded for now
 
         edit_btn_save = (Button) findViewById(R.id.edit_btn_save);
+        //on press product is save with new link
         edit_btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +89,7 @@ public class edit_link_page extends AppCompatActivity {
         });
 
         Button get_link = (Button) findViewById(R.id.edit_get_link);
-
+        //on press user is sent to in app browser where user can find a link and place it in textview
         get_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +104,7 @@ public class edit_link_page extends AppCompatActivity {
         });
 
         Button delete = (Button)findViewById(R.id.edit_btn_delete);
+        //on press user can delete a link
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,8 +162,8 @@ public class edit_link_page extends AppCompatActivity {
             body1.put("command", "save_existing_uri_response");
             body1.put("session_id", sid);
             body1.put("uri_response_id", uri_response_id);
-            body1.put("attribute_id", "1");
-            body1.put("iana_language", "en");
+            body1.put("attribute_id", "1");//attribute id is hardcoded and unchangeable. value '1' correlates to 'productdescription'
+            body1.put("iana_language", "en");//default language is also hardcoded to english. Front end is solely visual
             body1.put("default_language_flag", "0");
             body1.put("destination_uri", link.getText().toString());
             body1.put("default_uri", "1");
@@ -174,7 +189,7 @@ public class edit_link_page extends AppCompatActivity {
                 System.out.println("Call 1 Error");
             }
 
-            //
+            //on successful api response toast is displayed
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
