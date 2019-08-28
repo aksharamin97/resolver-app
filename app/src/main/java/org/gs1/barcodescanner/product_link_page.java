@@ -46,7 +46,7 @@ public class product_link_page extends AppCompatActivity {
     Button edit_product;
     TextView add_link;
 
-    ArrayList<HashMap<String, String>> list;
+    ArrayList<HashMap<String, String>> list;//Array list hold a hashmap, hashmap holds a key and value pair
     ListView linkLv;
     TextView product_title;
     TextView productUri;
@@ -66,12 +66,14 @@ public class product_link_page extends AppCompatActivity {
         final String sid = intent.getStringExtra("sid");
         list = new ArrayList<>();
 
+        //front end and back end connections
         product_title = findViewById(R.id.product_title);
         productUri = (TextView) findViewById(R.id.productGTIN);
         linkLv = (ListView) findViewById(R.id.linkLv);
         btn_active_suspend = (Button) findViewById(R.id.btn_active_suspend);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //api call
         OkHttpClient client = new OkHttpClient();
 
         final MediaType JSON = MediaType.parse("application/json charset=utf-8");
@@ -104,6 +106,9 @@ public class product_link_page extends AppCompatActivity {
                     try {
                         json_array = new JSONArray(jsonString);
 //                        final HashMap<String, String> product = new HashMap<>();
+                        //for loop constructs each hashmap with product data
+                        //hashmap is added to list
+                        //similar functionality to dashboard
                         for (int i = 0; i < json_array.length(); i++) {
                             JSONObject jsonobject = json_array.getJSONObject(i);
                             link = jsonobject.getString("destination_uri");
@@ -123,6 +128,7 @@ public class product_link_page extends AppCompatActivity {
                             public void run() {
                                 product_title.setText(product_name);
                                 productUri.setText("https://id.gs1.org/gtin/" + gtin);
+                                //ListAdapter sets up how what data is displayed on each item in listview
                                 ListAdapter adapter = new SimpleAdapter(
                                         product_link_page.this, list,
                                         R.layout.product_link_page_lv_item, new String[]{"alt_attribute_name", "link"}
@@ -149,13 +155,16 @@ public class product_link_page extends AppCompatActivity {
                                 linkLv.requestLayout();
 
 
+                                //When item in listview is pressed edit_link_page is opened
                                 linkLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                                        //intent that opens edit_link_page carries all extra necessary data
+                                        //similar actions are seen multiple times throughout code
                                         Intent intent = new Intent(getApplicationContext(), edit_link_page.class);
-                                        intent.putExtra("sid", sid);
-                                        intent.putExtra("active", active);
+                                        intent.putExtra("sid", sid);//session id
+                                        intent.putExtra("active", active);//status
                                         intent.putExtra("alt_attribute_name", list.get(position).get("alt_attribute_name"));
                                         intent.putExtra("link", list.get(position).get("link"));
                                         intent.putExtra("uri_response_id", list.get(position).get("uri_response_id"));

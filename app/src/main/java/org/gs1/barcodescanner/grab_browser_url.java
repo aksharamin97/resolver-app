@@ -43,18 +43,17 @@ public class grab_browser_url extends AppCompatActivity {
         uri_request_id = intent.getStringExtra("uri_request_id");
 
 
+        //Open in app browser of google so user can search for a url
         web = (WebView) findViewById(R.id.webView);
         web.getSettings().setLoadsImagesAutomatically(true);
-
         WebSettings webSettings = web.getSettings();
         webSettings.setJavaScriptEnabled(true);
-
-
         web.loadUrl("https://www.google.com/");
         web.setWebViewClient(new WebViewClient());
 
         Button btn_geturl;
         btn_geturl = findViewById(R.id.btn_geturl);
+        //when on a url that the user wants press button to get url and bring it back to previous activity
         btn_geturl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +61,8 @@ public class grab_browser_url extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(),current_url, Toast.LENGTH_SHORT);
                 toast.show();
 
+                //Sets conditions for what activity to go to next depending on the previous activity
+                //Similar to what is used on barcode_scanner_page
                 Intent mIntent = getIntent();
                 String previousActivity= mIntent.getStringExtra("FROM_ACTIVITY");
                 if (previousActivity.equals("add_new_product_page2")) {
@@ -100,6 +101,7 @@ public class grab_browser_url extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    //back and forward press functions
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

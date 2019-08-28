@@ -28,17 +28,18 @@ public class main_page extends AppCompatActivity {
         setContentView(R.layout.main_page);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        //Scan a Product Button
         RelativeLayout btn_scan_product;
         btn_scan_product = findViewById(R.id.btn_scan_product);
 
+        //Checks for camera permissions
         //If the permission is not  already granted then ask,if it is already granted then just do nothing for the permission section
         if (!(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
             //After this function call,it will ask for permission and whether it granted or not,this response is handle in onRequestPermissionsResult() which we overrided.
         }
 
-
+        //When button is pressed go to barcode scanner page
         btn_scan_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,14 +54,17 @@ public class main_page extends AppCompatActivity {
             }
         });
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Log A Product Button
         RelativeLayout btn_log_product;
         btn_log_product = findViewById(R.id.btn_log_product);
 
         btn_log_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //If page is not previously logged go to login page
                 if (login_page.session_id.equals("") || dashboard.jsonString.equals(""))
                     startActivity(new Intent(getApplicationContext(), login_page.class));
+                    //Else go directly to dashboard. sid is carried in order to get to dashboard
                 else {
                     Intent intent = new Intent(getApplicationContext(), dashboard.class);
                     intent.putExtra("sid", login_page.session_id);
@@ -71,9 +75,12 @@ public class main_page extends AppCompatActivity {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //GTIN search bar
         final EditText editText_search_gtin;
         editText_search_gtin = findViewById(R.id.editText_search_gtin);
 
+        //GTIN is searched when enter button is pressed. OnKeyListener and is waiting for Key.KEYCODE_ENTER
+        //Once enter is pressed GTIN is taken and sent to consumer landing page
         editText_search_gtin.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -89,6 +96,7 @@ public class main_page extends AppCompatActivity {
         });
     }
 
+    //Disables back button
     @Override
     public void onBackPressed() {
     }

@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import me.dm7.barcodescanner.core.ViewFinderView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -28,6 +29,10 @@ public class add_new_link_page extends AppCompatActivity {
     Button get_link;
     EditText link;
     EditText alt_attribute_name;
+    EditText link_type;
+    EditText addNewLink_link;
+    EditText addNewLink_picker_enddate;
+    EditText addNewLink_picker_startdate;
 
     String url = "https://data.gs1.org/api/api.php";
     String sid;
@@ -37,6 +42,8 @@ public class add_new_link_page extends AppCompatActivity {
     JSONObject body1;
     MediaType JSON = MediaType.parse("application/json charset=utf-8");
     OkHttpClient client = new OkHttpClient();
+
+
 
 
     @Override
@@ -51,6 +58,14 @@ public class add_new_link_page extends AppCompatActivity {
         final String uri_response_id = intent.getStringExtra("uri_response_id");
         final String grab_link = intent.getStringExtra("link");
 
+        //Link type start date and end date are hardcoded and unchangeable for current version
+        //back end is not built for these so example text is in place
+        link_type = (EditText)findViewById(R.id.addNewLink_link_type);
+        link_type.setEnabled(false);
+        addNewLink_picker_enddate = (EditText)findViewById(R.id.addNewLink_picker_enddate);
+        addNewLink_picker_enddate.setEnabled(false);
+        addNewLink_picker_startdate = (EditText)findViewById(R.id.addNewLink_picker_startdate);
+        addNewLink_picker_startdate.setEnabled(false);
 
         link = findViewById(R.id.addNewLink_link);
         link.setText(grab_link);
@@ -86,6 +101,7 @@ public class add_new_link_page extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
     }
 

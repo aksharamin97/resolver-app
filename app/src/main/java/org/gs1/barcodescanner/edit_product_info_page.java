@@ -29,6 +29,8 @@ public class edit_product_info_page extends AppCompatActivity {
     OkHttpClient client = new OkHttpClient();
     MediaType JSON = MediaType.parse("application/json charset=utf-8");
 
+    EditText lang;
+
     Toast toast;
 
     Button scanGTIN;
@@ -48,70 +50,80 @@ public class edit_product_info_page extends AppCompatActivity {
         final EditText GTIN = (EditText)findViewById(R.id.gtin);
         final EditText item_description = (EditText)findViewById(R.id.product_name);
 
+        //Language is hardcoded to english
+        //cannot be changed in current version
+        lang = (EditText)findViewById(R.id.lang);
+        lang.setEnabled(false);
+
         GTIN.setText(gtin);
         item_description.setText(product_name);
 
         Button save = (Button)findViewById(R.id.btn_save);
+        //on press product is saved if check digit requirements are met
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String newGTIN = GTIN.getText().toString();
+                //if check digit is valid api call is made
+                //method checkdigit() in add_new_product_page1 is used to verify proper check digit
                 if (Integer.parseInt(newGTIN.substring(newGTIN.length() - 1)) == add_new_product_page1.checkDigit(newGTIN)){
                     body1 = new JSONObject();
-                try {
-                    body1.put("command", "save_existing_uri_request");
-                    body1.put("session_id", sid);
-                    body1.put("uri_request_id", uri_request_id);
-                    body1.put("alpha_code", "gtin");
-                    body1.put("alpha_value", GTIN.getText().toString());
-                    body1.put("item_description", item_description.getText().toString());
-                    body1.put("include_in_sitemap", "1");
-                    body1.put("active", "0");
-                    body1.put("uri_prefix_1", "");
-                    body1.put("uri_suffix_1", "");
-                    body1.put("uri_prefix_2", "");
-                    body1.put("uri_suffix_2", "");
-                    body1.put("uri_prefix_3", "");
-                    body1.put("uri_suffix_3", "");
-                    body1.put("uri_prefix_4", "");
-                    body1.put("uri_suffix_4", "");
-                } catch (JSONException e) {
-                    Log.d("OKHTTP3", "JSON Exception");
-                    e.printStackTrace();
-                }
-                RequestBody req_body1 = RequestBody.create(JSON, body1.toString());
-                Request request1 = new Request.Builder()
-                        .url(url)
-                        .post(req_body1)
-                        .build();
-
-                client.newCall(request1).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
+                    try {
+                        body1.put("command", "save_existing_uri_request");
+                        body1.put("session_id", sid);
+                        body1.put("uri_request_id", uri_request_id);
+                        body1.put("alpha_code", "gtin");
+                        body1.put("alpha_value", GTIN.getText().toString());
+                        body1.put("item_description", item_description.getText().toString());
+                        body1.put("include_in_sitemap", "1");
+                        body1.put("active", "0");
+                        body1.put("uri_prefix_1", "");
+                        body1.put("uri_suffix_1", "");
+                        body1.put("uri_prefix_2", "");
+                        body1.put("uri_suffix_2", "");
+                        body1.put("uri_prefix_3", "");
+                        body1.put("uri_suffix_3", "");
+                        body1.put("uri_prefix_4", "");
+                        body1.put("uri_suffix_4", "");
+                    } catch (JSONException e) {
+                        Log.d("OKHTTP3", "JSON Exception");
                         e.printStackTrace();
-                        System.out.println("Call 1 Error");
                     }
+                    RequestBody req_body1 = RequestBody.create(JSON, body1.toString());
+                    Request request1 = new Request.Builder()
+                            .url(url)
+                            .post(req_body1)
+                            .build();
 
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        if (response.isSuccessful()) {
-                            final String jsonString3 = response.body().string();
-                            System.out.println(jsonString3);
-                            edit_product_info_page.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast toast = Toast.makeText(getApplicationContext(), "Product Saved", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                    Intent intent = new Intent(getApplicationContext(), dashboard.class);
-                                    intent.putExtra("sid", sid);
-                                    startActivity(intent);
-                                }
-                            });
+                    client.newCall(request1).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            e.printStackTrace();
+                            System.out.println("Call 1 Error");
                         }
-                    }
-                });
-              }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            if (response.isSuccessful()) {
+                                final String jsonString3 = response.body().string();
+                                System.out.println(jsonString3);
+                                edit_product_info_page.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast toast = Toast.makeText(getApplicationContext(), "Product Saved", Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        Intent intent = new Intent(getApplicationContext(), dashboard.class);
+                                        intent.putExtra("sid", sid);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+                //if check digit is false toast is displayed saying what the proper check digit should be
+                //api call not made and product not saved
                 else {
                     toast = Toast.makeText(getApplicationContext(), "Invalid check digit. Digit should be " + add_new_product_page1.checkDigit(GTIN.getText().toString())+ "", Toast.LENGTH_SHORT);
                     toast.show();
@@ -120,6 +132,8 @@ public class edit_product_info_page extends AppCompatActivity {
         });
 
         scanGTIN = (Button)findViewById(R.id.scanGTIN);
+        //on press user is brought to barcode_scanner_page
+        //user can then scan barcode and it GTIN will be brought to GTIN editText
         scanGTIN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
