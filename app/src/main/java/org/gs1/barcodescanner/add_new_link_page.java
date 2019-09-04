@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import me.dm7.barcodescanner.core.ViewFinderView;
 import okhttp3.Call;
@@ -25,11 +28,12 @@ import okhttp3.Response;
 
 public class add_new_link_page extends AppCompatActivity {
 
+    //initiating front end connections
     Button btn_save;
     Button get_link;
     EditText link;
     EditText alt_attribute_name;
-    EditText link_type;
+    AutoCompleteTextView link_type;
     EditText addNewLink_link;
     EditText addNewLink_picker_enddate;
     EditText addNewLink_picker_startdate;
@@ -58,10 +62,17 @@ public class add_new_link_page extends AppCompatActivity {
         final String uri_response_id = intent.getStringExtra("uri_response_id");
         final String grab_link = intent.getStringExtra("link");
 
-        //Link type start date and end date are hardcoded and unchangeable for current version
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, att_id);
+
+        link_type = (AutoCompleteTextView) findViewById(R.id.addNewLink_link_type);
+        link_type.setAdapter(adapter);
+//        link_type.setEnabled(false);
+
+
+
+        //start date and end date are hardcoded and unchangeable for current version
         //back end is not built for these so example text is in place
-        link_type = (EditText)findViewById(R.id.addNewLink_link_type);
-        link_type.setEnabled(false);
         addNewLink_picker_enddate = (EditText)findViewById(R.id.addNewLink_picker_enddate);
         addNewLink_picker_enddate.setEnabled(false);
         addNewLink_picker_startdate = (EditText)findViewById(R.id.addNewLink_picker_startdate);
@@ -69,27 +80,65 @@ public class add_new_link_page extends AppCompatActivity {
 
         link = findViewById(R.id.addNewLink_link);
         link.setText(grab_link);
-        System.out.println("DIS     " + link.getText().toString());
-        System.out.println("PRODUCT_ID     " + uri_request_id);
-        System.out.println(uri_request_id);
+//        System.out.println("DIS     " + link.getText().toString());
+//        System.out.println("PRODUCT_ID     " + uri_request_id);
+//        System.out.println(uri_request_id);
         alt_attribute_name = findViewById(R.id.addNewLink_alt_attribute_name);
 
 
         btn_save = findViewById(R.id.addNewLink_btn_save);
         get_link = findViewById(R.id.addNewLink_get_link);
 
+        final HashMap<String, String> attribute_id = new HashMap<>();
+        attribute_id.put("productDescriptionPage","1");
+        attribute_id.put("nutritionalInformationPage","2");
+        attribute_id.put("recipeWebsite","3");
+        attribute_id.put("instructionsForUse","4");
+        attribute_id.put("b2bData","5");
+        attribute_id.put("productJson","6");
+        attribute_id.put("activityIdeas","8");
+        attribute_id.put("sustainabilityInformation","9");
+        attribute_id.put("smartLabel","10");
+        attribute_id.put("relatedVideo","11");
+        attribute_id.put("consumerData","12");
+        attribute_id.put("productMarketingMessage","13");
+        attribute_id.put("epil","16");
+        attribute_id.put("packshot","17");
+        attribute_id.put("productMarketingMessage2","18");
+        attribute_id.put("tastingNotes","19");
+        attribute_id.put("sameAs","20");
+        attribute_id.put("premiumDataService","21");
+        attribute_id.put("epcisService","22");
+        attribute_id.put("mitVnsWakeHandler","23");
+        attribute_id.put("doNotUse","24");
+        attribute_id.put("smpc","25");
+        attribute_id.put("brandHomepagePatient","26");
+        attribute_id.put("promotion","27");
+        attribute_id.put("pip","28");
+        attribute_id.put("review","29");
+        attribute_id.put("recallStatus","30");
+        attribute_id.put("safetyInfo","31");
+        attribute_id.put("faqs","32");
+        attribute_id.put("socialMedia","33");
+        attribute_id.put("allergenInfo","34");
+        attribute_id.put("traceability","35");
+        attribute_id.put("trackAndTrace","36");
+        attribute_id.put("hasRetailers","37");
+        attribute_id.put("productSustainabilityInfo","38");
+
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("LINK      " + link.getText().toString());
                 System.out.println("ATTRIBUTE _NAME     " + alt_attribute_name.getText().toString());
-                link_call(sid, uri_request_id, link, alt_attribute_name);
+                link_call(sid, uri_request_id, link, alt_attribute_name, attribute_id, link_type);
                 Intent intent = new Intent(getApplicationContext(), dashboard.class);
                 intent.putExtra("sid", sid);
                 startActivity(intent);
             }
         });
 
+        //on press user is brought to in app browser that can grab a link and be brought back his page
         get_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,16 +152,21 @@ public class add_new_link_page extends AppCompatActivity {
         });
 
 
+
+
+
+
     }
 
-    private void link_call(String sid, String uri_request_id, EditText link, EditText alt_attribute_name) {
+    //api call
+    private void link_call(String sid, String uri_request_id, EditText link, EditText alt_attribute_name, HashMap attribute_id, AutoCompleteTextView link_type) {
         try {
 
             body1 = new JSONObject();
             body1.put("command", "save_new_uri_response");
             body1.put("session_id", sid);
             body1.put("uri_request_id", uri_request_id);
-            body1.put("attribute_id", "1");
+            body1.put("attribute_id", attribute_id.get(link_type.getText().toString()));
             body1.put("iana_language", "en");
             body1.put("destination_uri", link.getText().toString());
             body1.put("default_uri", "0");
@@ -137,7 +191,8 @@ public class add_new_link_page extends AppCompatActivity {
                 System.out.println("Call 1 Error");
             }
 
-            //
+            //on successful call
+            //toast will appear saying link was added
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
@@ -156,5 +211,43 @@ public class add_new_link_page extends AppCompatActivity {
             }
         });
     }
+
+     public static final String[] att_id = new String[]{"productDescriptionPage",
+             "nutritionalInformationPage",
+             "recipeWebsite",
+             "instructionsForUse",
+             "b2bData",
+             "productJson",
+             "activityIdeas",
+             "sustainabilityInformation",
+             "smartLabel",
+             "relatedVideo",
+             "consumerData",
+             "productMarketingMessage",
+             "epil",
+             "packshot",
+             "productMarketingMessage",
+             "tastingNotes",
+             "sameAs",
+             "premiumDataService",
+             "epcisService",
+             "mitVnsWakeHandler",
+             "doNotUse",
+             "smpc",
+             "brandHomepagePatient",
+             "promotion",
+             "pip",
+             "review",
+             "recallStatus",
+             "safetyInfo",
+             "faqs",
+             "socialMedia",
+             "allergenInfo",
+             "traceability",
+             "trackAndTrace",
+             "hasRetailers",
+             "productSustainabilityInfo"};
+
+
 
 }
