@@ -25,6 +25,7 @@ import okhttp3.Response;
 
 
 public class add_new_product_page1 extends AppCompatActivity {
+    //initiating variables
     String sid;
     String GTIN;
     String product_name;
@@ -54,6 +55,7 @@ public class add_new_product_page1 extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        //front end connections
         sid = intent.getStringExtra("sid");
         GTIN = intent.getStringExtra("GTIN");
         product_name = intent.getStringExtra("product_name");

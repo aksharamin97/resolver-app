@@ -59,7 +59,8 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="25dp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_edit_product" />
+                    app:layout_constraintEnd_toStartOf="@+id/btn_edit_product"
+                    tools:ignore="MissingConstraints" />
 
                 <Button
                     android:id="@+id/btn_edit_product"
@@ -70,7 +71,8 @@
                     android:background="@android:color/transparent"
                     android:drawableLeft="@drawable/ic_edit_orange_24dp"
                     android:paddingLeft="14sp"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:ignore="MissingConstraints" />
             </android.support.constraint.ConstraintLayout>
 
             <TextView
