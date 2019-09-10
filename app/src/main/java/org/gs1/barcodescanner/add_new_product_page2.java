@@ -61,6 +61,8 @@ public class add_new_product_page2 extends AppCompatActivity {
         link = (EditText)findViewById(R.id.link);
 
 
+        //Set up for link type text box
+        //when two letters are typed all options containing those letters are shown
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, add_new_link_page.att_id);
 
@@ -83,6 +85,9 @@ public class add_new_product_page2 extends AppCompatActivity {
         add_alt_attribute_name = (EditText)findViewById(R.id.alt_attribute_name);
         add_alt_attribute_name.setText(alt_attribute_name);
 
+        //This is a hashmap used to to match resolver link types with associated values
+        //these key value pairs are hardcoded with the values found on data.gs1.org/ui
+        //more efficient way to do this would be using api if possible, due to time constraints this method was used
         final HashMap<String, String> attribute_id = new HashMap<>();
         attribute_id.put("productDescriptionPage","1");
         attribute_id.put("nutritionalInformationPage","2");

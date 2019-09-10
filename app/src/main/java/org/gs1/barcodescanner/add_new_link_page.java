@@ -62,6 +62,8 @@ public class add_new_link_page extends AppCompatActivity {
         final String uri_response_id = intent.getStringExtra("uri_response_id");
         final String grab_link = intent.getStringExtra("link");
 
+        //Set up for link type text box
+        //when two letters are typed all options containing those letters are shown
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, att_id);
 
@@ -89,6 +91,9 @@ public class add_new_link_page extends AppCompatActivity {
         btn_save = findViewById(R.id.addNewLink_btn_save);
         get_link = findViewById(R.id.addNewLink_get_link);
 
+        //This is a hashmap used to to match resolver link types with associated values
+        //these key value pairs are hardcoded with the values found on data.gs1.org/ui
+        //more efficient way to do this would be using api if possible, due to time constraints this method was used
         final HashMap<String, String> attribute_id = new HashMap<>();
         attribute_id.put("productDescriptionPage","1");
         attribute_id.put("nutritionalInformationPage","2");
@@ -150,11 +155,6 @@ public class add_new_link_page extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
-
 
     }
 
