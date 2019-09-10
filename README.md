@@ -7,7 +7,6 @@ If user is a product owner and has Resolver credetials user can:
 1. Add Links to products already in Database
 1. Edit Product information
 1. Edit Links
-1. 
 
 
 ## Installation 
