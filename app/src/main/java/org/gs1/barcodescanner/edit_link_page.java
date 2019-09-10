@@ -57,6 +57,8 @@ public class edit_link_page extends AppCompatActivity {
         final String alt_attribute_name = intent.getStringExtra("alt_attribute_name");
 
 
+        //Set up for link type text box
+        //when two letters are typed all options containing those letters are shown
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, add_new_link_page.att_id);
 
@@ -78,10 +80,14 @@ public class edit_link_page extends AppCompatActivity {
         edit_link = (EditText) findViewById(R.id.edit_link);
         edit_alt_attribute_name = findViewById(R.id.edit_alt_attribute_name);
 
+        //Setting text to unedited information
         edit_alt_attribute_name.setText(alt_attribute_name);
         edit_title_link_type.setText("Edit Link");
         edit_link.setText(link);
 
+        //This is a hashmap used to to match resolver link types with associated values
+        //these key value pairs are hardcoded with the values found on data.gs1.org/ui
+        //more efficient way to do this would be using api if possible, due to time constraints this method was used
         final HashMap<String, String> attribute_id = new HashMap<>();
         attribute_id.put("productDescriptionPage","1");
         attribute_id.put("nutritionalInformationPage","2");
